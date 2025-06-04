@@ -205,7 +205,7 @@ export async function submitLeadForm(
       name,
       email,
       phone_number: phone,
-      interested_training: interestedTraining,
+      interested_training: interestedTraining ?? undefined,
       source: "CampaignLandingPage_SocialMedia",
     });
 

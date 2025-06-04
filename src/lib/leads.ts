@@ -100,7 +100,7 @@ export async function getLeads(options?: {
   
   const { data, error, count } = await query
   
-  return { data, error, count }
+  return { data, error, count: count ?? undefined }
 }
 
 /**
@@ -191,7 +191,7 @@ export async function getLeadsByDateRange(
   
   const { data, error, count } = await query
   
-  return { data, error, count }
+  return { data, error, count: count ?? undefined }
 }
 
 /**
