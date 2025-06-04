@@ -17,8 +17,9 @@ import { submitLeadForm } from "@/app/actions";
 export default function LeadCaptureForm() {
   const [selectedTraining, setSelectedTraining] = useState<string>("");
   const [message, setMessage] = useState<{
-    success?: string;
-    error?: string;
+    success: string;
+  } | {
+    error: string;
   } | null>(null);
 
   const handleSubmit = async (formData: FormData) => {
