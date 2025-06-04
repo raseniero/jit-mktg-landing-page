@@ -3,6 +3,7 @@
 import { encodedRedirect } from "@/utils/utils";
 import { redirect } from "next/navigation";
 import { createClient } from "../../supabase/server";
+import { createLead } from "@/lib/leads";
 
 export const signUpAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
@@ -199,10 +200,8 @@ export async function submitLeadForm(
   }
 
   try {
-    const supabase = await createClient();
-
-    // Save lead data to database
-    const { error } = await supabase.from("leads").insert({
+    // Save lead data to database using CRUD utility
+    const { data: lead, error } = await createLead({
       name,
       email,
       phone_number: phone,
@@ -214,6 +213,8 @@ export async function submitLeadForm(
       console.error("Error saving lead:", error);
       return { error: "Failed to save your information. Please try again." };
     }
+
+    const supabase = await createClient();
 
     // Send email notification
     const { error: emailError } = await supabase.functions.invoke(
