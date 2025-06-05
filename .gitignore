@@ -33,6 +33,7 @@ yarn-error.log*
 .env*.local
 .env
 .mcp.json
+.cursor/mcp.json
 
 # vercel
 .vercel
