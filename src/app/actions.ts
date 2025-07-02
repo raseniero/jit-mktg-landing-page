@@ -49,19 +49,24 @@ export const signUpAction = async (formData: FormData) => {
       });
 
       if (updateError) {
-        // Error handling without console.error
+        // Provide more specific error message based on the actual error
+        const errorMessage = updateError.message.includes('duplicate key') 
+          ? 'A user with this email already exists'
+          : 'Error creating user profile. Please try again.';
+        
+        console.error('User insert error:', updateError);
         return encodedRedirect(
           "error",
           "/sign-up",
-          "Error updating user. Please try again.",
+          errorMessage,
         );
       }
     } catch (err) {
-      // Error handling without console.error
+      console.error('Unexpected error during user creation:', err);
       return encodedRedirect(
         "error",
         "/sign-up",
-        "Error updating user. Please try again.",
+        "An unexpected error occurred. Please try again.",
       );
     }
   }
