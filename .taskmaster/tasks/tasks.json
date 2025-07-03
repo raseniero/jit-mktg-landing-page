@@ -1,0 +1,774 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Analyze Existing Python TDD Documentation Structure",
+        "description": "Review and document the current Python TDD documentation structure, content organization, and key sections to maintain consistency in the JavaScript version",
+        "details": "1. Read through the existing Python TDD documentation\n2. Create a content outline mapping all sections and subsections\n3. Identify all Python-specific code examples that need conversion\n4. Document the current flow and instructional methodology\n5. Create a conversion checklist for each section\n6. Note any Python-specific concepts that need JavaScript equivalents",
+        "testStrategy": "Manual review and validation that all sections are documented and no content is missed in the analysis",
+        "priority": "high",
+        "dependencies": [],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Inventory and Map Python TDD Documentation Structure",
+            "description": "Systematically read through the existing Python TDD documentation to create a comprehensive structural map of all sections, subsections, and content organization patterns",
+            "dependencies": [],
+            "details": "Navigate through the entire Python TDD documentation, creating a hierarchical outline that captures: main sections, subsections, appendices, and any special content blocks. Document the depth of nesting, section numbering schemes, and cross-references between sections. Create a visual or text-based sitemap showing the complete information architecture.",
+            "status": "completed",
+            "testStrategy": "Verify completeness by cross-checking the created outline against the actual documentation structure, ensuring no sections are missed"
+          },
+          {
+            "id": 2,
+            "title": "Extract and Catalog All Python Code Examples",
+            "description": "Systematically identify, extract, and catalog every Python code example, snippet, and code block throughout the documentation for conversion planning",
+            "dependencies": [
+              1
+            ],
+            "details": "Go through each section identified in the structural map and extract all Python code examples. Create a spreadsheet or structured document listing: code example location (section/page), code purpose/context, complexity level, dependencies on Python-specific libraries, and estimated conversion difficulty. Include inline code snippets, full code blocks, and any interactive examples.",
+            "status": "completed",
+            "testStrategy": "Validate extraction completeness by performing a second pass through the documentation to catch any missed code examples"
+          },
+          {
+            "id": 3,
+            "title": "Document Instructional Flow and Teaching Methodology",
+            "description": "Analyze and document the pedagogical approach, learning progression, and instructional methodology used in the Python TDD documentation",
+            "dependencies": [
+              1
+            ],
+            "details": "Study how concepts are introduced, built upon, and reinforced throughout the documentation. Document: the learning sequence (beginner to advanced concepts), teaching techniques used (examples-first, theory-first, etc.), how exercises and examples build complexity, prerequisite knowledge assumptions, and assessment/practice opportunities. Create a flow diagram showing the conceptual progression.",
+            "status": "completed",
+            "testStrategy": "Review the documented methodology with the structural map to ensure the instructional flow analysis covers all sections appropriately"
+          },
+          {
+            "id": 4,
+            "title": "Identify Python-Specific Concepts Requiring JavaScript Equivalents",
+            "description": "Identify all Python-specific language features, libraries, tools, and concepts that will need JavaScript equivalents or alternative approaches",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Create a comprehensive list of Python-specific elements including: language features (decorators, context managers, etc.), testing frameworks (unittest, pytest), development tools (pip, virtualenv), standard library modules, and Python-specific TDD patterns. For each item, research and document the closest JavaScript equivalent or alternative approach. Note items that have no direct equivalent and will require conceptual adaptation.",
+            "status": "completed",
+            "testStrategy": "Cross-reference the identified Python-specific concepts with the extracted code examples to ensure all conversion challenges are captured"
+          },
+          {
+            "id": 5,
+            "title": "Create Comprehensive Section-by-Section Conversion Checklist",
+            "description": "Synthesize all previous analysis into a detailed, actionable conversion checklist organized by documentation section",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "For each section in the structural map, create a conversion checklist item that includes: content to preserve as-is, Python code examples to convert (with reference to the catalog), Python-specific concepts to adapt (with JavaScript equivalents noted), instructional flow elements to maintain, and any section-specific conversion challenges or notes. Organize the checklist to follow the logical conversion sequence and include estimated effort for each section.",
+            "status": "completed",
+            "testStrategy": "Validate the checklist by ensuring every item from the previous subtasks (structure, code examples, concepts, methodology) is accounted for in the appropriate section checklist"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Setup Jest Configuration for Next.js Environment",
+        "description": "Create and document the Jest configuration setup specifically tailored for Next.js projects with TypeScript support",
+        "details": "1. Create jest.config.js with Next.js-specific settings:\n```javascript\nconst nextJest = require('next/jest')\nconst createJestConfig = nextJest({\n  dir: './'\n})\nconst customJestConfig = {\n  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],\n  moduleNameMapping: {\n    '^@/components/(.*)$': '<rootDir>/components/$1',\n    '^@/pages/(.*)$': '<rootDir>/pages/$1'\n  },\n  testEnvironment: 'jest-environment-jsdom'\n}\nmodule.exports = createJestConfig(customJestConfig)\n```\n2. Create jest.setup.js for global test configuration\n3. Document package.json dependencies (jest, @testing-library/jest-dom, @testing-library/react)\n4. Include TypeScript configuration for Jest",
+        "testStrategy": "Verify Jest configuration works by running a simple test case and ensuring Next.js modules can be imported correctly",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Install Required Jest Dependencies for Next.js",
+            "description": "Install and configure all necessary Jest-related packages for Next.js with TypeScript support",
+            "dependencies": [],
+            "details": "Install jest, @testing-library/react, @testing-library/jest-dom, @testing-library/user-event, and jest-environment-jsdom packages. Update package.json with test scripts including 'test', 'test:watch', and 'test:coverage' commands. Ensure compatibility with existing Next.js and TypeScript versions.",
+            "status": "completed",
+            "testStrategy": "Verify installation by running npm list to check all packages are properly installed and compatible"
+          },
+          {
+            "id": 2,
+            "title": "Create Core Jest Configuration File",
+            "description": "Set up the main jest.config.js file with Next.js-specific configuration using nextJest wrapper",
+            "dependencies": [
+              1
+            ],
+            "details": "Create jest.config.js in project root using the nextJest configuration wrapper. Configure module name mapping for path aliases (@/components, @/pages, @/lib, etc.), set testEnvironment to 'jest-environment-jsdom', and specify setupFilesAfterEnv path. Include testPathIgnorePatterns for .next and node_modules directories.",
+            "status": "completed",
+            "testStrategy": "Run jest --showConfig to verify configuration is loaded correctly and all paths resolve properly"
+          },
+          {
+            "id": 3,
+            "title": "Create Jest Setup File for Global Test Configuration",
+            "description": "Implement jest.setup.js file to configure global test environment settings and imports",
+            "dependencies": [
+              2
+            ],
+            "details": "Create jest.setup.js file that imports '@testing-library/jest-dom' for custom matchers. Add global test utilities, mock implementations for Next.js router, and configure any global test environment variables. Set up custom render functions if needed for consistent component testing.",
+            "status": "completed",
+            "testStrategy": "Create a simple test file to verify jest.setup.js is loaded and @testing-library/jest-dom matchers are available"
+          },
+          {
+            "id": 4,
+            "title": "Configure TypeScript Support for Jest",
+            "description": "Set up TypeScript configuration and type definitions for Jest testing environment",
+            "dependencies": [
+              3
+            ],
+            "details": "Update tsconfig.json to include jest types and test files. Create or update jest.config.js to handle TypeScript files with proper module resolution. Configure path mapping to match tsconfig.json paths. Add @types/jest if not already included. Ensure Jest can properly transform TypeScript files.",
+            "status": "completed",
+            "testStrategy": "Create a TypeScript test file with type annotations to verify TypeScript compilation and type checking work correctly in Jest"
+          },
+          {
+            "id": 5,
+            "title": "Document Jest Configuration and Create Testing Guidelines",
+            "description": "Create comprehensive documentation for the Jest setup and establish testing best practices for the project",
+            "dependencies": [
+              4
+            ],
+            "details": "Create README section or separate documentation file explaining the Jest configuration, available test commands, and testing patterns. Include examples of testing React components, API routes, and utility functions. Document the project's testing file structure conventions and naming patterns. Provide troubleshooting guide for common Jest issues in Next.js.",
+            "status": "completed",
+            "testStrategy": "Review documentation with team members and create a sample test suite following the documented guidelines to validate completeness"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Convert Python Code Examples to JavaScript/TypeScript",
+        "description": "Systematically convert all Python code examples in the documentation to JavaScript/TypeScript equivalents while maintaining the same TDD principles",
+        "details": "1. Replace Python function definitions with JavaScript functions:\n```javascript\n// Before (Python): def calculate_sum(a, b):\n// After (JavaScript): function calculateSum(a, b) {\n//   return a + b;\n// }\n```\n2. Convert Python classes to JavaScript classes with proper constructor syntax\n3. Replace Python list comprehensions with JavaScript array methods (map, filter, reduce)\n4. Update variable declarations to use const/let instead of Python assignments\n5. Convert Python dictionaries to JavaScript objects\n6. Replace Python string formatting with template literals\n7. Include TypeScript versions for type safety examples",
+        "testStrategy": "Ensure all converted JavaScript code examples are syntactically correct and functionally equivalent to the original Python versions",
+        "priority": "high",
+        "dependencies": [
+          1,
+          2
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Audit and Catalog All Python Code Examples",
+            "description": "Systematically identify and document all Python code examples throughout the documentation to create a comprehensive conversion plan",
+            "dependencies": [],
+            "details": "Scan all documentation files (.md, .rst, .txt) to locate Python code blocks. Create a spreadsheet or JSON file cataloging each example with: file path, line numbers, code type (function, class, list comprehension, etc.), complexity level, and dependencies between examples. Prioritize examples by frequency of use and educational value.",
+            "status": "completed",
+            "testStrategy": "Verify catalog completeness by running automated searches for Python syntax patterns (def, class, import, etc.) and cross-referencing with manual review"
+          },
+          {
+            "id": 2,
+            "title": "Convert Python Functions and Basic Syntax",
+            "description": "Transform Python function definitions, variable declarations, and basic syntax elements to JavaScript equivalents",
+            "dependencies": [
+              1
+            ],
+            "details": "Convert Python function definitions (def) to JavaScript function declarations or arrow functions. Replace Python variable assignments with const/let declarations. Transform Python print statements to console.log. Update indentation from Python's whitespace-based to JavaScript's brace-based structure. Handle Python's implicit return vs JavaScript's explicit return requirements.",
+            "status": "completed",
+            "testStrategy": "Create test files that can be executed in both Python and JavaScript environments to verify functional equivalence of converted examples"
+          },
+          {
+            "id": 3,
+            "title": "Convert Python Classes and Object-Oriented Patterns",
+            "description": "Transform Python class definitions, inheritance patterns, and object-oriented constructs to JavaScript class syntax",
+            "dependencies": [
+              2
+            ],
+            "details": "Convert Python class definitions to JavaScript ES6 class syntax with proper constructor methods. Transform Python __init__ methods to JavaScript constructors. Handle Python method definitions and convert to JavaScript class methods. Address Python's super() calls with JavaScript's super keyword. Convert Python property decorators to JavaScript getters/setters where applicable.",
+            "status": "completed",
+            "testStrategy": "Instantiate converted classes and verify that object creation, method calls, and inheritance work identically to Python versions"
+          },
+          {
+            "id": 4,
+            "title": "Convert Python Data Structures and Functional Programming",
+            "description": "Transform Python lists, dictionaries, comprehensions, and functional programming patterns to JavaScript equivalents",
+            "dependencies": [
+              2
+            ],
+            "details": "Replace Python list comprehensions with JavaScript array methods (map, filter, reduce). Convert Python dictionaries to JavaScript objects or Maps. Transform Python tuples to JavaScript arrays with destructuring where appropriate. Replace Python string formatting (f-strings, .format()) with JavaScript template literals. Handle Python's zip, enumerate, and range functions with JavaScript equivalents.",
+            "status": "completed",
+            "testStrategy": "Compare output of data manipulation operations between Python and JavaScript versions using identical input datasets"
+          },
+          {
+            "id": 5,
+            "title": "Add TypeScript Versions and Finalize Documentation",
+            "description": "Create TypeScript versions of all JavaScript examples and integrate both versions into the documentation with proper formatting and explanations",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Add TypeScript type annotations to all JavaScript examples, including function parameters, return types, and interface definitions. Create side-by-side comparisons showing Python, JavaScript, and TypeScript versions. Update documentation formatting to clearly distinguish between the three languages. Add explanatory notes about language-specific differences and TDD implications. Ensure all code examples follow consistent formatting and naming conventions.",
+            "status": "completed",
+            "testStrategy": "Compile all TypeScript examples to verify type correctness and run comprehensive documentation review to ensure clarity and completeness of all three language versions"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Replace pytest with Jest Testing Patterns",
+        "description": "Convert all pytest-specific testing patterns, fixtures, and assertions to Jest equivalents",
+        "details": "1. Replace pytest test functions with Jest test syntax:\n```javascript\n// Before (Python): def test_function_returns_expected_value():\n// After (JavaScript): test('function returns expected value', () => {\n//   expect(functionUnderTest()).toBe(expectedValue);\n// });\n```\n2. Convert pytest fixtures to Jest beforeEach/afterEach hooks\n3. Replace Python assert statements with Jest expectations:\n   - assert x == y → expect(x).toBe(y)\n   - assert x in list → expect(list).toContain(x)\n   - assert len(list) == 3 → expect(list).toHaveLength(3)\n4. Update parametrized tests to use Jest's test.each()\n5. Convert pytest markers to Jest describe blocks for organization",
+        "testStrategy": "Validate that all Jest test patterns follow best practices and produce the same test coverage as the original pytest examples",
+        "priority": "high",
+        "dependencies": [
+          2,
+          3
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Convert pytest test functions to Jest test syntax",
+            "description": "Transform all Python test functions from pytest format to Jest test format, updating function signatures and basic structure",
+            "dependencies": [],
+            "details": "Replace Python 'def test_*():' functions with Jest 'test(description, () => {})' or 'it(description, () => {})' syntax. Update function names to descriptive strings. Ensure proper arrow function syntax and Jest test structure. Handle async test functions by adding 'async' keyword where needed.",
+            "status": "completed",
+            "testStrategy": "Verify each converted test can be parsed by Jest and maintains the same test logic flow"
+          },
+          {
+            "id": 2,
+            "title": "Convert pytest fixtures to Jest setup/teardown hooks",
+            "description": "Replace pytest @fixture decorators and fixture parameters with Jest beforeEach, afterEach, beforeAll, and afterAll hooks",
+            "dependencies": [
+              1
+            ],
+            "details": "Identify all pytest fixtures and their scopes (function, class, module, session). Convert function-scoped fixtures to beforeEach/afterEach hooks. Convert module/session-scoped fixtures to beforeAll/afterAll hooks. Handle fixture dependencies by ensuring proper hook ordering. Move fixture logic into appropriate Jest lifecycle methods.",
+            "status": "completed",
+            "testStrategy": "Ensure setup and teardown operations execute in correct order and scope, maintaining test isolation"
+          },
+          {
+            "id": 3,
+            "title": "Replace Python assertions with Jest expectations",
+            "description": "Convert all Python assert statements to Jest expect() assertions with appropriate matchers",
+            "dependencies": [
+              1
+            ],
+            "details": "Map Python assertions to Jest matchers: 'assert x == y' → 'expect(x).toBe(y)', 'assert x in list' → 'expect(list).toContain(x)', 'assert len(list) == 3' → 'expect(list).toHaveLength(3)', 'assert x is True' → 'expect(x).toBe(true)', 'assert x is None' → 'expect(x).toBeNull()'. Handle complex assertions and custom assertion messages.",
+            "status": "completed",
+            "testStrategy": "Verify all assertion types are correctly converted and produce equivalent test results"
+          },
+          {
+            "id": 4,
+            "title": "Convert parametrized tests to Jest test.each()",
+            "description": "Transform pytest @pytest.mark.parametrize decorators to Jest's test.each() syntax for data-driven tests",
+            "dependencies": [
+              1,
+              3
+            ],
+            "details": "Identify parametrized tests using @pytest.mark.parametrize. Convert parameter arrays to Jest test.each() format. Update test function signatures to receive parameters. Handle multiple parameter sets and complex parameter structures. Ensure test names are descriptive using Jest's template string formatting.",
+            "status": "completed",
+            "testStrategy": "Verify parametrized tests run with all parameter combinations and maintain original test coverage"
+          },
+          {
+            "id": 5,
+            "title": "Convert pytest markers to Jest describe blocks",
+            "description": "Replace pytest markers and test organization with Jest describe blocks for better test structure and organization",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "Identify pytest markers like @pytest.mark.slow, @pytest.mark.integration, etc. Create Jest describe blocks to group related tests. Use Jest's skip/only functionality to replace pytest markers for conditional test execution. Organize tests hierarchically using nested describe blocks. Update any custom pytest markers to Jest equivalents or describe block organization.",
+            "status": "completed",
+            "testStrategy": "Ensure test organization is maintained and conditional test execution works as expected with Jest's skip/only features"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Update Directory Structure and File Naming Conventions",
+        "description": "Replace Python project structure examples with JavaScript/Next.js conventions and update file naming patterns",
+        "details": "1. Update project structure examples:\n```\nproject/\n├── components/\n│   ├── Button.js\n│   └── Button.test.js\n├── pages/\n│   ├── index.js\n│   └── api/\n├── __tests__/\n├── jest.config.js\n├── package.json\n└── next.config.js\n```\n2. Change test file naming from test_*.py to *.test.js or *.spec.js\n3. Update import paths to use relative imports and Next.js conventions\n4. Include examples of component co-location with tests\n5. Document Next.js specific directories (pages/, public/, styles/)",
+        "testStrategy": "Verify that all directory structure examples follow Next.js conventions and that file paths in examples are consistent",
+        "priority": "medium",
+        "dependencies": [
+          1,
+          3
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Update Core Project Structure Examples",
+            "description": "Replace Python project structure examples with JavaScript/Next.js directory conventions and create comprehensive project structure templates",
+            "dependencies": [],
+            "details": "Create new project structure examples showing Next.js conventions including components/, pages/, public/, styles/, __tests__/, and configuration files. Replace any Python-specific directories with JavaScript equivalents. Include both basic and advanced project structures with proper nesting and organization patterns.",
+            "status": "completed",
+            "testStrategy": "Validate structure examples against Next.js documentation and common project patterns"
+          },
+          {
+            "id": 2,
+            "title": "Convert Test File Naming Conventions",
+            "description": "Update all test file naming patterns from Python conventions (test_*.py) to JavaScript conventions (*.test.js or *.spec.js)",
+            "dependencies": [
+              1
+            ],
+            "details": "Systematically find and replace all references to Python test file patterns. Update examples to use .test.js for unit tests and .spec.js for integration tests. Ensure consistency across all documentation and code examples. Update any build configuration references to match new naming patterns.",
+            "status": "completed",
+            "testStrategy": "Search for any remaining Python test file references and verify all examples use correct JavaScript naming"
+          },
+          {
+            "id": 3,
+            "title": "Update Import Paths and Module References",
+            "description": "Convert all import statements from Python syntax to JavaScript/Next.js conventions including relative imports and Next.js specific imports",
+            "dependencies": [
+              2
+            ],
+            "details": "Replace Python import statements with JavaScript ES6 imports. Update relative path references to use proper JavaScript syntax. Include Next.js specific imports like 'next/router', 'next/head', 'next/image'. Convert any Python module references to npm package equivalents. Ensure all import examples follow Next.js conventions.",
+            "status": "completed",
+            "testStrategy": "Verify all import statements are valid JavaScript syntax and follow Next.js best practices"
+          },
+          {
+            "id": 4,
+            "title": "Implement Component Co-location Examples",
+            "description": "Create examples demonstrating component co-location patterns with tests, stories, and related files in JavaScript/Next.js projects",
+            "dependencies": [
+              3
+            ],
+            "details": "Develop examples showing components organized with their tests, styles, and documentation in the same directory. Include patterns like Button/index.js, Button/Button.test.js, Button/Button.module.css. Show both flat and nested component organization strategies. Demonstrate how to structure reusable components vs page-specific components.",
+            "status": "completed",
+            "testStrategy": "Ensure co-location examples follow React/Next.js community standards and are easily maintainable"
+          },
+          {
+            "id": 5,
+            "title": "Document Next.js Specific Directories and Conventions",
+            "description": "Create comprehensive documentation for Next.js specific directories (pages/, public/, styles/) and their usage patterns",
+            "dependencies": [
+              4
+            ],
+            "details": "Document the purpose and conventions for pages/ directory including file-based routing, API routes in pages/api/, dynamic routes. Explain public/ directory for static assets and proper referencing. Cover styles/ directory organization including CSS modules, global styles, and component-specific styles. Include next.config.js configuration examples and package.json scripts specific to Next.js projects.",
+            "status": "completed",
+            "testStrategy": "Validate documentation against official Next.js documentation and ensure all examples are current with latest Next.js version"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Convert Import/Export Statements to ES6 Modules",
+        "description": "Replace all Python import statements with JavaScript ES6 import/export syntax throughout the documentation",
+        "details": "1. Convert Python imports to JavaScript imports:\n```javascript\n// Before (Python): from module import function\n// After (JavaScript): import { function } from './module';\n```\n2. Replace Python module exports with JavaScript exports:\n```javascript\n// Named exports: export { function1, function2 };\n// Default exports: export default MyComponent;\n```\n3. Update relative import paths for JavaScript file extensions\n4. Include examples of importing from node_modules\n5. Show both CommonJS and ES6 module patterns where relevant\n6. Include TypeScript import examples with type imports",
+        "testStrategy": "Ensure all import/export examples are syntactically correct and follow JavaScript module best practices",
+        "priority": "medium",
+        "dependencies": [
+          3,
+          5
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Audit and Catalog All Python Import Statements",
+            "description": "Systematically identify and document all Python import statements throughout the documentation that need to be converted to JavaScript ES6 syntax",
+            "dependencies": [],
+            "details": "Scan all documentation files to find Python import patterns including: 'import module', 'from module import function', 'import module as alias', and 'from module import *'. Create a comprehensive list with file locations and current syntax for conversion reference.",
+            "status": "completed",
+            "testStrategy": "Create a checklist of all found import statements and verify completeness by searching for common Python import keywords"
+          },
+          {
+            "id": 2,
+            "title": "Convert Basic Python Imports to ES6 Import Syntax",
+            "description": "Replace standard Python import statements with their JavaScript ES6 equivalents, handling named imports, default imports, and namespace imports",
+            "dependencies": [
+              1
+            ],
+            "details": "Convert patterns: 'from module import function' → 'import { function } from './module.js'', 'import module' → 'import module from './module.js'', 'import module as alias' → 'import alias from './module.js'', and 'from module import function as alias' → 'import { function as alias } from './module.js'",
+            "status": "completed",
+            "testStrategy": "Verify each converted import follows proper ES6 syntax and maintains the same semantic meaning as the original Python import"
+          },
+          {
+            "id": 3,
+            "title": "Update File Paths and Extensions for JavaScript Modules",
+            "description": "Modify all import paths to use appropriate JavaScript file extensions and correct relative/absolute path syntax for ES6 modules",
+            "dependencies": [
+              2
+            ],
+            "details": "Add '.js' extensions to relative imports, convert Python package paths to JavaScript module paths, update relative path syntax (e.g., '../module.py' → '../module.js'), and ensure proper path resolution for ES6 modules including handling of index files",
+            "status": "completed",
+            "testStrategy": "Validate that all import paths are syntactically correct and would resolve properly in a JavaScript environment"
+          },
+          {
+            "id": 4,
+            "title": "Add Node Modules and External Package Import Examples",
+            "description": "Include comprehensive examples showing how to import from node_modules packages and external libraries using ES6 syntax",
+            "dependencies": [
+              3
+            ],
+            "details": "Add examples for: importing from npm packages ('import lodash from 'lodash''), importing specific functions from packages ('import { debounce } from 'lodash''), importing CSS/assets ('import './styles.css''), and importing JSON files ('import config from './config.json')",
+            "status": "completed",
+            "testStrategy": "Ensure examples cover common real-world scenarios and follow current JavaScript ecosystem best practices"
+          },
+          {
+            "id": 5,
+            "title": "Add TypeScript and CommonJS Alternative Examples",
+            "description": "Enhance documentation with TypeScript import syntax examples and show CommonJS alternatives where relevant for comprehensive coverage",
+            "dependencies": [
+              4
+            ],
+            "details": "Add TypeScript examples: 'import type { Interface } from './types'', 'import { type MyType, function } from './module''. Include CommonJS patterns: 'const module = require('./module')', 'const { function } = require('./module')'. Show when to use each approach and migration strategies between formats.",
+            "status": "completed",
+            "testStrategy": "Verify TypeScript syntax is current with latest TypeScript version and CommonJS examples are accurate for Node.js environments"
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Update Error Handling and Exception Examples",
+        "description": "Convert Python exception handling patterns to JavaScript Error handling with try/catch blocks",
+        "details": "1. Replace Python ValueError with JavaScript Error types:\n```javascript\n// Before (Python): raise ValueError(\"Invalid input\")\n// After (JavaScript): throw new Error(\"Invalid input\");\n```\n2. Convert Python try/except blocks to JavaScript try/catch:\n```javascript\ntry {\n  riskyOperation();\n} catch (error) {\n  console.error('Operation failed:', error.message);\n}\n```\n3. Update Jest error testing patterns:\n```javascript\nexpect(() => {\n  functionThatShouldThrow();\n}).toThrow('Expected error message');\n```\n4. Include custom Error class examples for JavaScript\n5. Show async/await error handling patterns",
+        "testStrategy": "Verify that all error handling examples work correctly and follow JavaScript best practices for exception management",
+        "priority": "medium",
+        "dependencies": [
+          3,
+          4
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Replace Python ValueError with JavaScript Error Types",
+            "description": "Convert all Python ValueError exceptions to appropriate JavaScript Error types, including built-in Error, TypeError, and RangeError classes",
+            "dependencies": [],
+            "details": "Scan codebase for Python raise ValueError patterns and replace with JavaScript throw new Error(), throw new TypeError(), or throw new RangeError() based on context. Update error messages to follow JavaScript conventions. Create mapping documentation for common Python exceptions to JavaScript equivalents.",
+            "status": "completed",
+            "testStrategy": "Create unit tests to verify that functions throw the correct JavaScript Error types with expected messages"
+          },
+          {
+            "id": 2,
+            "title": "Convert Python try/except Blocks to JavaScript try/catch",
+            "description": "Transform all Python try/except/finally blocks to JavaScript try/catch/finally syntax with proper error handling patterns",
+            "dependencies": [
+              1
+            ],
+            "details": "Replace Python try/except syntax with JavaScript try/catch blocks. Update variable scoping from Python's except e as syntax to JavaScript's catch (error) syntax. Ensure proper error propagation and logging using console.error or appropriate logging mechanisms. Handle multiple exception types using instanceof checks.",
+            "status": "completed",
+            "testStrategy": "Test error handling paths to ensure exceptions are properly caught and handled without breaking application flow"
+          },
+          {
+            "id": 3,
+            "title": "Update Jest Error Testing Patterns",
+            "description": "Convert Python unittest exception testing to Jest error testing patterns using expect().toThrow() and related matchers",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Replace Python assertRaises patterns with Jest expect(() => {}).toThrow() syntax. Update test cases to use toThrow(), toThrowError(), and toThrowErrorMatchingSnapshot() matchers. Ensure async error testing uses proper await expect().rejects.toThrow() patterns for Promise-based functions.",
+            "status": "completed",
+            "testStrategy": "Run Jest test suite to verify all error testing patterns work correctly and provide meaningful test output"
+          },
+          {
+            "id": 4,
+            "title": "Create Custom Error Class Examples",
+            "description": "Implement JavaScript custom Error classes to replace Python custom exception classes, following JavaScript inheritance patterns",
+            "dependencies": [
+              1
+            ],
+            "details": "Create custom Error classes extending the base Error class using class syntax or prototype inheritance. Implement proper constructor patterns with super() calls. Add custom properties like error codes, context data, and stack trace handling. Provide examples of ValidationError, NetworkError, and other domain-specific error types.",
+            "status": "completed",
+            "testStrategy": "Test custom Error classes to ensure they properly extend Error, maintain stack traces, and can be caught with instanceof checks"
+          },
+          {
+            "id": 5,
+            "title": "Implement Async/Await Error Handling Patterns",
+            "description": "Add comprehensive async/await error handling examples showing Promise rejection handling and async function error patterns",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Create examples of try/catch blocks with async/await syntax. Show Promise.catch() patterns and Promise.allSettled() for handling multiple async operations. Implement error handling for fetch requests, database operations, and other async operations. Include patterns for error propagation in async function chains.",
+            "status": "completed",
+            "testStrategy": "Test async error handling with both resolved and rejected Promises, ensuring proper error propagation and handling in async contexts"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Replace Python Mocking with Jest Mock Patterns",
+        "description": "Convert all Python mocker fixture examples to Jest mocking patterns using jest.mock() and jest.fn()",
+        "details": "1. Replace Python mocker.patch with Jest module mocking:\n```javascript\n// Mock entire module\njest.mock('./api', () => ({\n  fetchData: jest.fn()\n}));\n```\n2. Convert Python mock objects to Jest mock functions:\n```javascript\n// Create mock function\nconst mockCallback = jest.fn();\nmockCallback.mockReturnValue(42);\n```\n3. Update spy patterns:\n```javascript\n// Spy on existing method\nconst spy = jest.spyOn(object, 'method');\n```\n4. Include Jest mock assertions:\n```javascript\nexpect(mockFunction).toHaveBeenCalledWith(expectedArgs);\nexpect(mockFunction).toHaveBeenCalledTimes(1);\n```\n5. Show how to mock Next.js specific modules (router, image, etc.)",
+        "testStrategy": "Ensure all Jest mocking examples work correctly and provide the same testing capabilities as the original Python mocker examples",
+        "priority": "medium",
+        "dependencies": [
+          4,
+          7
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Convert Python mocker.patch to Jest Module Mocking",
+            "description": "Replace all Python mocker.patch examples with Jest jest.mock() patterns for module-level mocking",
+            "dependencies": [],
+            "details": "Find all instances of Python mocker.patch() and convert them to Jest module mocking syntax. Use jest.mock() for entire modules and jest.mock() with factory functions for partial mocks. Include examples of mocking both default and named exports, and show how to mock modules at the top of test files.",
+            "status": "completed",
+            "testStrategy": "Verify that all module mocking examples work correctly and demonstrate proper isolation between tests"
+          },
+          {
+            "id": 2,
+            "title": "Transform Python Mock Objects to Jest Mock Functions",
+            "description": "Convert Python Mock() objects and their configurations to Jest mock functions using jest.fn()",
+            "dependencies": [
+              1
+            ],
+            "details": "Replace Python Mock() instances with jest.fn() calls. Convert mock configurations like return_value to mockReturnValue(), side_effect to mockImplementation(), and call_count to mock.calls.length. Include examples of mockReturnValueOnce(), mockResolvedValue(), and mockRejectedValue() for different scenarios.",
+            "status": "completed",
+            "testStrategy": "Test that mock functions behave identically to their Python counterparts with proper return values and side effects"
+          },
+          {
+            "id": 3,
+            "title": "Update Spy Patterns from Python to Jest",
+            "description": "Convert Python spy patterns using mocker.spy to Jest spyOn functionality",
+            "dependencies": [
+              2
+            ],
+            "details": "Replace mocker.spy() calls with jest.spyOn(object, 'method'). Show how to spy on methods while preserving original implementation, how to spy and mock the implementation, and how to restore spies after tests. Include examples of spying on object methods, class methods, and module functions.",
+            "status": "completed",
+            "testStrategy": "Ensure spies correctly intercept calls while maintaining original behavior when needed"
+          },
+          {
+            "id": 4,
+            "title": "Implement Jest Mock Assertions",
+            "description": "Replace Python mock assertion patterns with Jest-specific mock assertions",
+            "dependencies": [
+              3
+            ],
+            "details": "Convert Python assert_called_with() to expect().toHaveBeenCalledWith(), assert_called_once() to expect().toHaveBeenCalledTimes(1), and call_count checks to toHaveBeenCalledTimes(). Include examples of toHaveBeenLastCalledWith(), toHaveBeenNthCalledWith(), and mock.calls for detailed call inspection.",
+            "status": "completed",
+            "testStrategy": "Verify that all assertion patterns correctly validate mock function calls and arguments"
+          },
+          {
+            "id": 5,
+            "title": "Add Next.js Specific Module Mocking Examples",
+            "description": "Create Jest mocking patterns specifically for Next.js modules like router, image, and other framework-specific components",
+            "dependencies": [
+              4
+            ],
+            "details": "Provide examples of mocking next/router with useRouter hook, next/image component, next/head, and other Next.js specific modules. Show how to mock Next.js API routes, getServerSideProps, getStaticProps, and middleware. Include patterns for mocking Next.js context providers and custom hooks.",
+            "status": "completed",
+            "testStrategy": "Test that Next.js specific mocks work correctly in both unit tests and integration tests with proper TypeScript support"
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Add Package Management and Dependency Examples",
+        "description": "Include JavaScript-specific package management examples using package.json, npm, and yarn",
+        "details": "1. Create package.json examples with testing dependencies:\n```json\n{\n  \"scripts\": {\n    \"test\": \"jest\",\n    \"test:watch\": \"jest --watch\",\n    \"test:coverage\": \"jest --coverage\"\n  },\n  \"devDependencies\": {\n    \"jest\": \"^29.0.0\",\n    \"@testing-library/jest-dom\": \"^5.16.0\",\n    \"@testing-library/react\": \"^13.0.0\"\n  }\n}\n```\n2. Include npm/yarn installation commands\n3. Document common Jest CLI options\n4. Show how to add testing scripts to package.json\n5. Include TypeScript testing dependencies when relevant",
+        "testStrategy": "Verify that all package.json examples are valid and that the specified dependencies work together correctly",
+        "priority": "low",
+        "dependencies": [
+          2,
+          8
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Basic Package.json Examples with Testing Dependencies",
+            "description": "Create comprehensive package.json examples showing different testing setups including Jest, React Testing Library, and other common testing dependencies",
+            "dependencies": [],
+            "details": "Create multiple package.json examples: 1) Basic Jest setup for vanilla JavaScript, 2) React testing setup with Testing Library, 3) Node.js backend testing setup. Include proper version ranges, peer dependencies, and engine requirements. Show both minimal and comprehensive configurations.",
+            "status": "completed",
+            "testStrategy": "Validate JSON syntax and verify all package versions are current and compatible"
+          },
+          {
+            "id": 2,
+            "title": "Document NPM and Yarn Installation Commands",
+            "description": "Provide comprehensive documentation for installing testing dependencies using both npm and yarn package managers",
+            "dependencies": [
+              1
+            ],
+            "details": "Document installation commands for: 1) Installing all dependencies (npm install / yarn install), 2) Installing specific testing packages (npm install --save-dev jest / yarn add --dev jest), 3) Global installations when needed, 4) Installing from package.json examples created in previous subtask. Include flags like --exact, --save-dev, and --production.",
+            "status": "completed",
+            "testStrategy": "Test commands in clean environments to ensure they work correctly"
+          },
+          {
+            "id": 3,
+            "title": "Create Testing Scripts Configuration Examples",
+            "description": "Show how to properly configure npm scripts for various testing scenarios and workflows",
+            "dependencies": [
+              1
+            ],
+            "details": "Create examples of package.json scripts section with: 1) Basic test script, 2) Watch mode for development, 3) Coverage reporting, 4) Different test environments (unit, integration, e2e), 5) Linting and formatting alongside tests, 6) Pre-commit hooks integration. Include cross-platform compatibility considerations.",
+            "status": "completed",
+            "testStrategy": "Verify all scripts execute correctly on different operating systems"
+          },
+          {
+            "id": 4,
+            "title": "Document Common Jest CLI Options and Usage",
+            "description": "Provide comprehensive documentation of Jest command-line interface options and their practical applications",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Document Jest CLI options including: 1) --watch and --watchAll for development, 2) --coverage for code coverage, 3) --verbose for detailed output, 4) --silent for minimal output, 5) --testPathPattern for running specific tests, 6) --updateSnapshot for snapshot testing, 7) --maxWorkers for performance tuning, 8) Configuration file options (--config). Include practical examples and use cases.",
+            "status": "completed",
+            "testStrategy": "Test each CLI option with sample projects to verify functionality"
+          },
+          {
+            "id": 5,
+            "title": "Add TypeScript Testing Dependencies and Configuration",
+            "description": "Extend package management examples to include TypeScript-specific testing dependencies and configuration",
+            "dependencies": [
+              1,
+              3
+            ],
+            "details": "Add TypeScript testing examples including: 1) @types packages for Jest and testing libraries, 2) ts-jest for TypeScript transformation, 3) TypeScript configuration for testing (tsconfig.json), 4) Type-safe testing utilities, 5) Integration with existing JavaScript examples, 6) Build scripts that handle both TypeScript compilation and testing. Show both JavaScript and TypeScript versions of configurations.",
+            "status": "completed",
+            "testStrategy": "Verify TypeScript compilation and test execution work correctly with provided configurations"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Finalize Documentation and Validate Examples",
+        "description": "Review the complete JavaScript TDD documentation, validate all code examples, and ensure consistency with TDD principles",
+        "details": "1. Perform comprehensive review of all converted content\n2. Test all JavaScript code examples in a Next.js environment\n3. Ensure consistent formatting and style throughout\n4. Validate that TDD methodology is preserved in JavaScript context\n5. Check that all Jest patterns follow current best practices\n6. Verify TypeScript examples compile correctly\n7. Ensure all links and references are updated\n8. Create a final checklist comparing against original Python documentation structure\n9. Add any missing JavaScript-specific TDD patterns\n10. Include troubleshooting section for common Jest/Next.js testing issues",
+        "testStrategy": "Run all code examples in a test Next.js project to ensure they work correctly, and have the documentation reviewed for completeness and accuracy",
+        "priority": "high",
+        "dependencies": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "status": "completed",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Comprehensive Content Review and Structure Validation",
+            "description": "Perform a thorough review of all converted JavaScript TDD documentation to ensure completeness, accuracy, and proper structure alignment with the original Python documentation",
+            "dependencies": [],
+            "details": "Review all sections of the documentation for completeness, check that all topics from the original Python version are covered in JavaScript context, validate section organization and flow, ensure proper heading hierarchy, and create a comparison checklist against the original documentation structure",
+            "status": "completed",
+            "testStrategy": "Create a detailed checklist comparing section-by-section against original Python documentation and verify 100% coverage of all topics"
+          },
+          {
+            "id": 2,
+            "title": "JavaScript Code Examples Validation and Testing",
+            "description": "Validate all JavaScript code examples by testing them in a Next.js environment to ensure they work correctly and demonstrate proper TDD principles",
+            "dependencies": [
+              1
+            ],
+            "details": "Set up a Next.js testing environment, extract all code examples from documentation, create test files for each example, run Jest tests to verify functionality, ensure all examples follow current JavaScript/ES6+ standards, and validate that TypeScript examples compile without errors",
+            "status": "completed",
+            "testStrategy": "Create automated test suite that runs all documentation examples and validates their output matches expected results"
+          },
+          {
+            "id": 3,
+            "title": "Jest and Testing Framework Best Practices Validation",
+            "description": "Review and validate that all Jest patterns, testing configurations, and framework usage follow current best practices and industry standards",
+            "dependencies": [
+              2
+            ],
+            "details": "Audit all Jest test examples for current best practices, validate test configuration files, ensure proper use of Jest matchers and assertions, check async/await patterns in tests, verify mock usage follows best practices, and update any outdated patterns or syntax",
+            "status": "completed",
+            "testStrategy": "Run Jest with strict linting rules and validate all test patterns against Jest documentation and community best practices"
+          },
+          {
+            "id": 4,
+            "title": "Formatting, Style, and TDD Methodology Consistency",
+            "description": "Ensure consistent formatting and style throughout the documentation while validating that TDD methodology principles are properly preserved in the JavaScript context",
+            "dependencies": [
+              3
+            ],
+            "details": "Apply consistent code formatting using Prettier/ESLint standards, ensure uniform documentation style and tone, validate that Red-Green-Refactor cycle is properly demonstrated in JavaScript examples, check that TDD principles are clearly explained in JavaScript context, and ensure consistent terminology usage throughout",
+            "status": "completed",
+            "testStrategy": "Use automated linting tools to check formatting consistency and manually review TDD methodology explanations for accuracy"
+          },
+          {
+            "id": 5,
+            "title": "Final Integration and Troubleshooting Section",
+            "description": "Complete final integration by updating all links and references, adding JavaScript-specific TDD patterns, and creating a comprehensive troubleshooting section for common Jest/Next.js testing issues",
+            "dependencies": [
+              4
+            ],
+            "details": "Update all internal and external links to ensure they work correctly, add missing JavaScript-specific TDD patterns not covered in original Python version, create troubleshooting section covering common Jest configuration issues, Next.js testing gotchas, async testing problems, and mock-related issues, and perform final end-to-end review of complete documentation",
+            "status": "completed",
+            "testStrategy": "Manually test all links, validate troubleshooting solutions in actual development environment, and conduct final comprehensive review checklist"
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "title": "Create Feature Branch and Submit Code for Review",
+        "description": "Create a feature branch from main, commit all development changes to the repository, push to origin, and prepare for pull request review and approval.",
+        "details": "1. Create and checkout a new feature branch from main:\n```bash\ngit checkout main\ngit pull origin main\ngit checkout -b feature/javascript-tdd-documentation\n```\n\n2. Stage and commit all changes with descriptive commit messages:\n```bash\ngit add .\ngit status  # Review staged changes\ngit commit -m \"feat: Convert Python TDD documentation to JavaScript/Jest\n\n- Replace Python test examples with Jest patterns\n- Update import/export statements to ES6 modules\n- Convert Python mocking to Jest mock functions\n- Add Next.js-specific Jest configuration\n- Update error handling from Python exceptions to JavaScript\n- Include package.json and dependency management examples\n- Validate all code examples and ensure consistency\"\n```\n\n3. Push the feature branch to origin:\n```bash\ngit push -u origin feature/javascript-tdd-documentation\n```\n\n4. Create a pull request through the repository's web interface with:\n   - Clear title describing the conversion work\n   - Detailed description of changes made\n   - Reference to any related issues or requirements\n   - Request specific reviewers familiar with JavaScript/Jest testing\n\n5. Address any feedback from code review and update the branch as needed:\n```bash\ngit add .\ngit commit -m \"fix: Address code review feedback\"\ngit push origin feature/javascript-tdd-documentation\n```\n\n6. Wait for approval before merging to main branch",
+        "testStrategy": "1. Verify the feature branch was created successfully and contains all expected changes by running `git log --oneline` and `git diff main..feature/javascript-tdd-documentation`. 2. Confirm all files are properly committed by checking `git status` shows a clean working directory. 3. Validate the push was successful by viewing the branch on the remote repository. 4. Ensure the pull request is created with appropriate reviewers assigned and contains a comprehensive description of changes. 5. Test that all code examples in the documentation work correctly in a fresh Next.js project setup. 6. Verify that the branch can be successfully merged without conflicts once approved.",
+        "status": "pending",
+        "dependencies": [
+          10
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create and Setup Feature Branch",
+            "description": "Create a new feature branch from the main branch and ensure it's properly set up for development work",
+            "dependencies": [],
+            "details": "Execute git commands to checkout main, pull latest changes, and create a new feature branch named 'feature/javascript-tdd-documentation'. Verify the branch is created and checked out correctly.",
+            "status": "pending",
+            "testStrategy": "Verify branch creation with 'git branch' and confirm current branch with 'git status'"
+          },
+          {
+            "id": 2,
+            "title": "Stage and Review Changes",
+            "description": "Add all modified files to the staging area and review the changes before committing",
+            "dependencies": [
+              1
+            ],
+            "details": "Use 'git add .' to stage all changes, then run 'git status' to review what files are staged. Verify that all intended changes are included and no unwanted files are staged.",
+            "status": "pending",
+            "testStrategy": "Use 'git diff --cached' to review staged changes and ensure they match expectations"
+          },
+          {
+            "id": 3,
+            "title": "Commit Changes with Descriptive Message",
+            "description": "Create a comprehensive commit with a detailed message describing the JavaScript/Jest conversion work",
+            "dependencies": [
+              2
+            ],
+            "details": "Execute git commit with a detailed message following conventional commit format. The message should clearly describe the conversion from Python to JavaScript/Jest, including all major changes made to the documentation.",
+            "status": "pending",
+            "testStrategy": "Verify commit was created successfully with 'git log --oneline -1' and check commit message format"
+          },
+          {
+            "id": 4,
+            "title": "Push Feature Branch to Remote Repository",
+            "description": "Push the feature branch to the origin remote repository and set up tracking",
+            "dependencies": [
+              3
+            ],
+            "details": "Use 'git push -u origin feature/javascript-tdd-documentation' to push the branch and establish upstream tracking. Verify the push was successful and the branch exists on the remote repository.",
+            "status": "pending",
+            "testStrategy": "Confirm successful push by checking remote branch exists with 'git branch -r' or through repository web interface"
+          },
+          {
+            "id": 5,
+            "title": "Create Pull Request and Manage Review Process",
+            "description": "Create a pull request through the repository web interface and handle the code review process",
+            "dependencies": [
+              4
+            ],
+            "details": "Navigate to the repository web interface, create a pull request with clear title and detailed description of changes. Request appropriate reviewers, address any feedback by making additional commits, and push updates to the feature branch as needed.",
+            "status": "pending",
+            "testStrategy": "Verify pull request is created successfully, all required information is included, and reviewers are notified"
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "created": "2025-07-03T08:36:08.041Z",
+      "updated": "2025-07-03T11:53:21.307Z",
+      "description": "Tasks for master context"
+    }
+  }
+}
