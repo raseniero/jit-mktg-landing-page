@@ -130,7 +130,12 @@ function CourseDetails({ course }: CourseDetailsProps) {
   );
 }
 
-interface CourseDetailPageProps {
+interface PageProps {
+  params: { slug: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
+}
+
+interface CourseDetailPageProps extends PageProps {
   params: {
     slug: string;
   };
