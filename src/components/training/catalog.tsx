@@ -5,6 +5,7 @@ const trainingPrograms = [
   {
     id: 1,
     title: "Low-Code/No-Code using Bubbi.io",
+    slug: "low-code-no-code-using-bubbi-io",
     description:
       "Learn to build powerful applications without writing code using the Bubbi.io platform.",
     icon: <Code className="w-6 h-6" />,
@@ -12,6 +13,7 @@ const trainingPrograms = [
   {
     id: 2,
     title: "Leading SAFe",
+    slug: "leading-safe",
     description:
       "Master the Scaled Agile Framework and lead your organization through agile transformations.",
     icon: <Workflow className="w-6 h-6" />,
@@ -19,6 +21,7 @@ const trainingPrograms = [
   {
     id: 3,
     title: "Web Development with Bubbio.io",
+    slug: "web-development-with-bubbio-io",
     description:
       "Create responsive web applications using the intuitive Bubbio.io development platform.",
     icon: <Layers className="w-6 h-6" />,
@@ -26,6 +29,7 @@ const trainingPrograms = [
   {
     id: 4,
     title: "Introduction to Sitecore Fundamentals",
+    slug: "introduction-to-sitecore-fundamentals",
     description:
       "Learn the basics of Sitecore CMS and how to build and manage digital experiences.",
     icon: <Compass className="w-6 h-6" />,
@@ -33,6 +37,7 @@ const trainingPrograms = [
   {
     id: 5,
     title: "Introduction to Prompt Engineering",
+    slug: "introduction-to-prompt-engineering",
     description:
       "Master the art of crafting effective prompts for AI systems to generate desired outputs.",
     icon: <Lightbulb className="w-6 h-6" />,
@@ -51,10 +56,10 @@ export default function TrainingCatalog() {
           <h3 className="text-xl font-semibold mb-3">{program.title}</h3>
           <p className="text-gray-600 mb-6">{program.description}</p>
           <Link
-            href="#register"
-            className="text-blue-600 font-medium hover:text-blue-700 flex items-center"
+            href={`/courses/${program.slug}`}
+            className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium"
           >
-            Learn More
+            Learn more
             <svg
               className="w-4 h-4 ml-1"
               fill="none"
