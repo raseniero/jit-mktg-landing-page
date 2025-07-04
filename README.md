@@ -1,28 +1,35 @@
-# Jit Marketing Landing Page
+# JIT Marketing Landing Page
 
-A modern, responsive landing page for Jit Marketing services.
+A modern, responsive landing page for JIT Marketing services with lead capture functionality.
 
 ## Features
 
 - Clean and modern design
 - Responsive layout for all devices
+- Lead capture form with validation
+- Real-time form submission to Supabase
 - Clear call-to-action sections
 - SEO optimized structure
 - Fast loading performance
 
 ## Technologies Used
 
-- HTML5
-- CSS3
-- JavaScript
-- Modern UI/UX practices
+- Next.js 14
+- TypeScript
+- Tailwind CSS
+- React Hook Form
+- Zod for form validation
+- Supabase for data storage
+- Vercel for deployment
 
 ## Getting Started
 
 ### Prerequisites
 
+- Node.js 18+ and npm
 - Modern web browser (Chrome, Firefox, Safari, or Edge)
-- Node.js (for development purposes)
+- Supabase account (for the backend)
+- Vercel account (for deployment)
 
 ### Installation
 
@@ -36,18 +43,81 @@ git clone https://github.com/raseniero/jit-mktg-landing-page.git
 cd jit-mktg-landing-page
 ```
 
+3. Install dependencies:
+```bash
+npm install
+```
+
+4. Set up environment variables:
+   - Copy `.env.example` to `.env.local`
+   - Update the Supabase URL and anon key with your credentials
+
+```bash
+cp .env.example .env.local
+```
+
 ### Running the Application
 
-There are two ways to run the application:
-
-1. **Using a Local Server (Recommended)**
+1. **Development Mode**
 ```bash
-# Option 1: Using Python (if installed)
-python -m http.server 8000
+npm run dev
+```
 
-# Option 2: Using Node.js (if installed)
-npx http-server
+2. **Production Build**
+```bash
+npm run build
+npm start
+```
 
+## Environment Variables
+
+Create a `.env.local` file in the root directory with the following variables:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+## Deployment
+
+### Vercel
+
+1. Push your code to a GitHub/GitLab/Bitbucket repository
+2. Import the repository to Vercel
+3. Add the environment variables in the Vercel project settings
+4. Deploy!
+
+### Supabase Setup
+
+1. Create a new Supabase project
+2. Run the following SQL to create the `leads` table:
+
+```sql
+CREATE TABLE leads (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  phone_number TEXT NOT NULL,
+  interested_training TEXT,
+  source TEXT DEFAULT 'website',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_leads_email ON leads(email);
+```
+
+## Testing
+
+Run the test suite with:
+
+```bash
+npm test
+```
+
+## License
+
+MIT
 # Option 3: Using Live Server VS Code extension
 # Right-click on index.html and select "Open with Live Server"
 ```
