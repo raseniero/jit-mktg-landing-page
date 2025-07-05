@@ -161,6 +161,26 @@ describe('Badge Component', () => {
       expect(screen.getByText('Priority:')).toHaveClass('sr-only');
       expect(screen.getByText('High')).toBeInTheDocument();
     });
+
+    it('adds role status for status badges', () => {
+      render(<Badge type="status">Active</Badge>);
+      expect(screen.getByRole('status')).toBeInTheDocument();
+    });
+
+    it('automatically labels count badges', () => {
+      render(<Badge type="count">{5}</Badge>);
+      expect(screen.getByLabelText('5 items')).toBeInTheDocument();
+    });
+
+    it('automatically labels status badges', () => {
+      render(<Badge type="status">Active</Badge>);
+      expect(screen.getByLabelText('Status: Active')).toBeInTheDocument();
+    });
+
+    it('prefers custom aria-label over automatic labels', () => {
+      render(<Badge type="count" aria-label="5 unread messages">{5}</Badge>);
+      expect(screen.getByLabelText('5 unread messages')).toBeInTheDocument();
+    });
   });
 
   describe('Edge Cases', () => {

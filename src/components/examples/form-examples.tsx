@@ -35,8 +35,8 @@ export function ContactForm() {
 
       <div className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="name">
-            Name <span className="text-destructive">*</span>
+          <Label htmlFor="name" required>
+            Name
           </Label>
           <Input
             id="name"
@@ -50,8 +50,8 @@ export function ContactForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="email">
-            Email <span className="text-destructive">*</span>
+          <Label htmlFor="email" required>
+            Email
           </Label>
           <Input
             id="email"
@@ -66,14 +66,17 @@ export function ContactForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="message">
-            Message <span className="text-destructive">*</span>
+          <Label htmlFor="message" required>
+            Message
           </Label>
           <Textarea
             id="message"
             placeholder="Tell us how we can help..."
             rows={5}
             required
+            minLength={10}
+            maxLength={500}
+            showCount
             aria-describedby="message-description"
           />
           <p id="message-description" className="text-sm text-muted-foreground">

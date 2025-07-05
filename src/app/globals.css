@@ -79,6 +79,37 @@
     @apply bg-background text-foreground;
   }
   
+  /* Focus visible outline for better accessibility */
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-ring;
+  }
+  
+  /* Smooth transitions for interactive elements */
+  button, 
+  a, 
+  input, 
+  textarea, 
+  select,
+  [role="button"],
+  [role="link"],
+  [role="menuitem"],
+  [role="tab"] {
+    @apply transition-colors duration-200;
+  }
+  
+  /* Ensure screen reader only content is properly hidden */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+  
   /* Typography System from Design System */
   h1 {
     @apply text-4xl font-semibold tracking-tight;

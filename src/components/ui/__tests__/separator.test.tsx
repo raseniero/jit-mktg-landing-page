@@ -183,6 +183,38 @@ describe('Separator Component', () => {
     });
   });
 
+  describe('Semantic Separator', () => {
+    it('can be semantic with decorative false', () => {
+      render(<Separator decorative={false} data-testid="separator" />);
+      const separator = screen.getByTestId('separator');
+      expect(separator).toHaveAttribute('role', 'separator');
+    });
+
+    it('supports label for semantic separators', () => {
+      render(
+        <Separator 
+          decorative={false} 
+          label="Content separator" 
+          data-testid="separator" 
+        />
+      );
+      const separator = screen.getByTestId('separator');
+      expect(separator).toHaveAttribute('aria-label', 'Content separator');
+    });
+
+    it('ignores label when decorative', () => {
+      render(
+        <Separator 
+          decorative={true} 
+          label="Should be ignored" 
+          data-testid="separator" 
+        />
+      );
+      const separator = screen.getByTestId('separator');
+      expect(separator).not.toHaveAttribute('aria-label');
+    });
+  });
+
   describe('Edge Cases', () => {
     it('renders correctly with no props', () => {
       render(<Separator />);
