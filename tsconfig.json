@@ -37,6 +37,8 @@
     "next.config.js"
   ],
   "exclude": [
-    "node_modules", "supabase"
+    "node_modules", 
+    "supabase",
+    "ai_docs"
   ]
 }

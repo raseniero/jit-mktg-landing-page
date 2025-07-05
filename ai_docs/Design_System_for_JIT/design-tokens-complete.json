@@ -1,0 +1,437 @@
+{
+  "color": {
+    "primary": {
+      "value": "#4f46e5",
+      "type": "color",
+      "description": "Primary brand color used for buttons, links, and key UI elements"
+    },
+    "primary-foreground": {
+      "value": "#ffffff",
+      "type": "color",
+      "description": "Text color on primary backgrounds"
+    },
+    "secondary": {
+      "value": "#f9fafb",
+      "type": "color",
+      "description": "Secondary background color for subtle emphasis"
+    },
+    "secondary-foreground": {
+      "value": "#1f2937",
+      "type": "color",
+      "description": "Text color on secondary backgrounds"
+    },
+    "muted": {
+      "value": "#f3f4f6",
+      "type": "color",
+      "description": "Muted background color for cards and sections"
+    },
+    "muted-foreground": {
+      "value": "#6b7280",
+      "type": "color",
+      "description": "Muted text color for descriptions and labels"
+    },
+    "accent": {
+      "value": "#f3f4f6",
+      "type": "color",
+      "description": "Accent color for hover states and highlights"
+    },
+    "accent-foreground": {
+      "value": "#1f2937",
+      "type": "color",
+      "description": "Text color on accent backgrounds"
+    },
+    "destructive": {
+      "value": "#dc2626",
+      "type": "color",
+      "description": "Error and destructive action color"
+    },
+    "destructive-foreground": {
+      "value": "#ffffff",
+      "type": "color",
+      "description": "Text color on destructive backgrounds"
+    },
+    "border": {
+      "value": "#e5e7eb",
+      "type": "color",
+      "description": "Default border color"
+    },
+    "input": {
+      "value": "#f9fafb",
+      "type": "color",
+      "description": "Input field background color"
+    },
+    "ring": {
+      "value": "#4f46e5",
+      "type": "color",
+      "description": "Focus ring color"
+    },
+    "background": {
+      "value": "#ffffff",
+      "type": "color",
+      "description": "Page background color"
+    },
+    "foreground": {
+      "value": "#1f2937",
+      "type": "color",
+      "description": "Primary text color"
+    },
+    "chart": {
+      "1": {
+        "value": "#4f46e5",
+        "type": "color",
+        "description": "Chart color 1"
+      },
+      "2": {
+        "value": "#06b6d4",
+        "type": "color",
+        "description": "Chart color 2"
+      },
+      "3": {
+        "value": "#10b981",
+        "type": "color",
+        "description": "Chart color 3"
+      },
+      "4": {
+        "value": "#f59e0b",
+        "type": "color",
+        "description": "Chart color 4"
+      },
+      "5": {
+        "value": "#ef4444",
+        "type": "color",
+        "description": "Chart color 5"
+      }
+    }
+  },
+  "typography": {
+    "font-family": {
+      "sans": {
+        "value": "Inter, system-ui, -apple-system, sans-serif",
+        "type": "fontFamily",
+        "description": "Primary font family"
+      }
+    },
+    "font-size": {
+      "xs": {
+        "value": "12px",
+        "type": "fontSize",
+        "description": "Extra small text"
+      },
+      "sm": {
+        "value": "14px",
+        "type": "fontSize",
+        "description": "Small text, labels"
+      },
+      "base": {
+        "value": "16px",
+        "type": "fontSize",
+        "description": "Base font size, body text"
+      },
+      "lg": {
+        "value": "18px",
+        "type": "fontSize",
+        "description": "Large text"
+      },
+      "xl": {
+        "value": "20px",
+        "type": "fontSize",
+        "description": "Extra large text"
+      },
+      "2xl": {
+        "value": "24px",
+        "type": "fontSize",
+        "description": "Heading 3"
+      },
+      "3xl": {
+        "value": "32px",
+        "type": "fontSize",
+        "description": "Heading 2"
+      },
+      "4xl": {
+        "value": "40px",
+        "type": "fontSize",
+        "description": "Heading 1, Display"
+      }
+    },
+    "font-weight": {
+      "normal": {
+        "value": "400",
+        "type": "fontWeight",
+        "description": "Normal weight"
+      },
+      "medium": {
+        "value": "500",
+        "type": "fontWeight",
+        "description": "Medium weight"
+      },
+      "semibold": {
+        "value": "600",
+        "type": "fontWeight",
+        "description": "Semibold weight"
+      },
+      "bold": {
+        "value": "700",
+        "type": "fontWeight",
+        "description": "Bold weight"
+      }
+    },
+    "line-height": {
+      "tight": {
+        "value": "1.2",
+        "type": "lineHeight",
+        "description": "Tight line height for headings"
+      },
+      "snug": {
+        "value": "1.3",
+        "type": "lineHeight",
+        "description": "Snug line height"
+      },
+      "normal": {
+        "value": "1.4",
+        "type": "lineHeight",
+        "description": "Normal line height"
+      },
+      "relaxed": {
+        "value": "1.5",
+        "type": "lineHeight",
+        "description": "Relaxed line height"
+      },
+      "loose": {
+        "value": "1.6",
+        "type": "lineHeight",
+        "description": "Loose line height for body text"
+      }
+    },
+    "letter-spacing": {
+      "tight": {
+        "value": "-0.025em",
+        "type": "letterSpacing",
+        "description": "Tight letter spacing for headings"
+      },
+      "normal": {
+        "value": "0",
+        "type": "letterSpacing",
+        "description": "Normal letter spacing"
+      },
+      "wide": {
+        "value": "0.025em",
+        "type": "letterSpacing",
+        "description": "Wide letter spacing"
+      }
+    }
+  },
+  "spacing": {
+    "xs": {
+      "value": "4px",
+      "type": "spacing",
+      "description": "Extra small spacing"
+    },
+    "sm": {
+      "value": "8px",
+      "type": "spacing",
+      "description": "Small spacing"
+    },
+    "md": {
+      "value": "16px",
+      "type": "spacing",
+      "description": "Medium spacing"
+    },
+    "lg": {
+      "value": "24px",
+      "type": "spacing",
+      "description": "Large spacing"
+    },
+    "xl": {
+      "value": "32px",
+      "type": "spacing",
+      "description": "Extra large spacing"
+    },
+    "2xl": {
+      "value": "48px",
+      "type": "spacing",
+      "description": "2x large spacing"
+    },
+    "3xl": {
+      "value": "64px",
+      "type": "spacing",
+      "description": "3x large spacing"
+    },
+    "4xl": {
+      "value": "96px",
+      "type": "spacing",
+      "description": "4x large spacing"
+    }
+  },
+  "border-radius": {
+    "none": {
+      "value": "0",
+      "type": "borderRadius",
+      "description": "No border radius"
+    },
+    "sm": {
+      "value": "4px",
+      "type": "borderRadius",
+      "description": "Small border radius"
+    },
+    "md": {
+      "value": "6px",
+      "type": "borderRadius",
+      "description": "Medium border radius"
+    },
+    "lg": {
+      "value": "8px",
+      "type": "borderRadius",
+      "description": "Large border radius"
+    },
+    "xl": {
+      "value": "12px",
+      "type": "borderRadius",
+      "description": "Extra large border radius"
+    },
+    "2xl": {
+      "value": "16px",
+      "type": "borderRadius",
+      "description": "2x large border radius"
+    },
+    "full": {
+      "value": "50%",
+      "type": "borderRadius",
+      "description": "Full border radius (circular)"
+    }
+  },
+  "border-width": {
+    "0": {
+      "value": "0px",
+      "type": "borderWidth",
+      "description": "No border"
+    },
+    "1": {
+      "value": "1px",
+      "type": "borderWidth",
+      "description": "Default border width"
+    },
+    "2": {
+      "value": "2px",
+      "type": "borderWidth",
+      "description": "Thick border"
+    },
+    "4": {
+      "value": "4px",
+      "type": "borderWidth",
+      "description": "Extra thick border"
+    }
+  },
+  "shadow": {
+    "sm": {
+      "value": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+      "type": "boxShadow",
+      "description": "Small shadow"
+    },
+    "md": {
+      "value": "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
+      "type": "boxShadow",
+      "description": "Medium shadow"
+    },
+    "lg": {
+      "value": "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+      "type": "boxShadow",
+      "description": "Large shadow"
+    },
+    "xl": {
+      "value": "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+      "type": "boxShadow",
+      "description": "Extra large shadow"
+    }
+  },
+  "component": {
+    "button": {
+      "height": {
+        "sm": {
+          "value": "32px",
+          "type": "sizing",
+          "description": "Small button height"
+        },
+        "md": {
+          "value": "36px",
+          "type": "sizing",
+          "description": "Default button height"
+        },
+        "lg": {
+          "value": "40px",
+          "type": "sizing",
+          "description": "Large button height"
+        }
+      },
+      "padding": {
+        "sm": {
+          "value": "12px",
+          "type": "spacing",
+          "description": "Small button horizontal padding"
+        },
+        "md": {
+          "value": "16px",
+          "type": "spacing",
+          "description": "Default button horizontal padding"
+        },
+        "lg": {
+          "value": "24px",
+          "type": "spacing",
+          "description": "Large button horizontal padding"
+        }
+      }
+    },
+    "card": {
+      "padding": {
+        "value": "24px",
+        "type": "spacing",
+        "description": "Default card padding"
+      },
+      "border-radius": {
+        "value": "8px",
+        "type": "borderRadius",
+        "description": "Card border radius"
+      }
+    },
+    "input": {
+      "height": {
+        "value": "36px",
+        "type": "sizing",
+        "description": "Input field height"
+      },
+      "padding": {
+        "value": "8px 12px",
+        "type": "spacing",
+        "description": "Input field padding"
+      },
+      "border-radius": {
+        "value": "6px",
+        "type": "borderRadius",
+        "description": "Input field border radius"
+      }
+    },
+    "avatar": {
+      "size": {
+        "sm": {
+          "value": "32px",
+          "type": "sizing",
+          "description": "Small avatar size"
+        },
+        "md": {
+          "value": "40px",
+          "type": "sizing",
+          "description": "Default avatar size"
+        },
+        "lg": {
+          "value": "48px",
+          "type": "sizing",
+          "description": "Large avatar size"
+        },
+        "xl": {
+          "value": "64px",
+          "type": "sizing",
+          "description": "Extra large avatar size"
+        }
+      }
+    }
+  }
+}
