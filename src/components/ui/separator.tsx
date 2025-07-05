@@ -24,6 +24,7 @@ const Separator = React.forwardRef<
       data-slot="separator"
       decorative={decorative}
       orientation={orientation}
+      role={!decorative ? "separator" : undefined}
       aria-label={!decorative && label ? label : undefined}
       className={cn(
         "shrink-0 bg-border",
