@@ -92,7 +92,7 @@ describe('Input Component', () => {
     it('has proper focus styling', () => {
       render(<Input />);
       const input = screen.getByRole('textbox');
-      expect(input).toHaveClass('focus-visible:border-ring', 'focus-visible:ring-ring/50', 'focus-visible:ring-[3px]');
+      expect(input).toHaveClass('focus-visible:border-ring', 'focus-visible:ring-ring', 'focus-visible:ring-[3px]', 'focus-visible:ring-offset-1');
     });
 
     it('has proper disabled styling', () => {

@@ -159,14 +159,34 @@ describe('Alert Component', () => {
       expect(screen.getByRole('alert')).toBeInTheDocument();
     });
 
-    it('supports aria-live attribute', () => {
+    it('has default aria-live polite', () => {
       render(
-        <Alert aria-live="assertive">
+        <Alert>
+          <AlertDescription>Normal alert</AlertDescription>
+        </Alert>
+      );
+      const alert = screen.getByRole('alert');
+      expect(alert).toHaveAttribute('aria-live', 'polite');
+    });
+
+    it('supports custom aria-live attribute', () => {
+      render(
+        <Alert live="assertive">
           <AlertDescription>Urgent alert</AlertDescription>
         </Alert>
       );
       const alert = screen.getByRole('alert');
       expect(alert).toHaveAttribute('aria-live', 'assertive');
+    });
+
+    it('has aria-atomic attribute', () => {
+      render(
+        <Alert>
+          <AlertDescription>Alert message</AlertDescription>
+        </Alert>
+      );
+      const alert = screen.getByRole('alert');
+      expect(alert).toHaveAttribute('aria-atomic', 'true');
     });
 
     it('can be labelled by AlertTitle', () => {

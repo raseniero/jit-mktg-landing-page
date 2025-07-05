@@ -59,7 +59,7 @@ describe('Textarea Component', () => {
     it('has proper focus styling', () => {
       render(<Textarea />);
       const textarea = screen.getByRole('textbox');
-      expect(textarea).toHaveClass('focus-visible:border-ring', 'focus-visible:ring-ring/50', 'focus-visible:ring-[3px]');
+      expect(textarea).toHaveClass('focus-visible:border-ring', 'focus-visible:ring-ring', 'focus-visible:ring-[3px]', 'focus-visible:ring-offset-1');
     });
 
     it('has proper disabled styling', () => {
@@ -259,6 +259,46 @@ describe('Textarea Component', () => {
       const textarea = screen.getByRole('textbox');
       expect(textarea).toHaveAttribute('data-testid', 'custom-textarea');
       expect(textarea).toHaveAttribute('data-foo', 'bar');
+    });
+  });
+
+  describe('Character Count', () => {
+    it('shows character count when showCount and maxLength are provided', () => {
+      render(<Textarea showCount maxLength={100} />);
+      expect(screen.getByText('/100')).toBeInTheDocument();
+    });
+
+    it('updates character count on input', async () => {
+      const user = userEvent.setup();
+      render(<Textarea showCount maxLength={100} />);
+      
+      const textarea = screen.getByRole('textbox');
+      await user.type(textarea, 'Hello');
+      
+      expect(screen.getByText('5')).toBeInTheDocument();
+    });
+
+    it('shows warning color when approaching limit', async () => {
+      const user = userEvent.setup();
+      render(<Textarea showCount maxLength={10} />);
+      
+      const textarea = screen.getByRole('textbox');
+      await user.type(textarea, '123456789'); // 90% of limit
+      
+      const count = screen.getByText('9');
+      expect(count.parentElement).toHaveTextContent('9/10');
+    });
+
+    it('announces count changes for screen readers', () => {
+      render(<Textarea showCount maxLength={100} />);
+      const countDiv = screen.getByText('0').parentElement;
+      expect(countDiv).toHaveAttribute('aria-live', 'polite');
+      expect(countDiv).toHaveAttribute('aria-atomic', 'true');
+    });
+
+    it('does not show count without showCount prop', () => {
+      render(<Textarea maxLength={100} />);
+      expect(screen.queryByText('/100')).not.toBeInTheDocument();
     });
   });
 });

@@ -25,15 +25,39 @@ const badgeVariants = cva(
 
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> {}
+    VariantProps<typeof badgeVariants> {
+  /** Accessible label for the badge (for screen readers) */
+  "aria-label"?: string;
+  /** Whether this badge represents a count or status */
+  type?: "status" | "count" | "label";
+}
 
-function Badge({ className, variant, ...props }: BadgeProps) {
+function Badge({ className, variant, type = "label", children, ...props }: BadgeProps) {
+  // Add screen reader context based on badge type
+  const getAriaLabel = () => {
+    if (props["aria-label"]) return props["aria-label"];
+    
+    if (type === "count" && typeof children === "number") {
+      return `${children} items`;
+    }
+    
+    if (type === "status") {
+      return `Status: ${children}`;
+    }
+    
+    return undefined;
+  };
+
   return (
     <div 
       data-slot="badge"
+      role={type === "status" ? "status" : undefined}
+      aria-label={getAriaLabel()}
       className={cn(badgeVariants({ variant }), className)} 
-      {...props} 
-    />
+      {...props}
+    >
+      {children}
+    </div>
   );
 }
 

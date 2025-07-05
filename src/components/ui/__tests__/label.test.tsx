@@ -214,4 +214,38 @@ describe('Label Component', () => {
       expect(label).toHaveAttribute('data-field', 'email');
     });
   });
+
+  describe('Required Field Indicator', () => {
+    it('shows asterisk when required', () => {
+      render(<Label required>Name</Label>);
+      const asterisk = screen.getByLabelText('required');
+      expect(asterisk).toBeInTheDocument();
+      expect(asterisk).toHaveTextContent('*');
+    });
+
+    it('does not show asterisk when not required', () => {
+      render(<Label>Name</Label>);
+      expect(screen.queryByLabelText('required')).not.toBeInTheDocument();
+    });
+
+    it('applies destructive color to asterisk', () => {
+      render(<Label required>Name</Label>);
+      const asterisk = screen.getByLabelText('required');
+      expect(asterisk).toHaveClass('text-destructive');
+    });
+  });
+
+  describe('Screen Reader Only', () => {
+    it('applies sr-only class when srOnly is true', () => {
+      render(<Label srOnly>Screen reader text</Label>);
+      const label = screen.getByText('Screen reader text');
+      expect(label).toHaveClass('sr-only');
+    });
+
+    it('does not apply sr-only class by default', () => {
+      render(<Label>Visible text</Label>);
+      const label = screen.getByText('Visible text');
+      expect(label).not.toHaveClass('sr-only');
+    });
+  });
 });
