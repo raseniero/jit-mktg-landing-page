@@ -60,7 +60,7 @@ The project follows Test-Driven Development (TDD) principles:
 
 **Design System Integration**: 
 - Components migrated from `ai_docs/Design_System_for_JIT/`
-- Enhanced Button, Card, and Navigation Menu components
+- Enhanced Button, Card, Navigation Menu, and Dialog components
 - Data-slot attributes for component identification
 - Container query support in select components
 
@@ -112,7 +112,8 @@ All server-side operations use Next.js server actions in `src/app/actions.ts`:
 **Design System Migration**:
 - Components are being migrated from `ai_docs/Design_System_for_JIT/`
 - Each component requires: tests, examples, dark mode support, accessibility
-- Follow existing patterns in Button, Card, and Navigation Menu components
+- Follow existing patterns in Button, Card, Navigation Menu, and Dialog components
+- Completed Phase 2 components: Button (Task #5), Card (Task #6), Navigation Menu (Task #7), Dialog (Task #8)
 
 ### Path Aliases
 

@@ -3,496 +3,173 @@
     "tasks": [
       {
         "id": 1,
-        "title": "Install and Configure Design System Dependencies",
-        "description": "Install all required dependencies for the shadcn/ui components including lucide-react icons and other necessary packages.",
-        "details": "Run the following commands to install dependencies:\n\n```bash\nnpm install lucide-react @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-slot @radix-ui/react-accordion @radix-ui/react-tabs @radix-ui/react-navigation-menu class-variance-authority clsx tailwind-merge\n```\n\nEnsure all peer dependencies are properly installed and compatible with Next.js 14. Update package.json with the correct versions and run npm install to verify all dependencies are properly resolved.",
-        "testStrategy": "Verify all packages are correctly installed by checking package.json and node_modules. Run the application to ensure no console errors related to missing dependencies appear.",
+        "title": "Install UI Component Dependencies",
+        "description": "Install all necessary UI component dependencies for the design system.",
+        "details": "Use npm or yarn to install shadcn/ui components and lucide-react icons. Ensure all dependencies are listed in package.json.",
+        "testStrategy": "Verify that all dependencies are correctly installed by running the application and checking for missing modules.",
         "priority": "high",
         "dependencies": [],
-        "status": "pending",
+        "status": "done",
         "subtasks": []
       },
       {
         "id": 2,
-        "title": "Configure Tailwind CSS for Design System",
-        "description": "Update Tailwind configuration to support the new design tokens and ensure proper integration with the design system.",
-        "details": "Modify tailwind.config.js to include the new design tokens:\n\n```javascript\nmodule.exports = {\n  darkMode: ['class'],\n  content: [\n    './pages/**/*.{js,ts,jsx,tsx}',\n    './components/**/*.{js,ts,jsx,tsx}',\n    './app/**/*.{js,ts,jsx,tsx}',\n    './src/**/*.{js,ts,jsx,tsx}',\n  ],\n  theme: {\n    container: {\n      center: true,\n      padding: '2rem',\n      screens: {\n        '2xl': '1400px',\n      },\n    },\n    extend: {\n      colors: {\n        // Import colors from design-tokens-complete.json\n        primary: {\n          DEFAULT: '#4F46E5',\n          // Add all primary color variations\n        },\n        // Add all other color tokens\n      },\n      fontFamily: {\n        sans: ['Inter', 'sans-serif'],\n      },\n      spacing: {\n        // Add spacing tokens from xs (4px) to 2xl (48px)\n      },\n      // Add other design tokens as needed\n    },\n  },\n  plugins: [require('tailwindcss-animate')],\n};\n```",
-        "testStrategy": "Verify the Tailwind configuration by building the project and ensuring no configuration errors. Test that the design tokens are properly applied by creating a simple test component that uses the new color and spacing values.",
+        "title": "Configure Global Styles",
+        "description": "Integrate global CSS styles from the new design system.",
+        "details": "Update the global CSS file to include styles from the design system. Preserve existing CSS custom properties for theming and update Tailwind configuration to support new design tokens.",
+        "testStrategy": "Check the application to ensure global styles are applied correctly and theming is consistent.",
         "priority": "high",
         "dependencies": [
           1
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": []
       },
       {
         "id": 3,
-        "title": "Implement Design Tokens from JSON",
-        "description": "Import and implement the complete color palette and other design tokens from design-tokens-complete.json.",
-        "details": "Create a utility function to parse and apply design tokens:\n\n```typescript\n// src/lib/design-tokens.ts\nimport designTokens from 'ai_docs/Design_System_for_JIT/design-tokens-complete.json';\n\nexport const colors = designTokens.colors;\nexport const typography = designTokens.typography;\nexport const spacing = designTokens.spacing;\n\n// Export other token categories as needed\n\n// Helper function to generate CSS variables\nexport function generateCssVariables() {\n  // Implementation to convert tokens to CSS variables\n  // for use in global.css\n}\n```\n\nUpdate global.css to include these variables:\n\n```css\n:root {\n  /* Generated CSS variables from design tokens */\n  --primary: 79 70 229; /* RGB values for #4F46E5 */\n  /* Other variables */\n}\n\n.dark {\n  /* Dark mode variables */\n}\n```",
-        "testStrategy": "Verify that all design tokens from the JSON file are correctly imported and accessible in the application. Create a simple component that uses these tokens and visually verify the correct colors, typography, and spacing are applied.",
+        "title": "Setup Design Tokens",
+        "description": "Implement color palette, typography, and spacing tokens from the design system.",
+        "details": "Use the design-tokens-complete.json to configure color, typography, and spacing tokens. Update Tailwind configuration to reflect these tokens.",
+        "testStrategy": "Verify that the design tokens are applied correctly by inspecting elements in the browser.",
         "priority": "high",
         "dependencies": [
           2
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": []
       },
       {
         "id": 4,
-        "title": "Set Up Global CSS Styles",
-        "description": "Integrate the new design system's global CSS styles while preserving existing CSS custom properties for theming.",
-        "details": "Update the global.css file to include the design system styles:\n\n```css\n@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\n/* Import Inter font */\n@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');\n\n:root {\n  /* Preserve existing custom properties */\n  /* Add new design system properties */\n  --background: 0 0% 100%;\n  --foreground: 222.2 84% 4.9%;\n  \n  --card: 0 0% 100%;\n  --card-foreground: 222.2 84% 4.9%;\n  \n  --popover: 0 0% 100%;\n  --popover-foreground: 222.2 84% 4.9%;\n  \n  --primary: 79 70 229; /* #4F46E5 */\n  --primary-foreground: 210 40% 98%;\n  \n  /* Add all other color tokens */\n  \n  --radius: 0.5rem;\n}\n\n.dark {\n  /* Dark mode variables */\n  --background: 222.2 84% 4.9%;\n  --foreground: 210 40% 98%;\n  \n  /* Add all other dark mode color tokens */\n}\n\n@layer base {\n  * {\n    @apply border-border;\n  }\n  body {\n    @apply bg-background text-foreground font-sans;\n  }\n  /* Typography styles */\n  h1 {\n    @apply text-4xl font-bold md:text-5xl;\n  }\n  /* Add other global styles */\n}\n```",
-        "testStrategy": "Verify the global styles are correctly applied by checking the rendered output of basic HTML elements. Ensure that both light and dark mode styles are working correctly. Test that existing custom properties are preserved by checking components that rely on them.",
-        "priority": "high",
+        "title": "Migrate Base UI Components",
+        "description": "Copy and configure remaining Phase 2 base UI components from the design system.",
+        "status": "pending",
         "dependencies": [
           3
         ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 5,
-        "title": "Copy shadcn/ui Components to Project",
-        "description": "Copy all shadcn/ui components from the design system to src/components/ui/ directory ensuring proper TypeScript types and imports.",
-        "details": "Create a script to copy all components from the design system to the project:\n\n```typescript\n// scripts/copy-components.ts\nimport fs from 'fs-extra';\nimport path from 'path';\n\nconst sourceDir = 'ai_docs/Design_System_for_JIT/components';\nconst targetDir = 'src/components/ui';\n\n// Ensure target directory exists\nfs.ensureDirSync(targetDir);\n\n// Copy all components\nfs.copySync(sourceDir, targetDir, {\n  overwrite: true,\n  filter: (src) => {\n    // Add any filtering logic if needed\n    return true;\n  },\n});\n\nconsole.log('Components copied successfully!');\n```\n\nRun this script or manually copy the components. Ensure all components have proper imports and TypeScript types. Update any import paths to use the project's path aliases (@/components, @/lib/utils).",
-        "testStrategy": "Verify all components are correctly copied by checking the src/components/ui directory. Ensure TypeScript types are correct by running npm run type-check. Test a few basic components to ensure they render correctly.",
         "priority": "high",
-        "dependencies": [
-          4
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 6,
-        "title": "Create Component Library Index",
-        "description": "Create an index file for all UI components to simplify imports and ensure consistent usage across the application.",
-        "details": "Create an index.ts file in the src/components/ui directory that exports all components:\n\n```typescript\n// src/components/ui/index.ts\n\n// Re-export all components\nexport * from './accordion';\nexport * from './alert';\nexport * from './avatar';\nexport * from './badge';\nexport * from './button';\nexport * from './card';\nexport * from './checkbox';\nexport * from './dialog';\nexport * from './dropdown-menu';\n// Add all other component exports\n\n// Also export any utility functions\nexport * from './utils';\n```\n\nThis will allow importing multiple components from a single import statement:\n\n```typescript\nimport { Button, Card, Dialog } from '@/components/ui';\n```",
-        "testStrategy": "Verify the index file correctly exports all components by importing them in a test file. Ensure that the components can be used with the simplified import syntax. Check for any TypeScript errors related to the exports.",
-        "priority": "medium",
-        "dependencies": [
-          5
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 7,
-        "title": "Apply JIT Branding to UI Components",
-        "description": "Update the styling of all UI components to match JIT branding using the design tokens.",
-        "details": "For each component in src/components/ui, update the styling to use JIT branding colors and design tokens. For example, for the Button component:\n\n```typescript\n// src/components/ui/button.tsx\nimport { cva } from 'class-variance-authority';\n\nconst buttonVariants = cva(\n  'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background',\n  {\n    variants: {\n      variant: {\n        default: 'bg-primary text-primary-foreground hover:bg-primary/90',\n        destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',\n        outline: 'border border-input hover:bg-accent hover:text-accent-foreground',\n        secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',\n        ghost: 'hover:bg-accent hover:text-accent-foreground',\n        link: 'underline-offset-4 hover:underline text-primary',\n      },\n      size: {\n        default: 'h-10 py-2 px-4',\n        sm: 'h-9 px-3 rounded-md',\n        lg: 'h-11 px-8 rounded-md',\n      },\n    },\n    defaultVariants: {\n      variant: 'default',\n      size: 'default',\n    },\n  }\n);\n\n// Rest of the component implementation\n```\n\nRepeat this process for all components, ensuring consistent use of design tokens and JIT branding.",
-        "testStrategy": "Create a component showcase page that displays all UI components with different variants and states. Visually verify that all components match the JIT branding. Test dark mode compatibility by toggling between light and dark themes.",
-        "priority": "high",
-        "dependencies": [
-          6,
-          3
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 8,
-        "title": "Implement Dark Mode Support",
-        "description": "Ensure all components support dark mode and implement a theme toggle functionality.",
-        "details": "Create a theme provider component that manages dark mode:\n\n```typescript\n// src/components/theme-provider.tsx\n'use client';\n\nimport { createContext, useContext, useEffect, useState } from 'react';\n\ntype Theme = 'dark' | 'light' | 'system';\n\ntype ThemeProviderProps = {\n  children: React.ReactNode;\n  defaultTheme?: Theme;\n};\n\ntype ThemeProviderState = {\n  theme: Theme;\n  setTheme: (theme: Theme) => void;\n};\n\nconst ThemeProviderContext = createContext<ThemeProviderState | undefined>(undefined);\n\nexport function ThemeProvider({\n  children,\n  defaultTheme = 'system',\n  ...props\n}: ThemeProviderProps) {\n  const [theme, setTheme] = useState<Theme>(defaultTheme);\n\n  useEffect(() => {\n    const root = window.document.documentElement;\n    root.classList.remove('light', 'dark');\n\n    if (theme === 'system') {\n      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')\n        .matches\n        ? 'dark'\n        : 'light';\n      root.classList.add(systemTheme);\n      return;\n    }\n\n    root.classList.add(theme);\n  }, [theme]);\n\n  const value = {\n    theme,\n    setTheme,\n  };\n\n  return (\n    <ThemeProviderContext.Provider {...props} value={value}>\n      {children}\n    </ThemeProviderContext.Provider>\n  );\n}\n\nexport const useTheme = () => {\n  const context = useContext(ThemeProviderContext);\n  if (context === undefined) {\n    throw new Error('useTheme must be used within a ThemeProvider');\n  }\n  return context;\n};\n```\n\nCreate a theme toggle component:\n\n```typescript\n// src/components/theme-toggle.tsx\n'use client';\n\nimport { Moon, Sun } from 'lucide-react';\nimport { useTheme } from '@/components/theme-provider';\nimport { Button } from '@/components/ui/button';\n\nexport function ThemeToggle() {\n  const { theme, setTheme } = useTheme();\n\n  return (\n    <Button\n      variant=\"ghost\"\n      size=\"icon\"\n      onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}\n    >\n      {theme === 'light' ? <Moon className=\"h-5 w-5\" /> : <Sun className=\"h-5 w-5\" />}\n      <span className=\"sr-only\">Toggle theme</span>\n    </Button>\n  );\n}\n```\n\nAdd the ThemeProvider to the root layout:\n\n```tsx\n// src/app/layout.tsx\nimport { ThemeProvider } from '@/components/theme-provider';\n\nexport default function RootLayout({ children }) {\n  return (\n    <html lang=\"en\" suppressHydrationWarning>\n      <body>\n        <ThemeProvider>\n          {children}\n        </ThemeProvider>\n      </body>\n    </html>\n  );\n}\n```",
-        "testStrategy": "Test dark mode by toggling between light and dark themes and verifying all components render correctly in both modes. Test system preference detection by changing the system theme. Verify that the theme persists across page refreshes using local storage.",
-        "priority": "medium",
-        "dependencies": [
-          7
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 9,
-        "title": "Implement Accessibility Standards",
-        "description": "Ensure all components meet WCAG 2.1 AA accessibility standards including proper contrast, keyboard navigation, and screen reader support.",
-        "details": "For each component, implement the following accessibility features:\n\n1. Ensure proper color contrast (minimum 4.5:1 for normal text, 3:1 for large text)\n2. Add proper ARIA attributes\n3. Implement keyboard navigation\n4. Ensure screen reader compatibility\n\nExample for Button component:\n\n```typescript\n// src/components/ui/button.tsx\nimport { forwardRef } from 'react';\nimport { Slot } from '@radix-ui/react-slot';\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport { cn } from '@/lib/utils';\n\n// Button variants definition\n\ninterface ButtonProps\n  extends React.ButtonHTMLAttributes<HTMLButtonElement>,\n    VariantProps<typeof buttonVariants> {\n  asChild?: boolean;\n}\n\nconst Button = forwardRef<HTMLButtonElement, ButtonProps>(\n  ({ className, variant, size, asChild = false, ...props }, ref) => {\n    const Comp = asChild ? Slot : 'button';\n    return (\n      <Comp\n        className={cn(buttonVariants({ variant, size, className }))}\n        ref={ref}\n        {...props}\n      />\n    );\n  }\n);\nButton.displayName = 'Button';\n\nexport { Button, buttonVariants };\n```\n\nImplement focus styles for all interactive elements:\n\n```css\n@layer base {\n  :focus-visible {\n    @apply outline-none ring-2 ring-primary ring-offset-2;\n  }\n}\n```\n\nTest all components with keyboard navigation and screen readers.",
-        "testStrategy": "Use accessibility testing tools like axe-core or Lighthouse to verify WCAG 2.1 AA compliance. Test keyboard navigation by ensuring all interactive elements can be accessed and activated using only the keyboard. Test screen reader compatibility using NVDA or VoiceOver.",
-        "priority": "high",
-        "dependencies": [
-          7
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 10,
-        "title": "Create New Header Component",
-        "description": "Replace the current header with the new design system Header component while maintaining all navigation functionality.",
-        "details": "Create a new Header component using the design system:\n\n```tsx\n// src/components/header.tsx\n'use client';\n\nimport { useState } from 'react';\nimport Link from 'next/link';\nimport { usePathname } from 'next/navigation';\nimport { Menu, X } from 'lucide-react';\nimport { Button } from '@/components/ui/button';\nimport { ThemeToggle } from '@/components/theme-toggle';\n\nconst navigation = [\n  { name: 'Home', href: '/' },\n  { name: 'Programs', href: '/programs' },\n  { name: 'About', href: '/about' },\n  { name: 'Contact', href: '/contact' },\n  // Add all existing navigation items\n];\n\nexport function Header() {\n  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);\n  const pathname = usePathname();\n\n  return (\n    <header className=\"bg-background sticky top-0 z-40 w-full border-b\">\n      <nav className=\"mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8\" aria-label=\"Global\">\n        <div className=\"flex lg:flex-1\">\n          <Link href=\"/\" className=\"-m-1.5 p-1.5\">\n            <span className=\"sr-only\">JIT.EDU.PH</span>\n            <img\n              className=\"h-8 w-auto\"\n              src=\"/logo.png\"\n              alt=\"JIT Logo\"\n            />\n          </Link>\n        </div>\n        <div className=\"flex lg:hidden\">\n          <Button\n            variant=\"ghost\"\n            size=\"icon\"\n            onClick={() => setMobileMenuOpen(true)}\n          >\n            <span className=\"sr-only\">Open main menu</span>\n            <Menu className=\"h-6 w-6\" aria-hidden=\"true\" />\n          </Button>\n        </div>\n        <div className=\"hidden lg:flex lg:gap-x-12\">\n          {navigation.map((item) => (\n            <Link\n              key={item.name}\n              href={item.href}\n              className={`text-sm font-semibold leading-6 ${pathname === item.href ? 'text-primary' : 'text-foreground hover:text-primary'}`}\n            >\n              {item.name}\n            </Link>\n          ))}\n        </div>\n        <div className=\"hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4\">\n          <ThemeToggle />\n          <Button asChild>\n            <Link href=\"/contact\">Get Started</Link>\n          </Button>\n        </div>\n      </nav>\n      \n      {/* Mobile menu */}\n      {mobileMenuOpen && (\n        <div className=\"lg:hidden\">\n          <div className=\"fixed inset-0 z-50\" />\n          <div className=\"fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-background px-6 py-6 sm:max-w-sm\">\n            <div className=\"flex items-center justify-between\">\n              <Link href=\"/\" className=\"-m-1.5 p-1.5\">\n                <span className=\"sr-only\">JIT.EDU.PH</span>\n                <img\n                  className=\"h-8 w-auto\"\n                  src=\"/logo.png\"\n                  alt=\"JIT Logo\"\n                />\n              </Link>\n              <Button\n                variant=\"ghost\"\n                size=\"icon\"\n                onClick={() => setMobileMenuOpen(false)}\n              >\n                <span className=\"sr-only\">Close menu</span>\n                <X className=\"h-6 w-6\" aria-hidden=\"true\" />\n              </Button>\n            </div>\n            <div className=\"mt-6 flow-root\">\n              <div className=\"-my-6 divide-y divide-gray-200\">\n                <div className=\"space-y-2 py-6\">\n                  {navigation.map((item) => (\n                    <Link\n                      key={item.name}\n                      href={item.href}\n                      className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 ${pathname === item.href ? 'text-primary' : 'text-foreground hover:text-primary'}`}\n                      onClick={() => setMobileMenuOpen(false)}\n                    >\n                      {item.name}\n                    </Link>\n                  ))}\n                </div>\n                <div className=\"py-6\">\n                  <Button className=\"w-full\" asChild>\n                    <Link href=\"/contact\">Get Started</Link>\n                  </Button>\n                  <div className=\"mt-4 flex justify-center\">\n                    <ThemeToggle />\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      )}\n    </header>\n  );\n}\n```\n\nReplace the existing header in the layout:\n\n```tsx\n// src/app/layout.tsx\nimport { Header } from '@/components/header';\n\nexport default function RootLayout({ children }) {\n  return (\n    <html lang=\"en\" suppressHydrationWarning>\n      <body>\n        <ThemeProvider>\n          <Header />\n          <main>{children}</main>\n          <Footer />\n        </ThemeProvider>\n      </body>\n    </html>\n  );\n}\n```",
-        "testStrategy": "Test the header component by verifying all navigation links work correctly. Test mobile menu functionality by resizing the browser window and clicking the menu button. Verify that the active page is correctly highlighted. Test keyboard navigation and ensure the header is accessible.",
-        "priority": "high",
-        "dependencies": [
-          7,
-          8,
-          9
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 11,
-        "title": "Create New Footer Component",
-        "description": "Replace the current footer with the new design system Footer component while preserving all footer links and contact information.",
-        "details": "Create a new Footer component using the design system:\n\n```tsx\n// src/components/footer.tsx\nimport Link from 'next/link';\nimport { Input } from '@/components/ui/input';\nimport { Button } from '@/components/ui/button';\n\nconst navigation = {\n  main: [\n    { name: 'Home', href: '/' },\n    { name: 'Programs', href: '/programs' },\n    { name: 'About', href: '/about' },\n    { name: 'Contact', href: '/contact' },\n    // Add all existing navigation items\n  ],\n  social: [\n    {\n      name: 'Facebook',\n      href: '#',\n      icon: (props) => (\n        <svg fill=\"currentColor\" viewBox=\"0 0 24 24\" {...props}>\n          <path\n            fillRule=\"evenodd\"\n            d=\"M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z\"\n            clipRule=\"evenodd\"\n          />\n        </svg>\n      ),\n    },\n    // Add all social media links\n  ],\n};\n\nexport function Footer() {\n  return (\n    <footer className=\"bg-background border-t\">\n      <div className=\"mx-auto max-w-7xl overflow-hidden px-6 py-12 sm:py-16 lg:px-8\">\n        <nav className=\"-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12\" aria-label=\"Footer\">\n          {navigation.main.map((item) => (\n            <div key={item.name} className=\"pb-6\">\n              <Link href={item.href} className=\"text-sm leading-6 text-foreground hover:text-primary\">\n                {item.name}\n              </Link>\n            </div>\n          ))}\n        </nav>\n        <div className=\"mt-10 sm:mt-12\">\n          <p className=\"text-center text-xs leading-5 text-muted-foreground\">\n            Subscribe to our newsletter\n          </p>\n          <form className=\"mt-6 sm:mx-auto sm:max-w-xl sm:flex\">\n            <div className=\"min-w-0 flex-1\">\n              <Input\n                type=\"email\"\n                placeholder=\"Enter your email\"\n                required\n              />\n            </div>\n            <div className=\"mt-4 sm:mt-0 sm:ml-4\">\n              <Button type=\"submit\">Subscribe</Button>\n            </div>\n          </form>\n        </div>\n        <div className=\"mt-10 flex justify-center space-x-10\">\n          {navigation.social.map((item) => (\n            <Link key={item.name} href={item.href} className=\"text-muted-foreground hover:text-foreground\">\n              <span className=\"sr-only\">{item.name}</span>\n              <item.icon className=\"h-6 w-6\" aria-hidden=\"true\" />\n            </Link>\n          ))}\n        </div>\n        <p className=\"mt-10 text-center text-xs leading-5 text-muted-foreground\">\n          &copy; {new Date().getFullYear()} JIT.EDU.PH. All rights reserved.\n        </p>\n      </div>\n    </footer>\n  );\n}\n```\n\nReplace the existing footer in the layout:\n\n```tsx\n// src/app/layout.tsx\nimport { Footer } from '@/components/footer';\n\nexport default function RootLayout({ children }) {\n  return (\n    <html lang=\"en\" suppressHydrationWarning>\n      <body>\n        <ThemeProvider>\n          <Header />\n          <main>{children}</main>\n          <Footer />\n        </ThemeProvider>\n      </body>\n    </html>\n  );\n}\n```",
-        "testStrategy": "Test the footer component by verifying all links work correctly. Test the newsletter signup form by submitting a test email. Verify that all social media links are correct. Test the footer in both light and dark modes. Ensure the footer is responsive on mobile devices.",
-        "priority": "high",
-        "dependencies": [
-          7,
-          8,
-          9
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 12,
-        "title": "Create Hero Section Component",
-        "description": "Integrate the new HeroSection component while preserving call-to-action functionality and lead capture integration.",
-        "details": "Create a new HeroSection component using the design system:\n\n```tsx\n// src/components/hero-section.tsx\nimport Link from 'next/link';\nimport { Button } from '@/components/ui/button';\n\nexport function HeroSection() {\n  return (\n    <div className=\"relative isolate overflow-hidden bg-background\">\n      <div className=\"absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80\">\n        <div\n          className=\"relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-primary to-purple-500 opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]\"\n          style={{\n            clipPath:\n              'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',\n          }}\n        />\n      </div>\n      <div className=\"mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 lg:py-40\">\n        <div className=\"mx-auto max-w-2xl text-center\">\n          <h1 className=\"text-4xl font-bold tracking-tight text-foreground sm:text-6xl\">\n            Accelerate Your Tech Career with JIT\n          </h1>\n          <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n            Join our industry-focused training programs and gain the skills you need to succeed in today's tech industry.\n          </p>\n          <div className=\"mt-10 flex items-center justify-center gap-x-6\">\n            <Button asChild size=\"lg\">\n              <Link href=\"/programs\">Explore Programs</Link>\n            </Button>\n            <Button variant=\"outline\" asChild size=\"lg\">\n              <Link href=\"/contact\">Contact Us</Link>\n            </Button>\n          </div>\n        </div>\n      </div>\n      <div className=\"absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]\">\n        <div\n          className=\"relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-primary to-purple-500 opacity-20 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]\"\n          style={{\n            clipPath:\n              'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',\n          }}\n        />\n      </div>\n    </div>\n  );\n}\n```\n\nUpdate the home page to use the new HeroSection:\n\n```tsx\n// src/app/page.tsx\nimport { HeroSection } from '@/components/hero-section';\n\nexport default function Home() {\n  return (\n    <div>\n      <HeroSection />\n      {/* Other sections */}\n    </div>\n  );\n}\n```",
-        "testStrategy": "Test the hero section by verifying all call-to-action buttons work correctly. Verify that the component is responsive on different screen sizes. Test the component in both light and dark modes. Ensure the hero section is accessible to screen readers and keyboard navigation.",
-        "priority": "high",
-        "dependencies": [
-          7,
-          8,
-          9
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 13,
-        "title": "Create Training Programs Component",
-        "description": "Add the new TrainingPrograms component that displays all existing course data and maintains program selection functionality.",
-        "details": "Create a new TrainingPrograms component using the design system:\n\n```tsx\n// src/components/training-programs.tsx\nimport Link from 'next/link';\nimport { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';\nimport { Badge } from '@/components/ui/badge';\nimport { Button } from '@/components/ui/button';\n\ntype Program = {\n  id: string;\n  title: string;\n  description: string;\n  duration: string;\n  level: 'Beginner' | 'Intermediate' | 'Advanced';\n  slug: string;\n};\n\nconst programs: Program[] = [\n  {\n    id: '1',\n    title: 'Web Development Bootcamp',\n    description: 'Learn full-stack web development with modern JavaScript frameworks.',\n    duration: '12 weeks',\n    level: 'Beginner',\n    slug: 'web-development',\n  },\n  // Add all existing programs\n];\n\nexport function TrainingPrograms() {\n  return (\n    <div className=\"bg-background py-24 sm:py-32\">\n      <div className=\"mx-auto max-w-7xl px-6 lg:px-8\">\n        <div className=\"mx-auto max-w-2xl text-center\">\n          <h2 className=\"text-3xl font-bold tracking-tight text-foreground sm:text-4xl\">Our Training Programs</h2>\n          <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n            Choose from our industry-focused training programs designed to help you succeed in today's tech industry.\n          </p>\n        </div>\n        <div className=\"mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3\">\n          {programs.map((program) => (\n            <Card key={program.id} className=\"flex flex-col justify-between\">\n              <CardHeader>\n                <div className=\"flex justify-between items-start\">\n                  <CardTitle className=\"text-xl font-semibold\">{program.title}</CardTitle>\n                  <Badge variant={program.level === 'Beginner' ? 'default' : program.level === 'Intermediate' ? 'secondary' : 'outline'}>\n                    {program.level}\n                  </Badge>\n                </div>\n                <CardDescription className=\"mt-2\">{program.duration}</CardDescription>\n              </CardHeader>\n              <CardContent>\n                <p className=\"text-muted-foreground\">{program.description}</p>\n              </CardContent>\n              <CardFooter>\n                <Button asChild className=\"w-full\">\n                  <Link href={`/programs/${program.slug}`}>Learn More</Link>\n                </Button>\n              </CardFooter>\n            </Card>\n          ))}\n        </div>\n      </div>\n    </div>\n  );\n}\n```\n\nUpdate the home page or programs page to use the new TrainingPrograms component:\n\n```tsx\n// src/app/programs/page.tsx\nimport { TrainingPrograms } from '@/components/training-programs';\n\nexport default function ProgramsPage() {\n  return (\n    <div>\n      <TrainingPrograms />\n    </div>\n  );\n}\n```",
-        "testStrategy": "Test the training programs component by verifying all program cards display correctly. Test the \"Learn More\" buttons to ensure they navigate to the correct program detail pages. Verify that the component is responsive on different screen sizes. Test the component in both light and dark modes.",
-        "priority": "high",
-        "dependencies": [
-          7,
-          8,
-          9
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 14,
-        "title": "Create Training Program Landing Component",
-        "description": "Integrate the TrainingProgramLanding component for displaying detailed information about specific training programs.",
-        "details": "Create a new TrainingProgramLanding component using the design system:\n\n```tsx\n// src/components/training-program-landing.tsx\nimport Link from 'next/link';\nimport { Button } from '@/components/ui/button';\nimport { Badge } from '@/components/ui/badge';\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';\n\ntype ProgramProps = {\n  title: string;\n  description: string;\n  duration: string;\n  level: 'Beginner' | 'Intermediate' | 'Advanced';\n  curriculum: {\n    title: string;\n    description: string;\n  }[];\n  instructors: {\n    name: string;\n    role: string;\n    bio: string;\n    image: string;\n  }[];\n  faqs: {\n    question: string;\n    answer: string;\n  }[];\n};\n\nexport function TrainingProgramLanding({\n  title,\n  description,\n  duration,\n  level,\n  curriculum,\n  instructors,\n  faqs,\n}: ProgramProps) {\n  return (\n    <div className=\"bg-background\">\n      {/* Hero section */}\n      <div className=\"relative isolate overflow-hidden pt-14\">\n        <div className=\"mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8\">\n          <div className=\"mx-auto max-w-2xl text-center\">\n            <Badge className=\"mb-4\">{level}</Badge>\n            <h1 className=\"text-4xl font-bold tracking-tight text-foreground sm:text-6xl\">\n              {title}\n            </h1>\n            <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n              {description}\n            </p>\n            <p className=\"mt-4 text-base font-semibold\">\n              Duration: {duration}\n            </p>\n            <div className=\"mt-10 flex items-center justify-center gap-x-6\">\n              <Button asChild size=\"lg\">\n                <Link href=\"/contact?program=${encodeURIComponent(title)}\">Apply Now</Link>\n              </Button>\n              <Button variant=\"outline\" asChild size=\"lg\">\n                <Link href=\"/programs\">View All Programs</Link>\n              </Button>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      {/* Tabs section */}\n      <div className=\"mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8\">\n        <Tabs defaultValue=\"curriculum\" className=\"w-full\">\n          <TabsList className=\"grid w-full grid-cols-3\">\n            <TabsTrigger value=\"curriculum\">Curriculum</TabsTrigger>\n            <TabsTrigger value=\"instructors\">Instructors</TabsTrigger>\n            <TabsTrigger value=\"faqs\">FAQs</TabsTrigger>\n          </TabsList>\n          <TabsContent value=\"curriculum\" className=\"mt-6\">\n            <div className=\"space-y-8\">\n              {curriculum.map((item, index) => (\n                <div key={index} className=\"border-b pb-6 last:border-0\">\n                  <h3 className=\"text-lg font-semibold\">{item.title}</h3>\n                  <p className=\"mt-2 text-muted-foreground\">{item.description}</p>\n                </div>\n              ))}\n            </div>\n          </TabsContent>\n          <TabsContent value=\"instructors\" className=\"mt-6\">\n            <div className=\"grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3\">\n              {instructors.map((instructor, index) => (\n                <div key={index} className=\"flex flex-col items-center text-center\">\n                  <img\n                    className=\"h-24 w-24 rounded-full object-cover\"\n                    src={instructor.image}\n                    alt={instructor.name}\n                  />\n                  <h3 className=\"mt-4 text-lg font-semibold\">{instructor.name}</h3>\n                  <p className=\"text-sm text-muted-foreground\">{instructor.role}</p>\n                  <p className=\"mt-2 text-sm text-muted-foreground\">{instructor.bio}</p>\n                </div>\n              ))}\n            </div>\n          </TabsContent>\n          <TabsContent value=\"faqs\" className=\"mt-6\">\n            <div className=\"space-y-8\">\n              {faqs.map((faq, index) => (\n                <div key={index} className=\"border-b pb-6 last:border-0\">\n                  <h3 className=\"text-lg font-semibold\">{faq.question}</h3>\n                  <p className=\"mt-2 text-muted-foreground\">{faq.answer}</p>\n                </div>\n              ))}\n            </div>\n          </TabsContent>\n        </Tabs>\n      </div>\n    </div>\n  );\n}\n```",
-        "testStrategy": "Test the training program landing component by verifying all sections (hero, curriculum, instructors, FAQs) display correctly. Test the tabs to ensure they switch content correctly. Test the \"Apply Now\" and \"View All Programs\" buttons. Verify that the component is responsive on different screen sizes. Test the component in both light and dark modes.",
-        "priority": "high",
-        "dependencies": [
-          13
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 15,
-        "title": "Create Web Development Program Page",
-        "description": "Create a specific implementation of the TrainingProgramLanding component for the Web Development Program.",
-        "details": "Create a new page for the Web Development Program:\n\n```tsx\n// src/app/programs/web-development/page.tsx\nimport { TrainingProgramLanding } from '@/components/training-program-landing';\n\nconst webDevelopmentProgram = {\n  title: 'Web Development Bootcamp',\n  description: 'Learn full-stack web development with modern JavaScript frameworks. This comprehensive program covers front-end and back-end technologies to prepare you for a career in web development.',\n  duration: '12 weeks',\n  level: 'Beginner' as const,\n  curriculum: [\n    {\n      title: 'Module 1: HTML & CSS Fundamentals',\n      description: 'Learn the building blocks of the web. Master HTML5 semantic elements and CSS3 styling including flexbox and grid layouts.',\n    },\n    {\n      title: 'Module 2: JavaScript Essentials',\n      description: 'Dive into modern JavaScript (ES6+). Learn variables, functions, objects, arrays, and asynchronous programming with Promises and async/await.',\n    },\n    {\n      title: 'Module 3: React Framework',\n      description: 'Build interactive UIs with React. Learn components, props, state, hooks, and context API for state management.',\n    },\n    {\n      title: 'Module 4: Backend Development with Node.js',\n      description: 'Create server-side applications with Node.js and Express. Learn RESTful API design, middleware, and database integration.',\n    },\n    {\n      title: 'Module 5: Database Integration',\n      description: 'Work with SQL and NoSQL databases. Learn data modeling, queries, and how to integrate databases with your applications.',\n    },\n    {\n      title: 'Module 6: Capstone Project',\n      description: 'Apply everything you've learned to build a full-stack web application from scratch. Deploy your application to the cloud.',\n    },\n  ],\n  instructors: [\n    {\n      name: 'John Doe',\n      role: 'Lead Instructor',\n      bio: '10+ years of experience in web development. Former senior developer at Tech Corp.',\n      image: '/images/instructors/john-doe.jpg',\n    },\n    {\n      name: 'Jane Smith',\n      role: 'Assistant Instructor',\n      bio: 'Full-stack developer specializing in React and Node.js. Open source contributor.',\n      image: '/images/instructors/jane-smith.jpg',\n    },\n  ],\n  faqs: [\n    {\n      question: 'Do I need prior programming experience?',\n      answer: 'No prior experience is required. The program is designed for beginners and starts with the fundamentals.',\n    },\n    {\n      question: 'What equipment do I need?',\n      answer: 'You will need a laptop with at least 8GB RAM and a modern operating system (Windows 10+, macOS, or Linux).',\n    },\n    {\n      question: 'Is there job placement assistance?',\n      answer: 'Yes, we offer career services including resume reviews, interview preparation, and connections with hiring partners.',\n    },\n    {\n      question: 'What is the class schedule?',\n      answer: 'Classes are held Monday through Friday from 9am to 4pm. Additional lab hours are available in the evenings.',\n    },\n  ],\n};\n\nexport default function WebDevelopmentPage() {\n  return <TrainingProgramLanding {...webDevelopmentProgram} />;\n}\n```\n\nEnsure the page is properly linked from the TrainingPrograms component.",
-        "testStrategy": "Test the web development program page by verifying all content displays correctly. Test the tabs to ensure they switch content correctly. Test the \"Apply Now\" and \"View All Programs\" buttons. Verify that the page is accessible from the training programs list. Test the page in both light and dark modes. Verify that the page is responsive on different screen sizes.",
-        "priority": "medium",
-        "dependencies": [
-          14
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 16,
-        "title": "Create Contact Form Component",
-        "description": "Create a contact form component using the design system components to maintain lead capture functionality.",
-        "details": "Create a new ContactForm component using the design system:\n\n```tsx\n// src/components/contact-form.tsx\n'use client';\n\nimport { useState } from 'react';\nimport { useSearchParams } from 'next/navigation';\nimport { z } from 'zod';\nimport { useForm } from 'react-hook-form';\nimport { zodResolver } from '@hookform/resolvers/zod';\nimport { Button } from '@/components/ui/button';\nimport { Input } from '@/components/ui/input';\nimport { Textarea } from '@/components/ui/textarea';\nimport { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';\nimport { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';\nimport { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';\nimport { CheckCircle2 } from 'lucide-react';\n\nconst formSchema = z.object({\n  name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),\n  email: z.string().email({ message: 'Please enter a valid email address.' }),\n  phone: z.string().optional(),\n  program: z.string().optional(),\n  message: z.string().min(10, { message: 'Message must be at least 10 characters.' }),\n});\n\ntype FormValues = z.infer<typeof formSchema>;\n\nexport function ContactForm() {\n  const [isSubmitting, setIsSubmitting] = useState(false);\n  const [isSuccess, setIsSuccess] = useState(false);\n  const [error, setError] = useState<string | null>(null);\n  \n  const searchParams = useSearchParams();\n  const programParam = searchParams.get('program');\n  \n  const form = useForm<FormValues>({\n    resolver: zodResolver(formSchema),\n    defaultValues: {\n      name: '',\n      email: '',\n      phone: '',\n      program: programParam || '',\n      message: '',\n    },\n  });\n\n  async function onSubmit(data: FormValues) {\n    setIsSubmitting(true);\n    setError(null);\n    \n    try {\n      // Replace with your actual form submission logic\n      // For example, using the existing server action\n      // const result = await submitContactForm(data);\n      \n      // Simulate API call\n      await new Promise(resolve => setTimeout(resolve, 1000));\n      \n      setIsSuccess(true);\n      form.reset();\n    } catch (err) {\n      setError('An error occurred. Please try again.');\n      console.error(err);\n    } finally {\n      setIsSubmitting(false);\n    }\n  }\n\n  return (\n    <div className=\"mx-auto max-w-2xl\">\n      {isSuccess ? (\n        <Alert className=\"bg-green-50 border-green-200 dark:bg-green-950 dark:border-green-900\">\n          <CheckCircle2 className=\"h-4 w-4 text-green-600 dark:text-green-400\" />\n          <AlertTitle>Success!</AlertTitle>\n          <AlertDescription>\n            Thank you for your message. We will get back to you shortly.\n          </AlertDescription>\n          <Button\n            variant=\"outline\"\n            className=\"mt-4\"\n            onClick={() => setIsSuccess(false)}\n          >\n            Send another message\n          </Button>\n        </Alert>\n      ) : (\n        <Form {...form}>\n          <form onSubmit={form.handleSubmit(onSubmit)} className=\"space-y-6\">\n            <FormField\n              control={form.control}\n              name=\"name\"\n              render={({ field }) => (\n                <FormItem>\n                  <FormLabel>Name</FormLabel>\n                  <FormControl>\n                    <Input placeholder=\"Your name\" {...field} />\n                  </FormControl>\n                  <FormMessage />\n                </FormItem>\n              )}\n            />\n            \n            <FormField\n              control={form.control}\n              name=\"email\"\n              render={({ field }) => (\n                <FormItem>\n                  <FormLabel>Email</FormLabel>\n                  <FormControl>\n                    <Input placeholder=\"your.email@example.com\" {...field} />\n                  </FormControl>\n                  <FormMessage />\n                </FormItem>\n              )}\n            />\n            \n            <FormField\n              control={form.control}\n              name=\"phone\"\n              render={({ field }) => (\n                <FormItem>\n                  <FormLabel>Phone (optional)</FormLabel>\n                  <FormControl>\n                    <Input placeholder=\"Your phone number\" {...field} />\n                  </FormControl>\n                  <FormMessage />\n                </FormItem>\n              )}\n            />\n            \n            <FormField\n              control={form.control}\n              name=\"program\"\n              render={({ field }) => (\n                <FormItem>\n                  <FormLabel>Program of Interest (optional)</FormLabel>\n                  <Select\n                    onValueChange={field.onChange}\n                    defaultValue={field.value}\n                  >\n                    <FormControl>\n                      <SelectTrigger>\n                        <SelectValue placeholder=\"Select a program\" />\n                      </SelectTrigger>\n                    </FormControl>\n                    <SelectContent>\n                      <SelectItem value=\"\">None</SelectItem>\n                      <SelectItem value=\"web-development\">Web Development Bootcamp</SelectItem>\n                      <SelectItem value=\"data-science\">Data Science Program</SelectItem>\n                      <SelectItem value=\"cybersecurity\">Cybersecurity Training</SelectItem>\n                      {/* Add all available programs */}\n                    </SelectContent>\n                  </Select>\n                  <FormMessage />\n                </FormItem>\n              )}\n            />\n            \n            <FormField\n              control={form.control}\n              name=\"message\"\n              render={({ field }) => (\n                <FormItem>\n                  <FormLabel>Message</FormLabel>\n                  <FormControl>\n                    <Textarea\n                      placeholder=\"How can we help you?\"\n                      className=\"min-h-32\"\n                      {...field}\n                    />\n                  </FormControl>\n                  <FormMessage />\n                </FormItem>\n              )}\n            />\n            \n            {error && (\n              <Alert variant=\"destructive\">\n                <AlertTitle>Error</AlertTitle>\n                <AlertDescription>{error}</AlertDescription>\n              </Alert>\n            )}\n            \n            <Button type=\"submit\" className=\"w-full\" disabled={isSubmitting}>\n              {isSubmitting ? 'Sending...' : 'Send Message'}\n            </Button>\n          </form>\n        </Form>\n      )}\n    </div>\n  );\n}\n```\n\nCreate a contact page that uses this form:\n\n```tsx\n// src/app/contact/page.tsx\nimport { ContactForm } from '@/components/contact-form';\n\nexport default function ContactPage() {\n  return (\n    <div className=\"bg-background py-24 sm:py-32\">\n      <div className=\"mx-auto max-w-7xl px-6 lg:px-8\">\n        <div className=\"mx-auto max-w-2xl text-center\">\n          <h1 className=\"text-3xl font-bold tracking-tight text-foreground sm:text-4xl\">Contact Us</h1>\n          <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n            Have questions about our programs? Get in touch with our team.\n          </p>\n        </div>\n        <div className=\"mx-auto mt-16 max-w-2xl\">\n          <ContactForm />\n        </div>\n      </div>\n    </div>\n  );\n}\n```",
-        "testStrategy": "Test the contact form by filling out all fields and submitting the form. Verify that form validation works correctly for required fields and email format. Test the success state by submitting a valid form. Test error handling by simulating a failed submission. Verify that the form pre-fills the program field when accessed with a query parameter. Test the form in both light and dark modes.",
-        "priority": "high",
-        "dependencies": [
-          7,
-          8,
-          9
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 17,
-        "title": "Create About Page Component",
-        "description": "Create an About page component using the design system to maintain information about JIT.EDU.PH.",
-        "details": "Create a new About page component using the design system:\n\n```tsx\n// src/app/about/page.tsx\nimport Link from 'next/link';\nimport { Button } from '@/components/ui/button';\n\nexport default function AboutPage() {\n  return (\n    <div className=\"bg-background\">\n      {/* Hero section */}\n      <div className=\"relative isolate overflow-hidden pt-14\">\n        <div className=\"mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8\">\n          <div className=\"mx-auto max-w-2xl text-center\">\n            <h1 className=\"text-4xl font-bold tracking-tight text-foreground sm:text-6xl\">\n              About JIT.EDU.PH\n            </h1>\n            <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n              We are dedicated to providing high-quality tech education that prepares students for real-world careers.\n            </p>\n          </div>\n        </div>\n      </div>\n\n      {/* Mission section */}\n      <div className=\"bg-muted/50 py-24 sm:py-32\">\n        <div className=\"mx-auto max-w-7xl px-6 lg:px-8\">\n          <div className=\"mx-auto max-w-2xl lg:text-center\">\n            <h2 className=\"text-3xl font-bold tracking-tight text-foreground sm:text-4xl\">Our Mission</h2>\n            <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n              To bridge the gap between traditional education and industry requirements by providing practical, hands-on training that prepares students for immediate employment in the tech industry.\n            </p>\n          </div>\n        </div>\n      </div>\n\n      {/* Values section */}\n      <div className=\"py-24 sm:py-32\">\n        <div className=\"mx-auto max-w-7xl px-6 lg:px-8\">\n          <div className=\"mx-auto max-w-2xl lg:text-center\">\n            <h2 className=\"text-3xl font-bold tracking-tight text-foreground sm:text-4xl\">Our Values</h2>\n            <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n              We believe in practical education, industry relevance, and student success.\n            </p>\n          </div>\n          <div className=\"mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none\">\n            <dl className=\"grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3\">\n              <div className=\"flex flex-col\">\n                <dt className=\"text-xl font-semibold leading-7 text-foreground\">Practical Education</dt>\n                <dd className=\"mt-4 flex flex-auto flex-col text-base leading-7 text-muted-foreground\">\n                  <p className=\"flex-auto\">\n                    We focus on hands-on learning and real-world projects that build practical skills employers value.\n                  </p>\n                </dd>\n              </div>\n              <div className=\"flex flex-col\">\n                <dt className=\"text-xl font-semibold leading-7 text-foreground\">Industry Relevance</dt>\n                <dd className=\"mt-4 flex flex-auto flex-col text-base leading-7 text-muted-foreground\">\n                  <p className=\"flex-auto\">\n                    Our curriculum is designed with input from industry professionals to ensure it meets current market needs.\n                  </p>\n                </dd>\n              </div>\n              <div className=\"flex flex-col\">\n                <dt className=\"text-xl font-semibold leading-7 text-foreground\">Student Success</dt>\n                <dd className=\"mt-4 flex flex-auto flex-col text-base leading-7 text-muted-foreground\">\n                  <p className=\"flex-auto\">\n                    We measure our success by the success of our students in finding employment and advancing their careers.\n                  </p>\n                </dd>\n              </div>\n            </dl>\n          </div>\n        </div>\n      </div>\n\n      {/* CTA section */}\n      <div className=\"bg-primary/5 py-24 sm:py-32\">\n        <div className=\"mx-auto max-w-7xl px-6 lg:px-8\">\n          <div className=\"mx-auto max-w-2xl text-center\">\n            <h2 className=\"text-3xl font-bold tracking-tight text-foreground sm:text-4xl\">Ready to start your journey?</h2>\n            <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n              Join our programs and gain the skills you need to succeed in today's tech industry.\n            </p>\n            <div className=\"mt-10 flex items-center justify-center gap-x-6\">\n              <Button asChild size=\"lg\">\n                <Link href=\"/programs\">Explore Programs</Link>\n              </Button>\n              <Button variant=\"outline\" asChild size=\"lg\">\n                <Link href=\"/contact\">Contact Us</Link>\n              </Button>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}\n```",
-        "testStrategy": "Test the about page by verifying all sections display correctly. Test the \"Explore Programs\" and \"Contact Us\" buttons to ensure they navigate to the correct pages. Verify that the page is responsive on different screen sizes. Test the page in both light and dark modes. Ensure the page is accessible to screen readers and keyboard navigation.",
-        "priority": "medium",
-        "dependencies": [
-          7,
-          8,
-          9
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 18,
-        "title": "Create Testimonials Component",
-        "description": "Create a Testimonials component to showcase student success stories and build trust with visitors.",
-        "details": "Create a new Testimonials component using the design system:\n\n```tsx\n// src/components/testimonials.tsx\nimport { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';\nimport { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';\n\ntype Testimonial = {\n  content: string;\n  author: {\n    name: string;\n    role: string;\n    company: string;\n    image?: string;\n  };\n};\n\ntype TestimonialsProps = {\n  testimonials: Testimonial[];\n};\n\nexport function Testimonials({ testimonials }: TestimonialsProps) {\n  return (\n    <div className=\"bg-muted/50 py-24 sm:py-32\">\n      <div className=\"mx-auto max-w-7xl px-6 lg:px-8\">\n        <div className=\"mx-auto max-w-2xl text-center\">\n          <h2 className=\"text-3xl font-bold tracking-tight text-foreground sm:text-4xl\">What Our Students Say</h2>\n          <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n            Hear from our graduates who have successfully transitioned into tech careers.\n          </p>\n        </div>\n        <div className=\"mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3\">\n          {testimonials.map((testimonial, index) => (\n            <Card key={index} className=\"flex flex-col justify-between\">\n              <CardHeader>\n                <div className=\"flex items-center gap-x-4\">\n                  <Avatar>\n                    {testimonial.author.image ? (\n                      <AvatarImage src={testimonial.author.image} alt={testimonial.author.name} />\n                    ) : (\n                      <AvatarFallback>{testimonial.author.name.charAt(0)}</AvatarFallback>\n                    )}\n                  </Avatar>\n                  <div>\n                    <h3 className=\"text-lg font-semibold\">{testimonial.author.name}</h3>\n                    <p className=\"text-sm text-muted-foreground\">{testimonial.author.role}, {testimonial.author.company}</p>\n                  </div>\n                </div>\n              </CardHeader>\n              <CardContent>\n                <p className=\"text-muted-foreground italic\">\"{testimonial.content}\"</p>\n              </CardContent>\n            </Card>\n          ))}\n        </div>\n      </div>\n    </div>\n  );\n}\n```\n\nUpdate the home page to include the Testimonials component:\n\n```tsx\n// src/app/page.tsx\nimport { HeroSection } from '@/components/hero-section';\nimport { TrainingPrograms } from '@/components/training-programs';\nimport { Testimonials } from '@/components/testimonials';\n\nconst testimonials = [\n  {\n    content: 'The Web Development Bootcamp completely changed my career trajectory. Within a month of graduating, I landed a job as a junior developer at a tech startup.',\n    author: {\n      name: 'Maria Santos',\n      role: 'Frontend Developer',\n      company: 'TechStart Inc.',\n      image: '/images/testimonials/maria.jpg',\n    },\n  },\n  {\n    content: 'The practical, hands-on approach to learning made all the difference. The instructors were knowledgeable and supportive throughout the entire program.',\n    author: {\n      name: 'David Chen',\n      role: 'Full Stack Developer',\n      company: 'Digital Solutions',\n      image: '/images/testimonials/david.jpg',\n    },\n  },\n  {\n    content: 'As someone with no prior tech experience, I was worried about keeping up. The curriculum was well-structured and the mentorship was invaluable in my learning journey.',\n    author: {\n      name: 'Sarah Johnson',\n      role: 'Junior Software Engineer',\n      company: 'InnovateTech',\n      image: '/images/testimonials/sarah.jpg',\n    },\n  },\n];\n\nexport default function Home() {\n  return (\n    <div>\n      <HeroSection />\n      <TrainingPrograms />\n      <Testimonials testimonials={testimonials} />\n      {/* Other sections */}\n    </div>\n  );\n}\n```",
-        "testStrategy": "Test the testimonials component by verifying all testimonial cards display correctly. Verify that the component is responsive on different screen sizes. Test the component in both light and dark modes. Ensure the component is accessible to screen readers and keyboard navigation. Test with and without testimonial images to ensure the avatar fallback works correctly.",
-        "priority": "medium",
-        "dependencies": [
-          7,
-          8,
-          9
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 19,
-        "title": "Create FAQ Component",
-        "description": "Create a FAQ component to answer common questions about the training programs.",
-        "details": "Create a new FAQ component using the design system:\n\n```tsx\n// src/components/faq.tsx\nimport { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';\n\ntype FAQItem = {\n  question: string;\n  answer: string;\n};\n\ntype FAQProps = {\n  faqs: FAQItem[];\n  title?: string;\n  description?: string;\n};\n\nexport function FAQ({ faqs, title = 'Frequently Asked Questions', description }: FAQProps) {\n  return (\n    <div className=\"bg-background py-24 sm:py-32\">\n      <div className=\"mx-auto max-w-7xl px-6 lg:px-8\">\n        <div className=\"mx-auto max-w-2xl lg:text-center\">\n          <h2 className=\"text-3xl font-bold tracking-tight text-foreground sm:text-4xl\">{title}</h2>\n          {description && (\n            <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n              {description}\n            </p>\n          )}\n        </div>\n        <div className=\"mx-auto mt-16 max-w-2xl\">\n          <Accordion type=\"single\" collapsible className=\"w-full\">\n            {faqs.map((faq, index) => (\n              <AccordionItem key={index} value={`item-${index}`}>\n                <AccordionTrigger className=\"text-left\">{faq.question}</AccordionTrigger>\n                <AccordionContent>{faq.answer}</AccordionContent>\n              </AccordionItem>\n            ))}\n          </Accordion>\n        </div>\n      </div>\n    </div>\n  );\n}\n```\n\nUpdate the home page to include the FAQ component:\n\n```tsx\n// src/app/page.tsx\nimport { HeroSection } from '@/components/hero-section';\nimport { TrainingPrograms } from '@/components/training-programs';\nimport { Testimonials } from '@/components/testimonials';\nimport { FAQ } from '@/components/faq';\n\n// Testimonials data\n\nconst faqs = [\n  {\n    question: 'What programs do you offer?',\n    answer: 'We offer a variety of tech training programs including Web Development, Data Science, Cybersecurity, and more. Each program is designed to prepare you for a specific career path in the tech industry.',\n  },\n  {\n    question: 'How long are the programs?',\n    answer: 'Program lengths vary depending on the subject matter. Our bootcamps typically range from 8 to 16 weeks of full-time study, while our part-time programs can extend to 24 weeks.',\n  },\n  {\n    question: 'Do I need prior experience?',\n    answer: 'Most of our programs are designed for beginners and require no prior experience. Some advanced programs may have prerequisites, which will be clearly stated in the program description.',\n  },\n  {\n    question: 'Is financial aid available?',\n    answer: 'Yes, we offer various financial aid options including scholarships, payment plans, and income share agreements. Contact our admissions team to learn more about these options.',\n  },\n  {\n    question: 'What is your job placement rate?',\n    answer: 'Our job placement rate varies by program but averages 85% within six months of graduation. We provide career services to help you find employment after completing your program.',\n  },\n];\n\nexport default function Home() {\n  return (\n    <div>\n      <HeroSection />\n      <TrainingPrograms />\n      <Testimonials testimonials={testimonials} />\n      <FAQ \n        faqs={faqs} \n        description=\"Find answers to commonly asked questions about our programs, admissions process, and more.\"\n      />\n      {/* Other sections */}\n    </div>\n  );\n}\n```",
-        "testStrategy": "Test the FAQ component by verifying all accordion items display correctly and expand/collapse when clicked. Verify that the component is responsive on different screen sizes. Test the component in both light and dark modes. Ensure the component is accessible to screen readers and keyboard navigation. Test with different numbers of FAQ items to ensure the layout remains consistent.",
-        "priority": "medium",
-        "dependencies": [
-          7,
-          8,
-          9
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 20,
-        "title": "Create Stats Component",
-        "description": "Create a Stats component to showcase key metrics about JIT.EDU.PH's success.",
-        "details": "Create a new Stats component using the design system:\n\n```tsx\n// src/components/stats.tsx\ntype Stat = {\n  value: string;\n  label: string;\n  description?: string;\n};\n\ntype StatsProps = {\n  stats: Stat[];\n  title?: string;\n  description?: string;\n};\n\nexport function Stats({ stats, title, description }: StatsProps) {\n  return (\n    <div className=\"bg-primary/5 py-24 sm:py-32\">\n      <div className=\"mx-auto max-w-7xl px-6 lg:px-8\">\n        {(title || description) && (\n          <div className=\"mx-auto max-w-2xl lg:text-center\">\n            {title && (\n              <h2 className=\"text-3xl font-bold tracking-tight text-foreground sm:text-4xl\">{title}</h2>\n            )}\n            {description && (\n              <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n                {description}\n              </p>\n            )}\n          </div>\n        )}\n        <div className=\"mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none\">\n          <dl className=\"grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-4\">\n            {stats.map((stat, index) => (\n              <div key={index} className=\"flex flex-col items-center\">\n                <dt className=\"text-4xl font-bold tracking-tight text-primary\">{stat.value}</dt>\n                <dd className=\"mt-2 text-base font-semibold text-foreground\">{stat.label}</dd>\n                {stat.description && (\n                  <p className=\"mt-1 text-sm text-muted-foreground text-center\">{stat.description}</p>\n                )}\n              </div>\n            ))}\n          </dl>\n        </div>\n      </div>\n    </div>\n  );\n}\n```\n\nUpdate the home page to include the Stats component:\n\n```tsx\n// src/app/page.tsx\nimport { HeroSection } from '@/components/hero-section';\nimport { TrainingPrograms } from '@/components/training-programs';\nimport { Testimonials } from '@/components/testimonials';\nimport { FAQ } from '@/components/faq';\nimport { Stats } from '@/components/stats';\n\n// Other data\n\nconst stats = [\n  {\n    value: '1,200+',\n    label: 'Graduates',\n    description: 'Students who have successfully completed our programs',\n  },\n  {\n    value: '85%',\n    label: 'Job Placement',\n    description: 'Graduates employed within 6 months of program completion',\n  },\n  {\n    value: '50+',\n    label: 'Corporate Partners',\n    description: 'Companies that hire our graduates and contribute to our curriculum',\n  },\n  {\n    value: '4.8/5',\n    label: 'Student Satisfaction',\n    description: 'Average rating from our program graduates',\n  },\n];\n\nexport default function Home() {\n  return (\n    <div>\n      <HeroSection />\n      <Stats \n        stats={stats} \n        title=\"Our Impact\"\n        description=\"We're proud of our track record in helping students launch successful tech careers.\"\n      />\n      <TrainingPrograms />\n      <Testimonials testimonials={testimonials} />\n      <FAQ faqs={faqs} description=\"Find answers to commonly asked questions about our programs, admissions process, and more.\" />\n      {/* Other sections */}\n    </div>\n  );\n}\n```",
-        "testStrategy": "Test the stats component by verifying all stat items display correctly. Verify that the component is responsive on different screen sizes. Test the component in both light and dark modes. Ensure the component is accessible to screen readers and keyboard navigation. Test with different numbers of stat items to ensure the layout adjusts appropriately.",
-        "priority": "low",
-        "dependencies": [
-          7,
-          8,
-          9
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 21,
-        "title": "Create Call-to-Action Component",
-        "description": "Create a reusable Call-to-Action component to encourage visitors to take action.",
-        "details": "Create a new CTA component using the design system:\n\n```tsx\n// src/components/cta.tsx\nimport Link from 'next/link';\nimport { Button } from '@/components/ui/button';\n\ntype CTAProps = {\n  title: string;\n  description: string;\n  primaryAction: {\n    label: string;\n    href: string;\n  };\n  secondaryAction?: {\n    label: string;\n    href: string;\n  };\n  background?: 'default' | 'muted' | 'primary';\n};\n\nexport function CTA({\n  title,\n  description,\n  primaryAction,\n  secondaryAction,\n  background = 'default',\n}: CTAProps) {\n  const bgClasses = {\n    default: 'bg-background',\n    muted: 'bg-muted/50',\n    primary: 'bg-primary/5',\n  };\n\n  return (\n    <div className={`${bgClasses[background]} py-24 sm:py-32`}>\n      <div className=\"mx-auto max-w-7xl px-6 lg:px-8\">\n        <div className=\"mx-auto max-w-2xl text-center\">\n          <h2 className=\"text-3xl font-bold tracking-tight text-foreground sm:text-4xl\">{title}</h2>\n          <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n            {description}\n          </p>\n          <div className=\"mt-10 flex items-center justify-center gap-x-6\">\n            <Button asChild size=\"lg\">\n              <Link href={primaryAction.href}>{primaryAction.label}</Link>\n            </Button>\n            {secondaryAction && (\n              <Button variant=\"outline\" asChild size=\"lg\">\n                <Link href={secondaryAction.href}>{secondaryAction.label}</Link>\n              </Button>\n            )}\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}\n```\n\nUpdate the home page to include the CTA component:\n\n```tsx\n// src/app/page.tsx\nimport { HeroSection } from '@/components/hero-section';\nimport { TrainingPrograms } from '@/components/training-programs';\nimport { Testimonials } from '@/components/testimonials';\nimport { FAQ } from '@/components/faq';\nimport { Stats } from '@/components/stats';\nimport { CTA } from '@/components/cta';\n\n// Other data\n\nexport default function Home() {\n  return (\n    <div>\n      <HeroSection />\n      <Stats stats={stats} title=\"Our Impact\" description=\"We're proud of our track record in helping students launch successful tech careers.\" />\n      <TrainingPrograms />\n      <Testimonials testimonials={testimonials} />\n      <FAQ faqs={faqs} description=\"Find answers to commonly asked questions about our programs, admissions process, and more.\" />\n      <CTA\n        title=\"Ready to Start Your Tech Career?\"\n        description=\"Join our programs and gain the skills you need to succeed in today's tech industry.\"\n        primaryAction={{ label: 'Apply Now', href: '/contact' }}\n        secondaryAction={{ label: 'Learn More', href: '/programs' }}\n        background=\"primary\"\n      />\n    </div>\n  );\n}\n```",
-        "testStrategy": "Test the CTA component by verifying the title, description, and buttons display correctly. Test the primary and secondary action buttons to ensure they navigate to the correct pages. Test the component with different background options. Verify that the component is responsive on different screen sizes. Test the component in both light and dark modes. Ensure the component is accessible to screen readers and keyboard navigation.",
-        "priority": "medium",
-        "dependencies": [
-          7,
-          8,
-          9
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 22,
-        "title": "Create Not Found Page",
-        "description": "Create a custom 404 Not Found page using the design system components.",
-        "details": "Create a custom 404 Not Found page using the design system:\n\n```tsx\n// src/app/not-found.tsx\nimport Link from 'next/link';\nimport { Button } from '@/components/ui/button';\n\nexport default function NotFound() {\n  return (\n    <div className=\"bg-background min-h-[70vh] flex items-center\">\n      <div className=\"mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 text-center\">\n        <p className=\"text-base font-semibold text-primary\">404</p>\n        <h1 className=\"mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-5xl\">Page not found</h1>\n        <p className=\"mt-6 text-base leading-7 text-muted-foreground\">\n          Sorry, we couldn't find the page you're looking for.\n        </p>\n        <div className=\"mt-10 flex items-center justify-center gap-x-6\">\n          <Button asChild>\n            <Link href=\"/\">Go back home</Link>\n          </Button>\n          <Button variant=\"outline\" asChild>\n            <Link href=\"/contact\">Contact support</Link>\n          </Button>\n        </div>\n      </div>\n    </div>\n  );\n}\n```",
-        "testStrategy": "Test the 404 page by navigating to a non-existent URL. Verify that the page displays correctly and the buttons navigate to the correct pages. Test the page in both light and dark modes. Verify that the page is responsive on different screen sizes. Ensure the page is accessible to screen readers and keyboard navigation.",
-        "priority": "low",
-        "dependencies": [
-          7,
-          8,
-          9
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 23,
-        "title": "Create Loading States",
-        "description": "Create loading state components for pages and sections using the design system.",
-        "details": "Create loading state components using the design system:\n\n```tsx\n// src/components/ui/skeleton.tsx\nimport { cn } from '@/lib/utils';\n\nfunction Skeleton({\n  className,\n  ...props\n}: React.HTMLAttributes<HTMLDivElement>) {\n  return (\n    <div\n      className={cn('animate-pulse rounded-md bg-muted', className)}\n      {...props}\n    />\n  );\n}\n\nexport { Skeleton };\n```\n\nCreate a loading state for the programs page:\n\n```tsx\n// src/app/programs/loading.tsx\nimport { Skeleton } from '@/components/ui/skeleton';\n\nexport default function ProgramsLoading() {\n  return (\n    <div className=\"bg-background py-24 sm:py-32\">\n      <div className=\"mx-auto max-w-7xl px-6 lg:px-8\">\n        <div className=\"mx-auto max-w-2xl text-center\">\n          <Skeleton className=\"h-10 w-64 mx-auto\" />\n          <Skeleton className=\"h-6 w-full mt-6\" />\n          <Skeleton className=\"h-6 w-3/4 mx-auto mt-2\" />\n        </div>\n        <div className=\"mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3\">\n          {Array.from({ length: 3 }).map((_, index) => (\n            <div key={index} className=\"flex flex-col\">\n              <Skeleton className=\"h-48 w-full rounded-t-lg\" />\n              <div className=\"p-6\">\n                <Skeleton className=\"h-6 w-3/4\" />\n                <Skeleton className=\"h-4 w-1/2 mt-2\" />\n                <Skeleton className=\"h-20 w-full mt-4\" />\n                <Skeleton className=\"h-10 w-full mt-6\" />\n              </div>\n            </div>\n          ))}\n        </div>\n      </div>\n    </div>\n  );\n}\n```\n\nCreate a loading state for the program detail page:\n\n```tsx\n// src/app/programs/[slug]/loading.tsx\nimport { Skeleton } from '@/components/ui/skeleton';\n\nexport default function ProgramDetailLoading() {\n  return (\n    <div className=\"bg-background\">\n      <div className=\"relative isolate overflow-hidden pt-14\">\n        <div className=\"mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8\">\n          <div className=\"mx-auto max-w-2xl text-center\">\n            <Skeleton className=\"h-4 w-16 mx-auto mb-4\" />\n            <Skeleton className=\"h-12 w-full\" />\n            <Skeleton className=\"h-12 w-3/4 mx-auto mt-2\" />\n            <Skeleton className=\"h-6 w-full mt-6\" />\n            <Skeleton className=\"h-6 w-3/4 mx-auto mt-2\" />\n            <Skeleton className=\"h-4 w-32 mx-auto mt-4\" />\n            <div className=\"mt-10 flex items-center justify-center gap-x-6\">\n              <Skeleton className=\"h-12 w-32\" />\n              <Skeleton className=\"h-12 w-32\" />\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div className=\"mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8\">\n        <Skeleton className=\"h-10 w-full\" />\n        <div className=\"mt-6 space-y-8\">\n          {Array.from({ length: 4 }).map((_, index) => (\n            <div key={index} className=\"border-b pb-6 last:border-0\">\n              <Skeleton className=\"h-6 w-1/3\" />\n              <Skeleton className=\"h-4 w-full mt-2\" />\n              <Skeleton className=\"h-4 w-5/6 mt-1\" />\n            </div>\n          ))}\n        </div>\n      </div>\n    </div>\n  );\n}\n```",
-        "testStrategy": "Test the loading states by artificially delaying data loading in development. Verify that the loading states display correctly and match the layout of the actual content. Test the loading states in both light and dark modes. Verify that the loading states are responsive on different screen sizes. Ensure the loading states are accessible to screen readers.",
-        "priority": "low",
-        "dependencies": [
-          7,
-          8,
-          9
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 24,
-        "title": "Implement Error Handling Components",
-        "description": "Create error handling components using the design system to display user-friendly error messages.",
-        "details": "Create error handling components using the design system:\n\n```tsx\n// src/components/error-message.tsx\nimport Link from 'next/link';\nimport { AlertTriangle } from 'lucide-react';\nimport { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';\nimport { Button } from '@/components/ui/button';\n\ntype ErrorMessageProps = {\n  title?: string;\n  description?: string;\n  actionText?: string;\n  actionHref?: string;\n  retry?: () => void;\n};\n\nexport function ErrorMessage({\n  title = 'Something went wrong',\n  description = 'An error occurred while loading this content. Please try again later.',\n  actionText,\n  actionHref,\n  retry,\n}: ErrorMessageProps) {\n  return (\n    <Alert variant=\"destructive\" className=\"my-8\">\n      <AlertTriangle className=\"h-4 w-4\" />\n      <AlertTitle>{title}</AlertTitle>\n      <AlertDescription>{description}</AlertDescription>\n      <div className=\"mt-4 flex gap-x-4\">\n        {retry && (\n          <Button variant=\"outline\" onClick={retry}>\n            Try again\n          </Button>\n        )}\n        {actionText && actionHref && (\n          <Button variant=\"outline\" asChild>\n            <Link href={actionHref}>{actionText}</Link>\n          </Button>\n        )}\n      </div>\n    </Alert>\n  );\n}\n```\n\nCreate an error page for the app:\n\n```tsx\n// src/app/error.tsx\n'use client';\n\nimport { useEffect } from 'react';\nimport Link from 'next/link';\nimport { Button } from '@/components/ui/button';\n\nexport default function Error({\n  error,\n  reset,\n}: {\n  error: Error & { digest?: string };\n  reset: () => void;\n}) {\n  useEffect(() => {\n    // Log the error to an error reporting service\n    console.error(error);\n  }, [error]);\n\n  return (\n    <div className=\"bg-background min-h-[70vh] flex items-center\">\n      <div className=\"mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 text-center\">\n        <p className=\"text-base font-semibold text-destructive\">Error</p>\n        <h1 className=\"mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-5xl\">Something went wrong</h1>\n        <p className=\"mt-6 text-base leading-7 text-muted-foreground\">\n          We're sorry, but an error occurred while loading this page.\n        </p>\n        <div className=\"mt-10 flex items-center justify-center gap-x-6\">\n          <Button onClick={reset}>Try again</Button>\n          <Button variant=\"outline\" asChild>\n            <Link href=\"/\">Go back home</Link>\n          </Button>\n        </div>\n      </div>\n    </div>\n  );\n}\n```\n\nCreate a component for handling data loading errors:\n\n```tsx\n// src/components/error-boundary.tsx\n'use client';\n\nimport { ErrorMessage } from '@/components/error-message';\n\ntype ErrorBoundaryProps = {\n  children: React.ReactNode;\n  fallback?: React.ReactNode;\n};\n\nexport function ErrorBoundary({ children, fallback }: ErrorBoundaryProps) {\n  try {\n    return <>{children}</>;\n  } catch (error) {\n    console.error('Error caught by ErrorBoundary:', error);\n    return (\n      fallback || (\n        <ErrorMessage\n          title=\"Component Error\"\n          description=\"An error occurred while rendering this component.\"\n        />\n      )\n    );\n  }\n}\n```",
-        "testStrategy": "Test the error handling components by triggering errors in development. Verify that the error messages display correctly and the action buttons work as expected. Test the error boundary by intentionally causing a component to throw an error. Test the components in both light and dark modes. Verify that the components are responsive on different screen sizes. Ensure the components are accessible to screen readers and keyboard navigation.",
-        "priority": "medium",
-        "dependencies": [
-          7,
-          8,
-          9
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 25,
-        "title": "Perform Final Testing and Cleanup",
-        "description": "Conduct comprehensive testing of all components, remove unused code, and ensure consistent import paths.",
-        "details": "1. **Code Cleanup**:\n   - Remove all unused components and code\n   - Ensure consistent import paths using path aliases\n   - Remove duplicate styles\n   - Check for and fix any TypeScript errors\n\n```bash\n# Run TypeScript type checking\nnpm run type-check\n\n# Run linting\nnpm run lint\n\n# Run build to check for errors\nnpm run build\n```\n\n2. **Testing Checklist**:\n   - Verify all pages load correctly\n   - Test navigation between all pages\n   - Test all interactive elements (buttons, forms, etc.)\n   - Test responsive design on different screen sizes\n   - Test dark mode functionality\n   - Test accessibility using keyboard navigation and screen readers\n   - Verify all links work correctly\n   - Test form submissions\n   - Verify error handling works correctly\n   - Test loading states\n\n3. **Performance Optimization**:\n   - Check page load times using Lighthouse or similar tools\n   - Optimize images and assets\n   - Verify smooth animations and transitions\n   - Check for and fix any performance bottlenecks\n\n4. **Documentation**:\n   - Update any documentation to reflect the new design system\n   - Document any known issues or limitations\n   - Provide instructions for future maintenance\n\n5. **Final Review**:\n   - Conduct a final visual review of all pages\n   - Verify all requirements from the PRD have been met\n   - Check for any inconsistencies in design or functionality",
-        "testStrategy": "Conduct comprehensive testing using the following methods:\n\n1. **Manual Testing**:\n   - Test all pages and components on different browsers (Chrome, Firefox, Safari, Edge)\n   - Test on different devices (desktop, tablet, mobile)\n   - Test all user flows and interactions\n\n2. **Automated Testing**:\n   - Run any existing automated tests\n   - Use Lighthouse to test performance, accessibility, and best practices\n   - Use axe or similar tools to test accessibility\n\n3. **Visual Testing**:\n   - Compare the new design with the design specifications\n   - Verify consistent spacing, typography, and colors\n   - Check dark mode appearance\n\n4. **Performance Testing**:\n   - Measure and record page load times\n   - Test with throttled network connections\n   - Check for any render-blocking resources\n\nDocument all test results and fix any issues found before final deployment.",
-        "priority": "high",
-        "dependencies": [
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9,
-          10,
-          11,
-          12,
-          13,
-          14,
-          15,
-          16,
-          17,
-          18,
-          19,
-          20,
-          21,
-          22,
-          23,
-          24
-        ],
-        "status": "pending",
-        "subtasks": []
-      }
-    ],
-    "metadata": {
-      "created": "2025-07-05T02:15:31.661Z",
-      "updated": "2025-07-05T02:15:31.661Z",
-      "description": "Tasks for master context"
-    }
-  },
-  "main": {
-    "tasks": [
-      {
-        "id": 1,
-        "title": "Install and Configure Design System Dependencies",
-        "description": "Install all required dependencies for the shadcn/ui components including lucide-react icons and other necessary packages.",
-        "details": "Run the following commands to install dependencies:\n\n```bash\nnpm install lucide-react @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-slot @radix-ui/react-accordion @radix-ui/react-tabs @radix-ui/react-navigation-menu class-variance-authority clsx tailwind-merge\n```\n\nEnsure all peer dependencies are properly installed and compatible with Next.js 14. Update package.json with the correct versions and run npm install to verify all dependencies are properly resolved.",
-        "testStrategy": "Verify all packages are correctly installed by checking package.json and node_modules. Run the application to ensure no console errors related to missing dependencies appear.",
-        "priority": "high",
-        "dependencies": [],
-        "status": "pending",
+        "details": "Copy all remaining Phase 2 shadcn/ui components to src/components/ui/. Ensure TypeScript types and imports are correct and maintain component API compatibility. Previously completed components include Button, Card, Navigation Menu, and Dialog.",
+        "testStrategy": "Run the application and check for any TypeScript errors or component import issues. Specifically test the newly migrated Dropdown Menu and any other remaining components for compatibility.",
         "subtasks": [
           {
-            "id": 1,
-            "title": "Install Core UI Dependencies",
-            "description": "Install the primary UI component libraries and utilities needed for the design system",
+            "id": 9,
+            "title": "Migrate Dropdown Menu Component",
+            "description": "Copy and configure the Dropdown Menu component from the design system.",
+            "status": "done"
+          },
+          {
+            "id": 10,
+            "title": "Copy Remaining UI Components from Design System",
+            "description": "Identify and migrate any remaining Phase 2 components not yet copied.",
+            "status": "in-progress",
+            "details": "<info added on 2025-07-05T07:27:42.757Z>\nThere are 41 UI components from the design system that still need migration. Key components include: accordion, alert, alert-dialog, avatar, badge, breadcrumb, calendar, checkbox, form, input, label, popover, progress, select, separator, sheet, skeleton, slider, switch, table, tabs, textarea, toggle, tooltip, and more. Each component requires a Test-Driven Development (TDD) approach with tests, dark mode support, accessibility features, and examples.\n</info added on 2025-07-05T07:27:42.757Z>\n<info added on 2025-07-05T08:05:00.000Z>\nCompleted migration of 6 essential UI components following strict TDD approach:\n1. Input - 35 tests, data-slot attribute, enhanced focus styling\n2. Label - 22 tests, design system styling, group state handling\n3. Textarea - 35 tests, field-sizing-content, new focus ring\n4. Alert - 30 tests, data-slot attributes for all sub-components\n5. Badge - 27 tests, data-slot attribute\n6. Separator - 28 tests, data-slot attribute\nAll components pass tests, TypeScript checks, and build successfully. Form examples created to showcase usage.\n</info added on 2025-07-05T08:05:00.000Z>"
+          },
+          {
+            "id": 11,
+            "title": "Button Component Migration",
+            "description": "Migrate Button component from design system (Task #5)",
+            "details": "",
+            "status": "done",
             "dependencies": [],
-            "details": "Run `npm install lucide-react @radix-ui/react-slot class-variance-authority clsx tailwind-merge` to install the core dependencies. These packages provide the foundation for icons, component styling, and utility functions for the design system.",
-            "status": "pending",
-            "testStrategy": "Verify installation by checking package.json and node_modules directory to ensure all packages are properly installed."
+            "parentTaskId": 4
           },
           {
-            "id": 2,
-            "title": "Install Radix UI Component Primitives",
-            "description": "Install the Radix UI primitives for specific components that will be used in the design system",
-            "dependencies": [
-              1
-            ],
-            "details": "Run `npm install @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-accordion @radix-ui/react-tabs @radix-ui/react-navigation-menu` to install the Radix UI component primitives. These provide unstyled, accessible components that will be styled with Tailwind CSS.",
-            "status": "pending",
-            "testStrategy": "Check package.json to confirm all Radix UI primitives are installed with compatible versions."
+            "id": 12,
+            "title": "Card Component Migration",
+            "description": "Migrate Card component from design system (Task #6)",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 4
           },
           {
-            "id": 3,
-            "title": "Verify Peer Dependencies",
-            "description": "Check and install any missing peer dependencies required by the installed packages",
-            "dependencies": [
-              2
-            ],
-            "details": "Run `npm ls` to check for any peer dependency warnings. Install any missing peer dependencies that are reported. Common peer dependencies might include react, react-dom, and specific version requirements for these libraries. Ensure compatibility with Next.js 14.",
-            "status": "pending",
-            "testStrategy": "Run `npm ls` again after installing peer dependencies to verify no warnings remain."
+            "id": 13,
+            "title": "Navigation Menu Component Migration",
+            "description": "Migrate Navigation Menu component from design system (Task #7)",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 4
           },
           {
-            "id": 4,
-            "title": "Update package.json with Correct Versions",
-            "description": "Review and update package.json to ensure all dependencies have appropriate version constraints",
-            "dependencies": [
-              3
-            ],
-            "details": "Review the installed package versions in package.json. Update version constraints to use appropriate semver ranges (e.g., ^1.0.0) to allow compatible updates but prevent breaking changes. For critical dependencies, consider pinning exact versions if needed for stability.",
-            "status": "pending",
-            "testStrategy": "Run `npm outdated` to check if any packages have major updates available that might require attention."
+            "id": 14,
+            "title": "Dialog Component Migration",
+            "description": "Migrate Dialog component from design system (Task #8)",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 4
           },
           {
-            "id": 5,
-            "title": "Verify Installation and Compatibility",
-            "description": "Run a final verification to ensure all dependencies are properly installed and compatible with the project",
-            "dependencies": [
-              4
-            ],
-            "details": "Run `npm install` to ensure all dependencies are properly resolved and installed. Create a simple test component that imports and uses one of the installed packages (e.g., a Lucide icon or a basic Radix UI component) to verify the dependencies can be used in the project. Check for any console errors or warnings during build.",
-            "status": "pending",
-            "testStrategy": "Start the development server with `npm run dev` and verify the application builds and runs without dependency-related errors. Test a simple component that uses the installed packages."
+            "id": 15,
+            "title": "Dropdown Menu Component Migration",
+            "description": "Migrate Dropdown Menu component from design system (Task #9)",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 4
+          },
+          {
+            "id": 16,
+            "title": "Input Component Migration",
+            "description": "Migrate Input component with TDD approach",
+            "details": "Migrated with data-slot attribute and enhanced focus styling. Created 35 comprehensive tests covering all functionality.",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 4
+          },
+          {
+            "id": 17,
+            "title": "Label Component Migration",
+            "description": "Migrate Label component with TDD approach",
+            "details": "Migrated with design system styling and group state handling. Created 22 tests for all use cases.",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 4
+          },
+          {
+            "id": 18,
+            "title": "Textarea Component Migration",
+            "description": "Migrate Textarea component with TDD approach",
+            "details": "Migrated with field-sizing-content and new focus ring styling. Created 35 tests covering all scenarios.",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 4
+          },
+          {
+            "id": 19,
+            "title": "Alert Component Migration",
+            "description": "Migrate Alert component with TDD approach",
+            "details": "Migrated with data-slot attributes for all sub-components. Created 30 tests for complete coverage.",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 4
+          },
+          {
+            "id": 20,
+            "title": "Badge Component Migration",
+            "description": "Migrate Badge component with TDD approach",
+            "details": "Simple migration with data-slot attribute. Created 27 tests covering all variants.",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 4
+          },
+          {
+            "id": 21,
+            "title": "Separator Component Migration",
+            "description": "Migrate Separator component with TDD approach",
+            "details": "Migrated with data-slot attribute and proper styling. Created 28 tests for all orientations and use cases.",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 4
           }
         ]
       },
       {
-        "id": 2,
-        "title": "Configure Tailwind CSS for Design System",
-        "description": "Update Tailwind configuration to support the new design tokens and ensure proper integration with the design system.",
-        "details": "Modify tailwind.config.js to include the new design tokens:\n\n```javascript\nmodule.exports = {\n  darkMode: ['class'],\n  content: [\n    './pages/**/*.{js,ts,jsx,tsx}',\n    './components/**/*.{js,ts,jsx,tsx}',\n    './app/**/*.{js,ts,jsx,tsx}',\n    './src/**/*.{js,ts,jsx,tsx}',\n  ],\n  theme: {\n    container: {\n      center: true,\n      padding: '2rem',\n      screens: {\n        '2xl': '1400px',\n      },\n    },\n    extend: {\n      colors: {\n        // Import colors from design-tokens-complete.json\n        primary: {\n          DEFAULT: '#4F46E5',\n          // Add all primary color variations\n        },\n        // Add all other color tokens\n      },\n      fontFamily: {\n        sans: ['Inter', 'sans-serif'],\n      },\n      spacing: {\n        // Add spacing tokens from xs (4px) to 2xl (48px)\n      },\n      // Add other design tokens as needed\n    },\n  },\n  plugins: [require('tailwindcss-animate')],\n};\n```",
-        "testStrategy": "Verify the Tailwind configuration by building the project and ensuring no configuration errors. Test that the design tokens are properly applied by creating a simple test component that uses the new color and spacing values.",
-        "priority": "high",
-        "dependencies": [
-          1
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 3,
-        "title": "Implement Design Tokens from JSON",
-        "description": "Import and implement the complete color palette and other design tokens from design-tokens-complete.json.",
-        "details": "Create a utility function to parse and apply design tokens:\n\n```typescript\n// src/lib/design-tokens.ts\nimport designTokens from 'ai_docs/Design_System_for_JIT/design-tokens-complete.json';\n\nexport const colors = designTokens.colors;\nexport const typography = designTokens.typography;\nexport const spacing = designTokens.spacing;\n\n// Export other token categories as needed\n\n// Helper function to generate CSS variables\nexport function generateCssVariables() {\n  // Implementation to convert tokens to CSS variables\n  // for use in global.css\n}\n```\n\nUpdate global.css to include these variables:\n\n```css\n:root {\n  /* Generated CSS variables from design tokens */\n  --primary: 79 70 229; /* RGB values for #4F46E5 */\n  /* Other variables */\n}\n\n.dark {\n  /* Dark mode variables */\n}\n```",
-        "testStrategy": "Verify that all design tokens from the JSON file are correctly imported and accessible in the application. Create a simple component that uses these tokens and visually verify the correct colors, typography, and spacing are applied.",
-        "priority": "high",
-        "dependencies": [
-          2
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 4,
-        "title": "Set Up Global CSS Styles",
-        "description": "Integrate the new design system's global CSS styles while preserving existing CSS custom properties for theming.",
-        "details": "Update the global.css file to include the design system styles:\n\n```css\n@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\n/* Import Inter font */\n@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');\n\n:root {\n  /* Preserve existing custom properties */\n  /* Add new design system properties */\n  --background: 0 0% 100%;\n  --foreground: 222.2 84% 4.9%;\n  \n  --card: 0 0% 100%;\n  --card-foreground: 222.2 84% 4.9%;\n  \n  --popover: 0 0% 100%;\n  --popover-foreground: 222.2 84% 4.9%;\n  \n  --primary: 79 70 229; /* #4F46E5 */\n  --primary-foreground: 210 40% 98%;\n  \n  /* Add all other color tokens */\n  \n  --radius: 0.5rem;\n}\n\n.dark {\n  /* Dark mode variables */\n  --background: 222.2 84% 4.9%;\n  --foreground: 210 40% 98%;\n  \n  /* Add all other dark mode color tokens */\n}\n\n@layer base {\n  * {\n    @apply border-border;\n  }\n  body {\n    @apply bg-background text-foreground font-sans;\n  }\n  /* Typography styles */\n  h1 {\n    @apply text-4xl font-bold md:text-5xl;\n  }\n  /* Add other global styles */\n}\n```",
-        "testStrategy": "Verify the global styles are correctly applied by checking the rendered output of basic HTML elements. Ensure that both light and dark mode styles are working correctly. Test that existing custom properties are preserved by checking components that rely on them.",
-        "priority": "high",
-        "dependencies": [
-          3
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
         "id": 5,
-        "title": "Copy shadcn/ui Components to Project",
-        "description": "Copy all shadcn/ui components from the design system to src/components/ui/ directory ensuring proper TypeScript types and imports.",
-        "details": "Create a script to copy all components from the design system to the project:\n\n```typescript\n// scripts/copy-components.ts\nimport fs from 'fs-extra';\nimport path from 'path';\n\nconst sourceDir = 'ai_docs/Design_System_for_JIT/components';\nconst targetDir = 'src/components/ui';\n\n// Ensure target directory exists\nfs.ensureDirSync(targetDir);\n\n// Copy all components\nfs.copySync(sourceDir, targetDir, {\n  overwrite: true,\n  filter: (src) => {\n    // Add any filtering logic if needed\n    return true;\n  },\n});\n\nconsole.log('Components copied successfully!');\n```\n\nRun this script or manually copy the components. Ensure all components have proper imports and TypeScript types. Update any import paths to use the project's path aliases (@/components, @/lib/utils).",
-        "testStrategy": "Verify all components are correctly copied by checking the src/components/ui directory. Ensure TypeScript types are correct by running npm run type-check. Test a few basic components to ensure they render correctly.",
+        "title": "Update Component Styling",
+        "description": "Apply JIT branding and ensure dark mode and accessibility standards.",
+        "details": "Update component styles to reflect JIT branding. Ensure dark mode support and WCAG 2.1 AA accessibility standards are met.",
+        "testStrategy": "Use accessibility tools to verify compliance and test dark mode functionality.",
         "priority": "high",
         "dependencies": [
           4
@@ -502,10 +179,10 @@
       },
       {
         "id": 6,
-        "title": "Create Component Library Index",
-        "description": "Create an index file for all UI components to simplify imports and ensure consistent usage across the application.",
-        "details": "Create an index.ts file in the src/components/ui directory that exports all components:\n\n```typescript\n// src/components/ui/index.ts\n\n// Re-export all components\nexport * from './accordion';\nexport * from './alert';\nexport * from './avatar';\nexport * from './badge';\nexport * from './button';\nexport * from './card';\nexport * from './checkbox';\nexport * from './dialog';\nexport * from './dropdown-menu';\n// Add all other component exports\n\n// Also export any utility functions\nexport * from './utils';\n```\n\nThis will allow importing multiple components from a single import statement:\n\n```typescript\nimport { Button, Card, Dialog } from '@/components/ui';\n```",
-        "testStrategy": "Verify the index file correctly exports all components by importing them in a test file. Ensure that the components can be used with the simplified import syntax. Check for any TypeScript errors related to the exports.",
+        "title": "Replace Header Component",
+        "description": "Replace the current header with the new design system Header component.",
+        "details": "Integrate the new Header component, ensuring all navigation functionality and mobile menu work correctly.",
+        "testStrategy": "Test navigation links and mobile menu functionality on various devices.",
         "priority": "medium",
         "dependencies": [
           5
@@ -515,54 +192,51 @@
       },
       {
         "id": 7,
-        "title": "Apply JIT Branding to UI Components",
-        "description": "Update the styling of all UI components to match JIT branding using the design tokens.",
-        "details": "For each component in src/components/ui, update the styling to use JIT branding colors and design tokens. For example, for the Button component:\n\n```typescript\n// src/components/ui/button.tsx\nimport { cva } from 'class-variance-authority';\n\nconst buttonVariants = cva(\n  'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background',\n  {\n    variants: {\n      variant: {\n        default: 'bg-primary text-primary-foreground hover:bg-primary/90',\n        destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',\n        outline: 'border border-input hover:bg-accent hover:text-accent-foreground',\n        secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',\n        ghost: 'hover:bg-accent hover:text-accent-foreground',\n        link: 'underline-offset-4 hover:underline text-primary',\n      },\n      size: {\n        default: 'h-10 py-2 px-4',\n        sm: 'h-9 px-3 rounded-md',\n        lg: 'h-11 px-8 rounded-md',\n      },\n    },\n    defaultVariants: {\n      variant: 'default',\n      size: 'default',\n    },\n  }\n);\n\n// Rest of the component implementation\n```\n\nRepeat this process for all components, ensuring consistent use of design tokens and JIT branding.",
-        "testStrategy": "Create a component showcase page that displays all UI components with different variants and states. Visually verify that all components match the JIT branding. Test dark mode compatibility by toggling between light and dark themes.",
-        "priority": "high",
+        "title": "Replace Footer Component",
+        "description": "Replace the current footer with the new design system Footer component.",
+        "details": "Integrate the new Footer component, preserving all footer links and contact information.",
+        "testStrategy": "Verify that all footer links and contact information are correctly displayed and functional.",
+        "priority": "medium",
         "dependencies": [
-          6,
-          3
+          5
         ],
         "status": "pending",
         "subtasks": []
       },
       {
         "id": 8,
-        "title": "Implement Dark Mode Support",
-        "description": "Ensure all components support dark mode and implement a theme toggle functionality.",
-        "details": "Create a theme provider component that manages dark mode:\n\n```typescript\n// src/components/theme-provider.tsx\n'use client';\n\nimport { createContext, useContext, useEffect, useState } from 'react';\n\ntype Theme = 'dark' | 'light' | 'system';\n\ntype ThemeProviderProps = {\n  children: React.ReactNode;\n  defaultTheme?: Theme;\n};\n\ntype ThemeProviderState = {\n  theme: Theme;\n  setTheme: (theme: Theme) => void;\n};\n\nconst ThemeProviderContext = createContext<ThemeProviderState | undefined>(undefined);\n\nexport function ThemeProvider({\n  children,\n  defaultTheme = 'system',\n  ...props\n}: ThemeProviderProps) {\n  const [theme, setTheme] = useState<Theme>(defaultTheme);\n\n  useEffect(() => {\n    const root = window.document.documentElement;\n    root.classList.remove('light', 'dark');\n\n    if (theme === 'system') {\n      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')\n        .matches\n        ? 'dark'\n        : 'light';\n      root.classList.add(systemTheme);\n      return;\n    }\n\n    root.classList.add(theme);\n  }, [theme]);\n\n  const value = {\n    theme,\n    setTheme,\n  };\n\n  return (\n    <ThemeProviderContext.Provider {...props} value={value}>\n      {children}\n    </ThemeProviderContext.Provider>\n  );\n}\n\nexport const useTheme = () => {\n  const context = useContext(ThemeProviderContext);\n  if (context === undefined) {\n    throw new Error('useTheme must be used within a ThemeProvider');\n  }\n  return context;\n};\n```\n\nCreate a theme toggle component:\n\n```typescript\n// src/components/theme-toggle.tsx\n'use client';\n\nimport { Moon, Sun } from 'lucide-react';\nimport { useTheme } from '@/components/theme-provider';\nimport { Button } from '@/components/ui/button';\n\nexport function ThemeToggle() {\n  const { theme, setTheme } = useTheme();\n\n  return (\n    <Button\n      variant=\"ghost\"\n      size=\"icon\"\n      onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}\n    >\n      {theme === 'light' ? <Moon className=\"h-5 w-5\" /> : <Sun className=\"h-5 w-5\" />}\n      <span className=\"sr-only\">Toggle theme</span>\n    </Button>\n  );\n}\n```\n\nAdd the ThemeProvider to the root layout:\n\n```tsx\n// src/app/layout.tsx\nimport { ThemeProvider } from '@/components/theme-provider';\n\nexport default function RootLayout({ children }) {\n  return (\n    <html lang=\"en\" suppressHydrationWarning>\n      <body>\n        <ThemeProvider>\n          {children}\n        </ThemeProvider>\n      </body>\n    </html>\n  );\n}\n```",
-        "testStrategy": "Test dark mode by toggling between light and dark themes and verifying all components render correctly in both modes. Test system preference detection by changing the system theme. Verify that the theme persists across page refreshes using local storage.",
+        "title": "Update Hero Section",
+        "description": "Integrate the new HeroSection component with call-to-action functionality.",
+        "details": "Replace the existing Hero section with the new HeroSection component, ensuring call-to-action and lead capture integration are maintained.",
+        "testStrategy": "Test call-to-action buttons and lead capture forms for functionality.",
         "priority": "medium",
         "dependencies": [
-          7
+          5
         ],
         "status": "pending",
         "subtasks": []
       },
       {
         "id": 9,
-        "title": "Implement Accessibility Standards",
-        "description": "Ensure all components meet WCAG 2.1 AA accessibility standards including proper contrast, keyboard navigation, and screen reader support.",
-        "details": "For each component, implement the following accessibility features:\n\n1. Ensure proper color contrast (minimum 4.5:1 for normal text, 3:1 for large text)\n2. Add proper ARIA attributes\n3. Implement keyboard navigation\n4. Ensure screen reader compatibility\n\nExample for Button component:\n\n```typescript\n// src/components/ui/button.tsx\nimport { forwardRef } from 'react';\nimport { Slot } from '@radix-ui/react-slot';\nimport { cva, type VariantProps } from 'class-variance-authority';\nimport { cn } from '@/lib/utils';\n\n// Button variants definition\n\ninterface ButtonProps\n  extends React.ButtonHTMLAttributes<HTMLButtonElement>,\n    VariantProps<typeof buttonVariants> {\n  asChild?: boolean;\n}\n\nconst Button = forwardRef<HTMLButtonElement, ButtonProps>(\n  ({ className, variant, size, asChild = false, ...props }, ref) => {\n    const Comp = asChild ? Slot : 'button';\n    return (\n      <Comp\n        className={cn(buttonVariants({ variant, size, className }))}\n        ref={ref}\n        {...props}\n      />\n    );\n  }\n);\nButton.displayName = 'Button';\n\nexport { Button, buttonVariants };\n```\n\nImplement focus styles for all interactive elements:\n\n```css\n@layer base {\n  :focus-visible {\n    @apply outline-none ring-2 ring-primary ring-offset-2;\n  }\n}\n```\n\nTest all components with keyboard navigation and screen readers.",
-        "testStrategy": "Use accessibility testing tools like axe-core or Lighthouse to verify WCAG 2.1 AA compliance. Test keyboard navigation by ensuring all interactive elements can be accessed and activated using only the keyboard. Test screen reader compatibility using NVDA or VoiceOver.",
-        "priority": "high",
+        "title": "Integrate Training Programs Component",
+        "description": "Add the new TrainingPrograms component to display course data.",
+        "details": "Integrate the TrainingPrograms component, ensuring all existing course data is displayed and program selection functionality is maintained.",
+        "testStrategy": "Verify that all courses are displayed correctly and can be selected.",
+        "priority": "medium",
         "dependencies": [
-          7
+          5
         ],
         "status": "pending",
         "subtasks": []
       },
       {
         "id": 10,
-        "title": "Create New Header Component",
-        "description": "Replace the current header with the new design system Header component while maintaining all navigation functionality.",
-        "details": "Create a new Header component using the design system:\n\n```tsx\n// src/components/header.tsx\n'use client';\n\nimport { useState } from 'react';\nimport Link from 'next/link';\nimport { usePathname } from 'next/navigation';\nimport { Menu, X } from 'lucide-react';\nimport { Button } from '@/components/ui/button';\nimport { ThemeToggle } from '@/components/theme-toggle';\n\nconst navigation = [\n  { name: 'Home', href: '/' },\n  { name: 'Programs', href: '/programs' },\n  { name: 'About', href: '/about' },\n  { name: 'Contact', href: '/contact' },\n  // Add all existing navigation items\n];\n\nexport function Header() {\n  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);\n  const pathname = usePathname();\n\n  return (\n    <header className=\"bg-background sticky top-0 z-40 w-full border-b\">\n      <nav className=\"mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8\" aria-label=\"Global\">\n        <div className=\"flex lg:flex-1\">\n          <Link href=\"/\" className=\"-m-1.5 p-1.5\">\n            <span className=\"sr-only\">JIT.EDU.PH</span>\n            <img\n              className=\"h-8 w-auto\"\n              src=\"/logo.png\"\n              alt=\"JIT Logo\"\n            />\n          </Link>\n        </div>\n        <div className=\"flex lg:hidden\">\n          <Button\n            variant=\"ghost\"\n            size=\"icon\"\n            onClick={() => setMobileMenuOpen(true)}\n          >\n            <span className=\"sr-only\">Open main menu</span>\n            <Menu className=\"h-6 w-6\" aria-hidden=\"true\" />\n          </Button>\n        </div>\n        <div className=\"hidden lg:flex lg:gap-x-12\">\n          {navigation.map((item) => (\n            <Link\n              key={item.name}\n              href={item.href}\n              className={`text-sm font-semibold leading-6 ${pathname === item.href ? 'text-primary' : 'text-foreground hover:text-primary'}`}\n            >\n              {item.name}\n            </Link>\n          ))}\n        </div>\n        <div className=\"hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4\">\n          <ThemeToggle />\n          <Button asChild>\n            <Link href=\"/contact\">Get Started</Link>\n          </Button>\n        </div>\n      </nav>\n      \n      {/* Mobile menu */}\n      {mobileMenuOpen && (\n        <div className=\"lg:hidden\">\n          <div className=\"fixed inset-0 z-50\" />\n          <div className=\"fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-background px-6 py-6 sm:max-w-sm\">\n            <div className=\"flex items-center justify-between\">\n              <Link href=\"/\" className=\"-m-1.5 p-1.5\">\n                <span className=\"sr-only\">JIT.EDU.PH</span>\n                <img\n                  className=\"h-8 w-auto\"\n                  src=\"/logo.png\"\n                  alt=\"JIT Logo\"\n                />\n              </Link>\n              <Button\n                variant=\"ghost\"\n                size=\"icon\"\n                onClick={() => setMobileMenuOpen(false)}\n              >\n                <span className=\"sr-only\">Close menu</span>\n                <X className=\"h-6 w-6\" aria-hidden=\"true\" />\n              </Button>\n            </div>\n            <div className=\"mt-6 flow-root\">\n              <div className=\"-my-6 divide-y divide-gray-200\">\n                <div className=\"space-y-2 py-6\">\n                  {navigation.map((item) => (\n                    <Link\n                      key={item.name}\n                      href={item.href}\n                      className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 ${pathname === item.href ? 'text-primary' : 'text-foreground hover:text-primary'}`}\n                      onClick={() => setMobileMenuOpen(false)}\n                    >\n                      {item.name}\n                    </Link>\n                  ))}\n                </div>\n                <div className=\"py-6\">\n                  <Button className=\"w-full\" asChild>\n                    <Link href=\"/contact\">Get Started</Link>\n                  </Button>\n                  <div className=\"mt-4 flex justify-center\">\n                    <ThemeToggle />\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      )}\n    </header>\n  );\n}\n```\n\nReplace the existing header in the layout:\n\n```tsx\n// src/app/layout.tsx\nimport { Header } from '@/components/header';\n\nexport default function RootLayout({ children }) {\n  return (\n    <html lang=\"en\" suppressHydrationWarning>\n      <body>\n        <ThemeProvider>\n          <Header />\n          <main>{children}</main>\n          <Footer />\n        </ThemeProvider>\n      </body>\n    </html>\n  );\n}\n```",
-        "testStrategy": "Test the header component by verifying all navigation links work correctly. Test mobile menu functionality by resizing the browser window and clicking the menu button. Verify that the active page is correctly highlighted. Test keyboard navigation and ensure the header is accessible.",
-        "priority": "high",
+        "title": "Add Program Detail Pages",
+        "description": "Integrate TrainingProgramLanding component and add specific program pages.",
+        "details": "Add the TrainingProgramLanding component and implement the WebDevelopmentProgram page, ensuring proper routing between pages.",
+        "testStrategy": "Test navigation to and from program detail pages to ensure routing works correctly.",
+        "priority": "medium",
         "dependencies": [
-          7,
-          8,
           9
         ],
         "status": "pending",
@@ -570,56 +244,50 @@
       },
       {
         "id": 11,
-        "title": "Create New Footer Component",
-        "description": "Replace the current footer with the new design system Footer component while preserving all footer links and contact information.",
-        "details": "Create a new Footer component using the design system:\n\n```tsx\n// src/components/footer.tsx\nimport Link from 'next/link';\nimport { Input } from '@/components/ui/input';\nimport { Button } from '@/components/ui/button';\n\nconst navigation = {\n  main: [\n    { name: 'Home', href: '/' },\n    { name: 'Programs', href: '/programs' },\n    { name: 'About', href: '/about' },\n    { name: 'Contact', href: '/contact' },\n    // Add all existing navigation items\n  ],\n  social: [\n    {\n      name: 'Facebook',\n      href: '#',\n      icon: (props) => (\n        <svg fill=\"currentColor\" viewBox=\"0 0 24 24\" {...props}>\n          <path\n            fillRule=\"evenodd\"\n            d=\"M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z\"\n            clipRule=\"evenodd\"\n          />\n        </svg>\n      ),\n    },\n    // Add all social media links\n  ],\n};\n\nexport function Footer() {\n  return (\n    <footer className=\"bg-background border-t\">\n      <div className=\"mx-auto max-w-7xl overflow-hidden px-6 py-12 sm:py-16 lg:px-8\">\n        <nav className=\"-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12\" aria-label=\"Footer\">\n          {navigation.main.map((item) => (\n            <div key={item.name} className=\"pb-6\">\n              <Link href={item.href} className=\"text-sm leading-6 text-foreground hover:text-primary\">\n                {item.name}\n              </Link>\n            </div>\n          ))}\n        </nav>\n        <div className=\"mt-10 sm:mt-12\">\n          <p className=\"text-center text-xs leading-5 text-muted-foreground\">\n            Subscribe to our newsletter\n          </p>\n          <form className=\"mt-6 sm:mx-auto sm:max-w-xl sm:flex\">\n            <div className=\"min-w-0 flex-1\">\n              <Input\n                type=\"email\"\n                placeholder=\"Enter your email\"\n                required\n              />\n            </div>\n            <div className=\"mt-4 sm:mt-0 sm:ml-4\">\n              <Button type=\"submit\">Subscribe</Button>\n            </div>\n          </form>\n        </div>\n        <div className=\"mt-10 flex justify-center space-x-10\">\n          {navigation.social.map((item) => (\n            <Link key={item.name} href={item.href} className=\"text-muted-foreground hover:text-foreground\">\n              <span className=\"sr-only\">{item.name}</span>\n              <item.icon className=\"h-6 w-6\" aria-hidden=\"true\" />\n            </Link>\n          ))}\n        </div>\n        <p className=\"mt-10 text-center text-xs leading-5 text-muted-foreground\">\n          &copy; {new Date().getFullYear()} JIT.EDU.PH. All rights reserved.\n        </p>\n      </div>\n    </footer>\n  );\n}\n```\n\nReplace the existing footer in the layout:\n\n```tsx\n// src/app/layout.tsx\nimport { Footer } from '@/components/footer';\n\nexport default function RootLayout({ children }) {\n  return (\n    <html lang=\"en\" suppressHydrationWarning>\n      <body>\n        <ThemeProvider>\n          <Header />\n          <main>{children}</main>\n          <Footer />\n        </ThemeProvider>\n      </body>\n    </html>\n  );\n}\n```",
-        "testStrategy": "Test the footer component by verifying all links work correctly. Test the newsletter signup form by submitting a test email. Verify that all social media links are correct. Test the footer in both light and dark modes. Ensure the footer is responsive on mobile devices.",
+        "title": "Component Testing",
+        "description": "Develop unit tests for all new components.",
+        "details": "Write unit tests for each new component using a testing framework like Jest. Focus on interactive elements and form submissions.",
+        "testStrategy": "Run unit tests and ensure all pass with adequate coverage.",
         "priority": "high",
         "dependencies": [
-          7,
-          8,
-          9
+          10
         ],
         "status": "pending",
         "subtasks": []
       },
       {
         "id": 12,
-        "title": "Create Hero Section Component",
-        "description": "Integrate the new HeroSection component while preserving call-to-action functionality and lead capture integration.",
-        "details": "Create a new HeroSection component using the design system:\n\n```tsx\n// src/components/hero-section.tsx\nimport Link from 'next/link';\nimport { Button } from '@/components/ui/button';\n\nexport function HeroSection() {\n  return (\n    <div className=\"relative isolate overflow-hidden bg-background\">\n      <div className=\"absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80\">\n        <div\n          className=\"relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-primary to-purple-500 opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]\"\n          style={{\n            clipPath:\n              'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',\n          }}\n        />\n      </div>\n      <div className=\"mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 lg:py-40\">\n        <div className=\"mx-auto max-w-2xl text-center\">\n          <h1 className=\"text-4xl font-bold tracking-tight text-foreground sm:text-6xl\">\n            Accelerate Your Tech Career with JIT\n          </h1>\n          <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n            Join our industry-focused training programs and gain the skills you need to succeed in today's tech industry.\n          </p>\n          <div className=\"mt-10 flex items-center justify-center gap-x-6\">\n            <Button asChild size=\"lg\">\n              <Link href=\"/programs\">Explore Programs</Link>\n            </Button>\n            <Button variant=\"outline\" asChild size=\"lg\">\n              <Link href=\"/contact\">Contact Us</Link>\n            </Button>\n          </div>\n        </div>\n      </div>\n      <div className=\"absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]\">\n        <div\n          className=\"relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-primary to-purple-500 opacity-20 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]\"\n          style={{\n            clipPath:\n              'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',\n          }}\n        />\n      </div>\n    </div>\n  );\n}\n```\n\nUpdate the home page to use the new HeroSection:\n\n```tsx\n// src/app/page.tsx\nimport { HeroSection } from '@/components/hero-section';\n\nexport default function Home() {\n  return (\n    <div>\n      <HeroSection />\n      {/* Other sections */}\n    </div>\n  );\n}\n```",
-        "testStrategy": "Test the hero section by verifying all call-to-action buttons work correctly. Verify that the component is responsive on different screen sizes. Test the component in both light and dark modes. Ensure the hero section is accessible to screen readers and keyboard navigation.",
+        "title": "Integration Testing",
+        "description": "Conduct integration tests for navigation and functionality.",
+        "details": "Test navigation between pages, lead capture functionality, and Supabase integration using a testing framework like Cypress.",
+        "testStrategy": "Run integration tests and verify all critical paths are functional.",
         "priority": "high",
         "dependencies": [
-          7,
-          8,
-          9
+          11
         ],
         "status": "pending",
         "subtasks": []
       },
       {
         "id": 13,
-        "title": "Create Training Programs Component",
-        "description": "Add the new TrainingPrograms component that displays all existing course data and maintains program selection functionality.",
-        "details": "Create a new TrainingPrograms component using the design system:\n\n```tsx\n// src/components/training-programs.tsx\nimport Link from 'next/link';\nimport { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';\nimport { Badge } from '@/components/ui/badge';\nimport { Button } from '@/components/ui/button';\n\ntype Program = {\n  id: string;\n  title: string;\n  description: string;\n  duration: string;\n  level: 'Beginner' | 'Intermediate' | 'Advanced';\n  slug: string;\n};\n\nconst programs: Program[] = [\n  {\n    id: '1',\n    title: 'Web Development Bootcamp',\n    description: 'Learn full-stack web development with modern JavaScript frameworks.',\n    duration: '12 weeks',\n    level: 'Beginner',\n    slug: 'web-development',\n  },\n  // Add all existing programs\n];\n\nexport function TrainingPrograms() {\n  return (\n    <div className=\"bg-background py-24 sm:py-32\">\n      <div className=\"mx-auto max-w-7xl px-6 lg:px-8\">\n        <div className=\"mx-auto max-w-2xl text-center\">\n          <h2 className=\"text-3xl font-bold tracking-tight text-foreground sm:text-4xl\">Our Training Programs</h2>\n          <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n            Choose from our industry-focused training programs designed to help you succeed in today's tech industry.\n          </p>\n        </div>\n        <div className=\"mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3\">\n          {programs.map((program) => (\n            <Card key={program.id} className=\"flex flex-col justify-between\">\n              <CardHeader>\n                <div className=\"flex justify-between items-start\">\n                  <CardTitle className=\"text-xl font-semibold\">{program.title}</CardTitle>\n                  <Badge variant={program.level === 'Beginner' ? 'default' : program.level === 'Intermediate' ? 'secondary' : 'outline'}>\n                    {program.level}\n                  </Badge>\n                </div>\n                <CardDescription className=\"mt-2\">{program.duration}</CardDescription>\n              </CardHeader>\n              <CardContent>\n                <p className=\"text-muted-foreground\">{program.description}</p>\n              </CardContent>\n              <CardFooter>\n                <Button asChild className=\"w-full\">\n                  <Link href={`/programs/${program.slug}`}>Learn More</Link>\n                </Button>\n              </CardFooter>\n            </Card>\n          ))}\n        </div>\n      </div>\n    </div>\n  );\n}\n```\n\nUpdate the home page or programs page to use the new TrainingPrograms component:\n\n```tsx\n// src/app/programs/page.tsx\nimport { TrainingPrograms } from '@/components/training-programs';\n\nexport default function ProgramsPage() {\n  return (\n    <div>\n      <TrainingPrograms />\n    </div>\n  );\n}\n```",
-        "testStrategy": "Test the training programs component by verifying all program cards display correctly. Test the \"Learn More\" buttons to ensure they navigate to the correct program detail pages. Verify that the component is responsive on different screen sizes. Test the component in both light and dark modes.",
+        "title": "Responsive Testing",
+        "description": "Ensure the application is responsive across all devices.",
+        "details": "Test the application on mobile, tablet, and desktop devices to ensure proper display and functionality.",
+        "testStrategy": "Use browser developer tools to simulate different screen sizes and test responsiveness.",
         "priority": "high",
         "dependencies": [
-          7,
-          8,
-          9
+          12
         ],
         "status": "pending",
         "subtasks": []
       },
       {
         "id": 14,
-        "title": "Create Training Program Landing Component",
-        "description": "Integrate the TrainingProgramLanding component for displaying detailed information about specific training programs.",
-        "details": "Create a new TrainingProgramLanding component using the design system:\n\n```tsx\n// src/components/training-program-landing.tsx\nimport Link from 'next/link';\nimport { Button } from '@/components/ui/button';\nimport { Badge } from '@/components/ui/badge';\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';\n\ntype ProgramProps = {\n  title: string;\n  description: string;\n  duration: string;\n  level: 'Beginner' | 'Intermediate' | 'Advanced';\n  curriculum: {\n    title: string;\n    description: string;\n  }[];\n  instructors: {\n    name: string;\n    role: string;\n    bio: string;\n    image: string;\n  }[];\n  faqs: {\n    question: string;\n    answer: string;\n  }[];\n};\n\nexport function TrainingProgramLanding({\n  title,\n  description,\n  duration,\n  level,\n  curriculum,\n  instructors,\n  faqs,\n}: ProgramProps) {\n  return (\n    <div className=\"bg-background\">\n      {/* Hero section */}\n      <div className=\"relative isolate overflow-hidden pt-14\">\n        <div className=\"mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8\">\n          <div className=\"mx-auto max-w-2xl text-center\">\n            <Badge className=\"mb-4\">{level}</Badge>\n            <h1 className=\"text-4xl font-bold tracking-tight text-foreground sm:text-6xl\">\n              {title}\n            </h1>\n            <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n              {description}\n            </p>\n            <p className=\"mt-4 text-base font-semibold\">\n              Duration: {duration}\n            </p>\n            <div className=\"mt-10 flex items-center justify-center gap-x-6\">\n              <Button asChild size=\"lg\">\n                <Link href=\"/contact?program=${encodeURIComponent(title)}\">Apply Now</Link>\n              </Button>\n              <Button variant=\"outline\" asChild size=\"lg\">\n                <Link href=\"/programs\">View All Programs</Link>\n              </Button>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      {/* Tabs section */}\n      <div className=\"mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8\">\n        <Tabs defaultValue=\"curriculum\" className=\"w-full\">\n          <TabsList className=\"grid w-full grid-cols-3\">\n            <TabsTrigger value=\"curriculum\">Curriculum</TabsTrigger>\n            <TabsTrigger value=\"instructors\">Instructors</TabsTrigger>\n            <TabsTrigger value=\"faqs\">FAQs</TabsTrigger>\n          </TabsList>\n          <TabsContent value=\"curriculum\" className=\"mt-6\">\n            <div className=\"space-y-8\">\n              {curriculum.map((item, index) => (\n                <div key={index} className=\"border-b pb-6 last:border-0\">\n                  <h3 className=\"text-lg font-semibold\">{item.title}</h3>\n                  <p className=\"mt-2 text-muted-foreground\">{item.description}</p>\n                </div>\n              ))}\n            </div>\n          </TabsContent>\n          <TabsContent value=\"instructors\" className=\"mt-6\">\n            <div className=\"grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3\">\n              {instructors.map((instructor, index) => (\n                <div key={index} className=\"flex flex-col items-center text-center\">\n                  <img\n                    className=\"h-24 w-24 rounded-full object-cover\"\n                    src={instructor.image}\n                    alt={instructor.name}\n                  />\n                  <h3 className=\"mt-4 text-lg font-semibold\">{instructor.name}</h3>\n                  <p className=\"text-sm text-muted-foreground\">{instructor.role}</p>\n                  <p className=\"mt-2 text-sm text-muted-foreground\">{instructor.bio}</p>\n                </div>\n              ))}\n            </div>\n          </TabsContent>\n          <TabsContent value=\"faqs\" className=\"mt-6\">\n            <div className=\"space-y-8\">\n              {faqs.map((faq, index) => (\n                <div key={index} className=\"border-b pb-6 last:border-0\">\n                  <h3 className=\"text-lg font-semibold\">{faq.question}</h3>\n                  <p className=\"mt-2 text-muted-foreground\">{faq.answer}</p>\n                </div>\n              ))}\n            </div>\n          </TabsContent>\n        </Tabs>\n      </div>\n    </div>\n  );\n}\n```",
-        "testStrategy": "Test the training program landing component by verifying all sections (hero, curriculum, instructors, FAQs) display correctly. Test the tabs to ensure they switch content correctly. Test the \"Apply Now\" and \"View All Programs\" buttons. Verify that the component is responsive on different screen sizes. Test the component in both light and dark modes.",
-        "priority": "high",
+        "title": "Code Cleanup",
+        "description": "Remove unused components and ensure consistent codebase.",
+        "details": "Identify and remove unused components, ensure consistent import paths, and remove duplicate styles.",
+        "testStrategy": "Review the codebase to ensure no unused components or styles remain.",
+        "priority": "medium",
         "dependencies": [
           13
         ],
@@ -628,192 +296,21 @@
       },
       {
         "id": 15,
-        "title": "Create Web Development Program Page",
-        "description": "Create a specific implementation of the TrainingProgramLanding component for the Web Development Program.",
-        "details": "Create a new page for the Web Development Program:\n\n```tsx\n// src/app/programs/web-development/page.tsx\nimport { TrainingProgramLanding } from '@/components/training-program-landing';\n\nconst webDevelopmentProgram = {\n  title: 'Web Development Bootcamp',\n  description: 'Learn full-stack web development with modern JavaScript frameworks. This comprehensive program covers front-end and back-end technologies to prepare you for a career in web development.',\n  duration: '12 weeks',\n  level: 'Beginner' as const,\n  curriculum: [\n    {\n      title: 'Module 1: HTML & CSS Fundamentals',\n      description: 'Learn the building blocks of the web. Master HTML5 semantic elements and CSS3 styling including flexbox and grid layouts.',\n    },\n    {\n      title: 'Module 2: JavaScript Essentials',\n      description: 'Dive into modern JavaScript (ES6+). Learn variables, functions, objects, arrays, and asynchronous programming with Promises and async/await.',\n    },\n    {\n      title: 'Module 3: React Framework',\n      description: 'Build interactive UIs with React. Learn components, props, state, hooks, and context API for state management.',\n    },\n    {\n      title: 'Module 4: Backend Development with Node.js',\n      description: 'Create server-side applications with Node.js and Express. Learn RESTful API design, middleware, and database integration.',\n    },\n    {\n      title: 'Module 5: Database Integration',\n      description: 'Work with SQL and NoSQL databases. Learn data modeling, queries, and how to integrate databases with your applications.',\n    },\n    {\n      title: 'Module 6: Capstone Project',\n      description: 'Apply everything you've learned to build a full-stack web application from scratch. Deploy your application to the cloud.',\n    },\n  ],\n  instructors: [\n    {\n      name: 'John Doe',\n      role: 'Lead Instructor',\n      bio: '10+ years of experience in web development. Former senior developer at Tech Corp.',\n      image: '/images/instructors/john-doe.jpg',\n    },\n    {\n      name: 'Jane Smith',\n      role: 'Assistant Instructor',\n      bio: 'Full-stack developer specializing in React and Node.js. Open source contributor.',\n      image: '/images/instructors/jane-smith.jpg',\n    },\n  ],\n  faqs: [\n    {\n      question: 'Do I need prior programming experience?',\n      answer: 'No prior experience is required. The program is designed for beginners and starts with the fundamentals.',\n    },\n    {\n      question: 'What equipment do I need?',\n      answer: 'You will need a laptop with at least 8GB RAM and a modern operating system (Windows 10+, macOS, or Linux).',\n    },\n    {\n      question: 'Is there job placement assistance?',\n      answer: 'Yes, we offer career services including resume reviews, interview preparation, and connections with hiring partners.',\n    },\n    {\n      question: 'What is the class schedule?',\n      answer: 'Classes are held Monday through Friday from 9am to 4pm. Additional lab hours are available in the evenings.',\n    },\n  ],\n};\n\nexport default function WebDevelopmentPage() {\n  return <TrainingProgramLanding {...webDevelopmentProgram} />;\n}\n```\n\nEnsure the page is properly linked from the TrainingPrograms component.",
-        "testStrategy": "Test the web development program page by verifying all content displays correctly. Test the tabs to ensure they switch content correctly. Test the \"Apply Now\" and \"View All Programs\" buttons. Verify that the page is accessible from the training programs list. Test the page in both light and dark modes. Verify that the page is responsive on different screen sizes.",
+        "title": "Performance Optimization",
+        "description": "Optimize performance to maintain or improve page load times.",
+        "details": "Optimize images and assets, ensure smooth animations, and verify page load times remain under 3 seconds on 3G networks.",
+        "testStrategy": "Use performance testing tools to measure page load times and optimize as needed.",
         "priority": "medium",
         "dependencies": [
           14
         ],
         "status": "pending",
         "subtasks": []
-      },
-      {
-        "id": 16,
-        "title": "Create Contact Form Component",
-        "description": "Create a contact form component using the design system components to maintain lead capture functionality.",
-        "details": "Create a new ContactForm component using the design system:\n\n```tsx\n// src/components/contact-form.tsx\n'use client';\n\nimport { useState } from 'react';\nimport { useSearchParams } from 'next/navigation';\nimport { z } from 'zod';\nimport { useForm } from 'react-hook-form';\nimport { zodResolver } from '@hookform/resolvers/zod';\nimport { Button } from '@/components/ui/button';\nimport { Input } from '@/components/ui/input';\nimport { Textarea } from '@/components/ui/textarea';\nimport { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';\nimport { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';\nimport { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';\nimport { CheckCircle2 } from 'lucide-react';\n\nconst formSchema = z.object({\n  name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),\n  email: z.string().email({ message: 'Please enter a valid email address.' }),\n  phone: z.string().optional(),\n  program: z.string().optional(),\n  message: z.string().min(10, { message: 'Message must be at least 10 characters.' }),\n});\n\ntype FormValues = z.infer<typeof formSchema>;\n\nexport function ContactForm() {\n  const [isSubmitting, setIsSubmitting] = useState(false);\n  const [isSuccess, setIsSuccess] = useState(false);\n  const [error, setError] = useState<string | null>(null);\n  \n  const searchParams = useSearchParams();\n  const programParam = searchParams.get('program');\n  \n  const form = useForm<FormValues>({\n    resolver: zodResolver(formSchema),\n    defaultValues: {\n      name: '',\n      email: '',\n      phone: '',\n      program: programParam || '',\n      message: '',\n    },\n  });\n\n  async function onSubmit(data: FormValues) {\n    setIsSubmitting(true);\n    setError(null);\n    \n    try {\n      // Replace with your actual form submission logic\n      // For example, using the existing server action\n      // const result = await submitContactForm(data);\n      \n      // Simulate API call\n      await new Promise(resolve => setTimeout(resolve, 1000));\n      \n      setIsSuccess(true);\n      form.reset();\n    } catch (err) {\n      setError('An error occurred. Please try again.');\n      console.error(err);\n    } finally {\n      setIsSubmitting(false);\n    }\n  }\n\n  return (\n    <div className=\"mx-auto max-w-2xl\">\n      {isSuccess ? (\n        <Alert className=\"bg-green-50 border-green-200 dark:bg-green-950 dark:border-green-900\">\n          <CheckCircle2 className=\"h-4 w-4 text-green-600 dark:text-green-400\" />\n          <AlertTitle>Success!</AlertTitle>\n          <AlertDescription>\n            Thank you for your message. We will get back to you shortly.\n          </AlertDescription>\n          <Button\n            variant=\"outline\"\n            className=\"mt-4\"\n            onClick={() => setIsSuccess(false)}\n          >\n            Send another message\n          </Button>\n        </Alert>\n      ) : (\n        <Form {...form}>\n          <form onSubmit={form.handleSubmit(onSubmit)} className=\"space-y-6\">\n            <FormField\n              control={form.control}\n              name=\"name\"\n              render={({ field }) => (\n                <FormItem>\n                  <FormLabel>Name</FormLabel>\n                  <FormControl>\n                    <Input placeholder=\"Your name\" {...field} />\n                  </FormControl>\n                  <FormMessage />\n                </FormItem>\n              )}\n            />\n            \n            <FormField\n              control={form.control}\n              name=\"email\"\n              render={({ field }) => (\n                <FormItem>\n                  <FormLabel>Email</FormLabel>\n                  <FormControl>\n                    <Input placeholder=\"your.email@example.com\" {...field} />\n                  </FormControl>\n                  <FormMessage />\n                </FormItem>\n              )}\n            />\n            \n            <FormField\n              control={form.control}\n              name=\"phone\"\n              render={({ field }) => (\n                <FormItem>\n                  <FormLabel>Phone (optional)</FormLabel>\n                  <FormControl>\n                    <Input placeholder=\"Your phone number\" {...field} />\n                  </FormControl>\n                  <FormMessage />\n                </FormItem>\n              )}\n            />\n            \n            <FormField\n              control={form.control}\n              name=\"program\"\n              render={({ field }) => (\n                <FormItem>\n                  <FormLabel>Program of Interest (optional)</FormLabel>\n                  <Select\n                    onValueChange={field.onChange}\n                    defaultValue={field.value}\n                  >\n                    <FormControl>\n                      <SelectTrigger>\n                        <SelectValue placeholder=\"Select a program\" />\n                      </SelectTrigger>\n                    </FormControl>\n                    <SelectContent>\n                      <SelectItem value=\"\">None</SelectItem>\n                      <SelectItem value=\"web-development\">Web Development Bootcamp</SelectItem>\n                      <SelectItem value=\"data-science\">Data Science Program</SelectItem>\n                      <SelectItem value=\"cybersecurity\">Cybersecurity Training</SelectItem>\n                      {/* Add all available programs */}\n                    </SelectContent>\n                  </Select>\n                  <FormMessage />\n                </FormItem>\n              )}\n            />\n            \n            <FormField\n              control={form.control}\n              name=\"message\"\n              render={({ field }) => (\n                <FormItem>\n                  <FormLabel>Message</FormLabel>\n                  <FormControl>\n                    <Textarea\n                      placeholder=\"How can we help you?\"\n                      className=\"min-h-32\"\n                      {...field}\n                    />\n                  </FormControl>\n                  <FormMessage />\n                </FormItem>\n              )}\n            />\n            \n            {error && (\n              <Alert variant=\"destructive\">\n                <AlertTitle>Error</AlertTitle>\n                <AlertDescription>{error}</AlertDescription>\n              </Alert>\n            )}\n            \n            <Button type=\"submit\" className=\"w-full\" disabled={isSubmitting}>\n              {isSubmitting ? 'Sending...' : 'Send Message'}\n            </Button>\n          </form>\n        </Form>\n      )}\n    </div>\n  );\n}\n```\n\nCreate a contact page that uses this form:\n\n```tsx\n// src/app/contact/page.tsx\nimport { ContactForm } from '@/components/contact-form';\n\nexport default function ContactPage() {\n  return (\n    <div className=\"bg-background py-24 sm:py-32\">\n      <div className=\"mx-auto max-w-7xl px-6 lg:px-8\">\n        <div className=\"mx-auto max-w-2xl text-center\">\n          <h1 className=\"text-3xl font-bold tracking-tight text-foreground sm:text-4xl\">Contact Us</h1>\n          <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n            Have questions about our programs? Get in touch with our team.\n          </p>\n        </div>\n        <div className=\"mx-auto mt-16 max-w-2xl\">\n          <ContactForm />\n        </div>\n      </div>\n    </div>\n  );\n}\n```",
-        "testStrategy": "Test the contact form by filling out all fields and submitting the form. Verify that form validation works correctly for required fields and email format. Test the success state by submitting a valid form. Test error handling by simulating a failed submission. Verify that the form pre-fills the program field when accessed with a query parameter. Test the form in both light and dark modes.",
-        "priority": "high",
-        "dependencies": [
-          7,
-          8,
-          9
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 17,
-        "title": "Create About Page Component",
-        "description": "Create an About page component using the design system to maintain information about JIT.EDU.PH.",
-        "details": "Create a new About page component using the design system:\n\n```tsx\n// src/app/about/page.tsx\nimport Link from 'next/link';\nimport { Button } from '@/components/ui/button';\n\nexport default function AboutPage() {\n  return (\n    <div className=\"bg-background\">\n      {/* Hero section */}\n      <div className=\"relative isolate overflow-hidden pt-14\">\n        <div className=\"mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8\">\n          <div className=\"mx-auto max-w-2xl text-center\">\n            <h1 className=\"text-4xl font-bold tracking-tight text-foreground sm:text-6xl\">\n              About JIT.EDU.PH\n            </h1>\n            <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n              We are dedicated to providing high-quality tech education that prepares students for real-world careers.\n            </p>\n          </div>\n        </div>\n      </div>\n\n      {/* Mission section */}\n      <div className=\"bg-muted/50 py-24 sm:py-32\">\n        <div className=\"mx-auto max-w-7xl px-6 lg:px-8\">\n          <div className=\"mx-auto max-w-2xl lg:text-center\">\n            <h2 className=\"text-3xl font-bold tracking-tight text-foreground sm:text-4xl\">Our Mission</h2>\n            <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n              To bridge the gap between traditional education and industry requirements by providing practical, hands-on training that prepares students for immediate employment in the tech industry.\n            </p>\n          </div>\n        </div>\n      </div>\n\n      {/* Values section */}\n      <div className=\"py-24 sm:py-32\">\n        <div className=\"mx-auto max-w-7xl px-6 lg:px-8\">\n          <div className=\"mx-auto max-w-2xl lg:text-center\">\n            <h2 className=\"text-3xl font-bold tracking-tight text-foreground sm:text-4xl\">Our Values</h2>\n            <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n              We believe in practical education, industry relevance, and student success.\n            </p>\n          </div>\n          <div className=\"mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none\">\n            <dl className=\"grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3\">\n              <div className=\"flex flex-col\">\n                <dt className=\"text-xl font-semibold leading-7 text-foreground\">Practical Education</dt>\n                <dd className=\"mt-4 flex flex-auto flex-col text-base leading-7 text-muted-foreground\">\n                  <p className=\"flex-auto\">\n                    We focus on hands-on learning and real-world projects that build practical skills employers value.\n                  </p>\n                </dd>\n              </div>\n              <div className=\"flex flex-col\">\n                <dt className=\"text-xl font-semibold leading-7 text-foreground\">Industry Relevance</dt>\n                <dd className=\"mt-4 flex flex-auto flex-col text-base leading-7 text-muted-foreground\">\n                  <p className=\"flex-auto\">\n                    Our curriculum is designed with input from industry professionals to ensure it meets current market needs.\n                  </p>\n                </dd>\n              </div>\n              <div className=\"flex flex-col\">\n                <dt className=\"text-xl font-semibold leading-7 text-foreground\">Student Success</dt>\n                <dd className=\"mt-4 flex flex-auto flex-col text-base leading-7 text-muted-foreground\">\n                  <p className=\"flex-auto\">\n                    We measure our success by the success of our students in finding employment and advancing their careers.\n                  </p>\n                </dd>\n              </div>\n            </dl>\n          </div>\n        </div>\n      </div>\n\n      {/* CTA section */}\n      <div className=\"bg-primary/5 py-24 sm:py-32\">\n        <div className=\"mx-auto max-w-7xl px-6 lg:px-8\">\n          <div className=\"mx-auto max-w-2xl text-center\">\n            <h2 className=\"text-3xl font-bold tracking-tight text-foreground sm:text-4xl\">Ready to start your journey?</h2>\n            <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n              Join our programs and gain the skills you need to succeed in today's tech industry.\n            </p>\n            <div className=\"mt-10 flex items-center justify-center gap-x-6\">\n              <Button asChild size=\"lg\">\n                <Link href=\"/programs\">Explore Programs</Link>\n              </Button>\n              <Button variant=\"outline\" asChild size=\"lg\">\n                <Link href=\"/contact\">Contact Us</Link>\n              </Button>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}\n```",
-        "testStrategy": "Test the about page by verifying all sections display correctly. Test the \"Explore Programs\" and \"Contact Us\" buttons to ensure they navigate to the correct pages. Verify that the page is responsive on different screen sizes. Test the page in both light and dark modes. Ensure the page is accessible to screen readers and keyboard navigation.",
-        "priority": "medium",
-        "dependencies": [
-          7,
-          8,
-          9
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 18,
-        "title": "Create Testimonials Component",
-        "description": "Create a Testimonials component to showcase student success stories and build trust with visitors.",
-        "details": "Create a new Testimonials component using the design system:\n\n```tsx\n// src/components/testimonials.tsx\nimport { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';\nimport { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';\n\ntype Testimonial = {\n  content: string;\n  author: {\n    name: string;\n    role: string;\n    company: string;\n    image?: string;\n  };\n};\n\ntype TestimonialsProps = {\n  testimonials: Testimonial[];\n};\n\nexport function Testimonials({ testimonials }: TestimonialsProps) {\n  return (\n    <div className=\"bg-muted/50 py-24 sm:py-32\">\n      <div className=\"mx-auto max-w-7xl px-6 lg:px-8\">\n        <div className=\"mx-auto max-w-2xl text-center\">\n          <h2 className=\"text-3xl font-bold tracking-tight text-foreground sm:text-4xl\">What Our Students Say</h2>\n          <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n            Hear from our graduates who have successfully transitioned into tech careers.\n          </p>\n        </div>\n        <div className=\"mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3\">\n          {testimonials.map((testimonial, index) => (\n            <Card key={index} className=\"flex flex-col justify-between\">\n              <CardHeader>\n                <div className=\"flex items-center gap-x-4\">\n                  <Avatar>\n                    {testimonial.author.image ? (\n                      <AvatarImage src={testimonial.author.image} alt={testimonial.author.name} />\n                    ) : (\n                      <AvatarFallback>{testimonial.author.name.charAt(0)}</AvatarFallback>\n                    )}\n                  </Avatar>\n                  <div>\n                    <h3 className=\"text-lg font-semibold\">{testimonial.author.name}</h3>\n                    <p className=\"text-sm text-muted-foreground\">{testimonial.author.role}, {testimonial.author.company}</p>\n                  </div>\n                </div>\n              </CardHeader>\n              <CardContent>\n                <p className=\"text-muted-foreground italic\">\"{testimonial.content}\"</p>\n              </CardContent>\n            </Card>\n          ))}\n        </div>\n      </div>\n    </div>\n  );\n}\n```\n\nUpdate the home page to include the Testimonials component:\n\n```tsx\n// src/app/page.tsx\nimport { HeroSection } from '@/components/hero-section';\nimport { TrainingPrograms } from '@/components/training-programs';\nimport { Testimonials } from '@/components/testimonials';\n\nconst testimonials = [\n  {\n    content: 'The Web Development Bootcamp completely changed my career trajectory. Within a month of graduating, I landed a job as a junior developer at a tech startup.',\n    author: {\n      name: 'Maria Santos',\n      role: 'Frontend Developer',\n      company: 'TechStart Inc.',\n      image: '/images/testimonials/maria.jpg',\n    },\n  },\n  {\n    content: 'The practical, hands-on approach to learning made all the difference. The instructors were knowledgeable and supportive throughout the entire program.',\n    author: {\n      name: 'David Chen',\n      role: 'Full Stack Developer',\n      company: 'Digital Solutions',\n      image: '/images/testimonials/david.jpg',\n    },\n  },\n  {\n    content: 'As someone with no prior tech experience, I was worried about keeping up. The curriculum was well-structured and the mentorship was invaluable in my learning journey.',\n    author: {\n      name: 'Sarah Johnson',\n      role: 'Junior Software Engineer',\n      company: 'InnovateTech',\n      image: '/images/testimonials/sarah.jpg',\n    },\n  },\n];\n\nexport default function Home() {\n  return (\n    <div>\n      <HeroSection />\n      <TrainingPrograms />\n      <Testimonials testimonials={testimonials} />\n      {/* Other sections */}\n    </div>\n  );\n}\n```",
-        "testStrategy": "Test the testimonials component by verifying all testimonial cards display correctly. Verify that the component is responsive on different screen sizes. Test the component in both light and dark modes. Ensure the component is accessible to screen readers and keyboard navigation. Test with and without testimonial images to ensure the avatar fallback works correctly.",
-        "priority": "medium",
-        "dependencies": [
-          7,
-          8,
-          9
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 19,
-        "title": "Create FAQ Component",
-        "description": "Create a FAQ component to answer common questions about the training programs.",
-        "details": "Create a new FAQ component using the design system:\n\n```tsx\n// src/components/faq.tsx\nimport { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';\n\ntype FAQItem = {\n  question: string;\n  answer: string;\n};\n\ntype FAQProps = {\n  faqs: FAQItem[];\n  title?: string;\n  description?: string;\n};\n\nexport function FAQ({ faqs, title = 'Frequently Asked Questions', description }: FAQProps) {\n  return (\n    <div className=\"bg-background py-24 sm:py-32\">\n      <div className=\"mx-auto max-w-7xl px-6 lg:px-8\">\n        <div className=\"mx-auto max-w-2xl lg:text-center\">\n          <h2 className=\"text-3xl font-bold tracking-tight text-foreground sm:text-4xl\">{title}</h2>\n          {description && (\n            <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n              {description}\n            </p>\n          )}\n        </div>\n        <div className=\"mx-auto mt-16 max-w-2xl\">\n          <Accordion type=\"single\" collapsible className=\"w-full\">\n            {faqs.map((faq, index) => (\n              <AccordionItem key={index} value={`item-${index}`}>\n                <AccordionTrigger className=\"text-left\">{faq.question}</AccordionTrigger>\n                <AccordionContent>{faq.answer}</AccordionContent>\n              </AccordionItem>\n            ))}\n          </Accordion>\n        </div>\n      </div>\n    </div>\n  );\n}\n```\n\nUpdate the home page to include the FAQ component:\n\n```tsx\n// src/app/page.tsx\nimport { HeroSection } from '@/components/hero-section';\nimport { TrainingPrograms } from '@/components/training-programs';\nimport { Testimonials } from '@/components/testimonials';\nimport { FAQ } from '@/components/faq';\n\n// Testimonials data\n\nconst faqs = [\n  {\n    question: 'What programs do you offer?',\n    answer: 'We offer a variety of tech training programs including Web Development, Data Science, Cybersecurity, and more. Each program is designed to prepare you for a specific career path in the tech industry.',\n  },\n  {\n    question: 'How long are the programs?',\n    answer: 'Program lengths vary depending on the subject matter. Our bootcamps typically range from 8 to 16 weeks of full-time study, while our part-time programs can extend to 24 weeks.',\n  },\n  {\n    question: 'Do I need prior experience?',\n    answer: 'Most of our programs are designed for beginners and require no prior experience. Some advanced programs may have prerequisites, which will be clearly stated in the program description.',\n  },\n  {\n    question: 'Is financial aid available?',\n    answer: 'Yes, we offer various financial aid options including scholarships, payment plans, and income share agreements. Contact our admissions team to learn more about these options.',\n  },\n  {\n    question: 'What is your job placement rate?',\n    answer: 'Our job placement rate varies by program but averages 85% within six months of graduation. We provide career services to help you find employment after completing your program.',\n  },\n];\n\nexport default function Home() {\n  return (\n    <div>\n      <HeroSection />\n      <TrainingPrograms />\n      <Testimonials testimonials={testimonials} />\n      <FAQ \n        faqs={faqs} \n        description=\"Find answers to commonly asked questions about our programs, admissions process, and more.\"\n      />\n      {/* Other sections */}\n    </div>\n  );\n}\n```",
-        "testStrategy": "Test the FAQ component by verifying all accordion items display correctly and expand/collapse when clicked. Verify that the component is responsive on different screen sizes. Test the component in both light and dark modes. Ensure the component is accessible to screen readers and keyboard navigation. Test with different numbers of FAQ items to ensure the layout remains consistent.",
-        "priority": "medium",
-        "dependencies": [
-          7,
-          8,
-          9
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 20,
-        "title": "Create Stats Component",
-        "description": "Create a Stats component to showcase key metrics about JIT.EDU.PH's success.",
-        "details": "Create a new Stats component using the design system:\n\n```tsx\n// src/components/stats.tsx\ntype Stat = {\n  value: string;\n  label: string;\n  description?: string;\n};\n\ntype StatsProps = {\n  stats: Stat[];\n  title?: string;\n  description?: string;\n};\n\nexport function Stats({ stats, title, description }: StatsProps) {\n  return (\n    <div className=\"bg-primary/5 py-24 sm:py-32\">\n      <div className=\"mx-auto max-w-7xl px-6 lg:px-8\">\n        {(title || description) && (\n          <div className=\"mx-auto max-w-2xl lg:text-center\">\n            {title && (\n              <h2 className=\"text-3xl font-bold tracking-tight text-foreground sm:text-4xl\">{title}</h2>\n            )}\n            {description && (\n              <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n                {description}\n              </p>\n            )}\n          </div>\n        )}\n        <div className=\"mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none\">\n          <dl className=\"grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-4\">\n            {stats.map((stat, index) => (\n              <div key={index} className=\"flex flex-col items-center\">\n                <dt className=\"text-4xl font-bold tracking-tight text-primary\">{stat.value}</dt>\n                <dd className=\"mt-2 text-base font-semibold text-foreground\">{stat.label}</dd>\n                {stat.description && (\n                  <p className=\"mt-1 text-sm text-muted-foreground text-center\">{stat.description}</p>\n                )}\n              </div>\n            ))}\n          </dl>\n        </div>\n      </div>\n    </div>\n  );\n}\n```\n\nUpdate the home page to include the Stats component:\n\n```tsx\n// src/app/page.tsx\nimport { HeroSection } from '@/components/hero-section';\nimport { TrainingPrograms } from '@/components/training-programs';\nimport { Testimonials } from '@/components/testimonials';\nimport { FAQ } from '@/components/faq';\nimport { Stats } from '@/components/stats';\n\n// Other data\n\nconst stats = [\n  {\n    value: '1,200+',\n    label: 'Graduates',\n    description: 'Students who have successfully completed our programs',\n  },\n  {\n    value: '85%',\n    label: 'Job Placement',\n    description: 'Graduates employed within 6 months of program completion',\n  },\n  {\n    value: '50+',\n    label: 'Corporate Partners',\n    description: 'Companies that hire our graduates and contribute to our curriculum',\n  },\n  {\n    value: '4.8/5',\n    label: 'Student Satisfaction',\n    description: 'Average rating from our program graduates',\n  },\n];\n\nexport default function Home() {\n  return (\n    <div>\n      <HeroSection />\n      <Stats \n        stats={stats} \n        title=\"Our Impact\"\n        description=\"We're proud of our track record in helping students launch successful tech careers.\"\n      />\n      <TrainingPrograms />\n      <Testimonials testimonials={testimonials} />\n      <FAQ faqs={faqs} description=\"Find answers to commonly asked questions about our programs, admissions process, and more.\" />\n      {/* Other sections */}\n    </div>\n  );\n}\n```",
-        "testStrategy": "Test the stats component by verifying all stat items display correctly. Verify that the component is responsive on different screen sizes. Test the component in both light and dark modes. Ensure the component is accessible to screen readers and keyboard navigation. Test with different numbers of stat items to ensure the layout adjusts appropriately.",
-        "priority": "low",
-        "dependencies": [
-          7,
-          8,
-          9
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 21,
-        "title": "Create Call-to-Action Component",
-        "description": "Create a reusable Call-to-Action component to encourage visitors to take action.",
-        "details": "Create a new CTA component using the design system:\n\n```tsx\n// src/components/cta.tsx\nimport Link from 'next/link';\nimport { Button } from '@/components/ui/button';\n\ntype CTAProps = {\n  title: string;\n  description: string;\n  primaryAction: {\n    label: string;\n    href: string;\n  };\n  secondaryAction?: {\n    label: string;\n    href: string;\n  };\n  background?: 'default' | 'muted' | 'primary';\n};\n\nexport function CTA({\n  title,\n  description,\n  primaryAction,\n  secondaryAction,\n  background = 'default',\n}: CTAProps) {\n  const bgClasses = {\n    default: 'bg-background',\n    muted: 'bg-muted/50',\n    primary: 'bg-primary/5',\n  };\n\n  return (\n    <div className={`${bgClasses[background]} py-24 sm:py-32`}>\n      <div className=\"mx-auto max-w-7xl px-6 lg:px-8\">\n        <div className=\"mx-auto max-w-2xl text-center\">\n          <h2 className=\"text-3xl font-bold tracking-tight text-foreground sm:text-4xl\">{title}</h2>\n          <p className=\"mt-6 text-lg leading-8 text-muted-foreground\">\n            {description}\n          </p>\n          <div className=\"mt-10 flex items-center justify-center gap-x-6\">\n            <Button asChild size=\"lg\">\n              <Link href={primaryAction.href}>{primaryAction.label}</Link>\n            </Button>\n            {secondaryAction && (\n              <Button variant=\"outline\" asChild size=\"lg\">\n                <Link href={secondaryAction.href}>{secondaryAction.label}</Link>\n              </Button>\n            )}\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}\n```\n\nUpdate the home page to include the CTA component:\n\n```tsx\n// src/app/page.tsx\nimport { HeroSection } from '@/components/hero-section';\nimport { TrainingPrograms } from '@/components/training-programs';\nimport { Testimonials } from '@/components/testimonials';\nimport { FAQ } from '@/components/faq';\nimport { Stats } from '@/components/stats';\nimport { CTA } from '@/components/cta';\n\n// Other data\n\nexport default function Home() {\n  return (\n    <div>\n      <HeroSection />\n      <Stats stats={stats} title=\"Our Impact\" description=\"We're proud of our track record in helping students launch successful tech careers.\" />\n      <TrainingPrograms />\n      <Testimonials testimonials={testimonials} />\n      <FAQ faqs={faqs} description=\"Find answers to commonly asked questions about our programs, admissions process, and more.\" />\n      <CTA\n        title=\"Ready to Start Your Tech Career?\"\n        description=\"Join our programs and gain the skills you need to succeed in today's tech industry.\"\n        primaryAction={{ label: 'Apply Now', href: '/contact' }}\n        secondaryAction={{ label: 'Learn More', href: '/programs' }}\n        background=\"primary\"\n      />\n    </div>\n  );\n}\n```",
-        "testStrategy": "Test the CTA component by verifying the title, description, and buttons display correctly. Test the primary and secondary action buttons to ensure they navigate to the correct pages. Test the component with different background options. Verify that the component is responsive on different screen sizes. Test the component in both light and dark modes. Ensure the component is accessible to screen readers and keyboard navigation.",
-        "priority": "medium",
-        "dependencies": [
-          7,
-          8,
-          9
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 22,
-        "title": "Create Not Found Page",
-        "description": "Create a custom 404 Not Found page using the design system components.",
-        "details": "Create a custom 404 Not Found page using the design system:\n\n```tsx\n// src/app/not-found.tsx\nimport Link from 'next/link';\nimport { Button } from '@/components/ui/button';\n\nexport default function NotFound() {\n  return (\n    <div className=\"bg-background min-h-[70vh] flex items-center\">\n      <div className=\"mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 text-center\">\n        <p className=\"text-base font-semibold text-primary\">404</p>\n        <h1 className=\"mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-5xl\">Page not found</h1>\n        <p className=\"mt-6 text-base leading-7 text-muted-foreground\">\n          Sorry, we couldn't find the page you're looking for.\n        </p>\n        <div className=\"mt-10 flex items-center justify-center gap-x-6\">\n          <Button asChild>\n            <Link href=\"/\">Go back home</Link>\n          </Button>\n          <Button variant=\"outline\" asChild>\n            <Link href=\"/contact\">Contact support</Link>\n          </Button>\n        </div>\n      </div>\n    </div>\n  );\n}\n```",
-        "testStrategy": "Test the 404 page by navigating to a non-existent URL. Verify that the page displays correctly and the buttons navigate to the correct pages. Test the page in both light and dark modes. Verify that the page is responsive on different screen sizes. Ensure the page is accessible to screen readers and keyboard navigation.",
-        "priority": "low",
-        "dependencies": [
-          7,
-          8,
-          9
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 23,
-        "title": "Create Loading States",
-        "description": "Create loading state components for pages and sections using the design system.",
-        "details": "Create loading state components using the design system:\n\n```tsx\n// src/components/ui/skeleton.tsx\nimport { cn } from '@/lib/utils';\n\nfunction Skeleton({\n  className,\n  ...props\n}: React.HTMLAttributes<HTMLDivElement>) {\n  return (\n    <div\n      className={cn('animate-pulse rounded-md bg-muted', className)}\n      {...props}\n    />\n  );\n}\n\nexport { Skeleton };\n```\n\nCreate a loading state for the programs page:\n\n```tsx\n// src/app/programs/loading.tsx\nimport { Skeleton } from '@/components/ui/skeleton';\n\nexport default function ProgramsLoading() {\n  return (\n    <div className=\"bg-background py-24 sm:py-32\">\n      <div className=\"mx-auto max-w-7xl px-6 lg:px-8\">\n        <div className=\"mx-auto max-w-2xl text-center\">\n          <Skeleton className=\"h-10 w-64 mx-auto\" />\n          <Skeleton className=\"h-6 w-full mt-6\" />\n          <Skeleton className=\"h-6 w-3/4 mx-auto mt-2\" />\n        </div>\n        <div className=\"mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3\">\n          {Array.from({ length: 3 }).map((_, index) => (\n            <div key={index} className=\"flex flex-col\">\n              <Skeleton className=\"h-48 w-full rounded-t-lg\" />\n              <div className=\"p-6\">\n                <Skeleton className=\"h-6 w-3/4\" />\n                <Skeleton className=\"h-4 w-1/2 mt-2\" />\n                <Skeleton className=\"h-20 w-full mt-4\" />\n                <Skeleton className=\"h-10 w-full mt-6\" />\n              </div>\n            </div>\n          ))}\n        </div>\n      </div>\n    </div>\n  );\n}\n```\n\nCreate a loading state for the program detail page:\n\n```tsx\n// src/app/programs/[slug]/loading.tsx\nimport { Skeleton } from '@/components/ui/skeleton';\n\nexport default function ProgramDetailLoading() {\n  return (\n    <div className=\"bg-background\">\n      <div className=\"relative isolate overflow-hidden pt-14\">\n        <div className=\"mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8\">\n          <div className=\"mx-auto max-w-2xl text-center\">\n            <Skeleton className=\"h-4 w-16 mx-auto mb-4\" />\n            <Skeleton className=\"h-12 w-full\" />\n            <Skeleton className=\"h-12 w-3/4 mx-auto mt-2\" />\n            <Skeleton className=\"h-6 w-full mt-6\" />\n            <Skeleton className=\"h-6 w-3/4 mx-auto mt-2\" />\n            <Skeleton className=\"h-4 w-32 mx-auto mt-4\" />\n            <div className=\"mt-10 flex items-center justify-center gap-x-6\">\n              <Skeleton className=\"h-12 w-32\" />\n              <Skeleton className=\"h-12 w-32\" />\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div className=\"mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8\">\n        <Skeleton className=\"h-10 w-full\" />\n        <div className=\"mt-6 space-y-8\">\n          {Array.from({ length: 4 }).map((_, index) => (\n            <div key={index} className=\"border-b pb-6 last:border-0\">\n              <Skeleton className=\"h-6 w-1/3\" />\n              <Skeleton className=\"h-4 w-full mt-2\" />\n              <Skeleton className=\"h-4 w-5/6 mt-1\" />\n            </div>\n          ))}\n        </div>\n      </div>\n    </div>\n  );\n}\n```",
-        "testStrategy": "Test the loading states by artificially delaying data loading in development. Verify that the loading states display correctly and match the layout of the actual content. Test the loading states in both light and dark modes. Verify that the loading states are responsive on different screen sizes. Ensure the loading states are accessible to screen readers.",
-        "priority": "low",
-        "dependencies": [
-          7,
-          8,
-          9
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 24,
-        "title": "Implement Error Handling Components",
-        "description": "Create error handling components using the design system to display user-friendly error messages.",
-        "details": "Create error handling components using the design system:\n\n```tsx\n// src/components/error-message.tsx\nimport Link from 'next/link';\nimport { AlertTriangle } from 'lucide-react';\nimport { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';\nimport { Button } from '@/components/ui/button';\n\ntype ErrorMessageProps = {\n  title?: string;\n  description?: string;\n  actionText?: string;\n  actionHref?: string;\n  retry?: () => void;\n};\n\nexport function ErrorMessage({\n  title = 'Something went wrong',\n  description = 'An error occurred while loading this content. Please try again later.',\n  actionText,\n  actionHref,\n  retry,\n}: ErrorMessageProps) {\n  return (\n    <Alert variant=\"destructive\" className=\"my-8\">\n      <AlertTriangle className=\"h-4 w-4\" />\n      <AlertTitle>{title}</AlertTitle>\n      <AlertDescription>{description}</AlertDescription>\n      <div className=\"mt-4 flex gap-x-4\">\n        {retry && (\n          <Button variant=\"outline\" onClick={retry}>\n            Try again\n          </Button>\n        )}\n        {actionText && actionHref && (\n          <Button variant=\"outline\" asChild>\n            <Link href={actionHref}>{actionText}</Link>\n          </Button>\n        )}\n      </div>\n    </Alert>\n  );\n}\n```\n\nCreate an error page for the app:\n\n```tsx\n// src/app/error.tsx\n'use client';\n\nimport { useEffect } from 'react';\nimport Link from 'next/link';\nimport { Button } from '@/components/ui/button';\n\nexport default function Error({\n  error,\n  reset,\n}: {\n  error: Error & { digest?: string };\n  reset: () => void;\n}) {\n  useEffect(() => {\n    // Log the error to an error reporting service\n    console.error(error);\n  }, [error]);\n\n  return (\n    <div className=\"bg-background min-h-[70vh] flex items-center\">\n      <div className=\"mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 text-center\">\n        <p className=\"text-base font-semibold text-destructive\">Error</p>\n        <h1 className=\"mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-5xl\">Something went wrong</h1>\n        <p className=\"mt-6 text-base leading-7 text-muted-foreground\">\n          We're sorry, but an error occurred while loading this page.\n        </p>\n        <div className=\"mt-10 flex items-center justify-center gap-x-6\">\n          <Button onClick={reset}>Try again</Button>\n          <Button variant=\"outline\" asChild>\n            <Link href=\"/\">Go back home</Link>\n          </Button>\n        </div>\n      </div>\n    </div>\n  );\n}\n```\n\nCreate a component for handling data loading errors:\n\n```tsx\n// src/components/error-boundary.tsx\n'use client';\n\nimport { ErrorMessage } from '@/components/error-message';\n\ntype ErrorBoundaryProps = {\n  children: React.ReactNode;\n  fallback?: React.ReactNode;\n};\n\nexport function ErrorBoundary({ children, fallback }: ErrorBoundaryProps) {\n  try {\n    return <>{children}</>;\n  } catch (error) {\n    console.error('Error caught by ErrorBoundary:', error);\n    return (\n      fallback || (\n        <ErrorMessage\n          title=\"Component Error\"\n          description=\"An error occurred while rendering this component.\"\n        />\n      )\n    );\n  }\n}\n```",
-        "testStrategy": "Test the error handling components by triggering errors in development. Verify that the error messages display correctly and the action buttons work as expected. Test the error boundary by intentionally causing a component to throw an error. Test the components in both light and dark modes. Verify that the components are responsive on different screen sizes. Ensure the components are accessible to screen readers and keyboard navigation.",
-        "priority": "medium",
-        "dependencies": [
-          7,
-          8,
-          9
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 25,
-        "title": "Perform Final Testing and Cleanup",
-        "description": "Conduct comprehensive testing of all components, remove unused code, and ensure consistent import paths.",
-        "details": "1. **Code Cleanup**:\n   - Remove all unused components and code\n   - Ensure consistent import paths using path aliases\n   - Remove duplicate styles\n   - Check for and fix any TypeScript errors\n\n```bash\n# Run TypeScript type checking\nnpm run type-check\n\n# Run linting\nnpm run lint\n\n# Run build to check for errors\nnpm run build\n```\n\n2. **Testing Checklist**:\n   - Verify all pages load correctly\n   - Test navigation between all pages\n   - Test all interactive elements (buttons, forms, etc.)\n   - Test responsive design on different screen sizes\n   - Test dark mode functionality\n   - Test accessibility using keyboard navigation and screen readers\n   - Verify all links work correctly\n   - Test form submissions\n   - Verify error handling works correctly\n   - Test loading states\n\n3. **Performance Optimization**:\n   - Check page load times using Lighthouse or similar tools\n   - Optimize images and assets\n   - Verify smooth animations and transitions\n   - Check for and fix any performance bottlenecks\n\n4. **Documentation**:\n   - Update any documentation to reflect the new design system\n   - Document any known issues or limitations\n   - Provide instructions for future maintenance\n\n5. **Final Review**:\n   - Conduct a final visual review of all pages\n   - Verify all requirements from the PRD have been met\n   - Check for any inconsistencies in design or functionality",
-        "testStrategy": "Conduct comprehensive testing using the following methods:\n\n1. **Manual Testing**:\n   - Test all pages and components on different browsers (Chrome, Firefox, Safari, Edge)\n   - Test on different devices (desktop, tablet, mobile)\n   - Test all user flows and interactions\n\n2. **Automated Testing**:\n   - Run any existing automated tests\n   - Use Lighthouse to test performance, accessibility, and best practices\n   - Use axe or similar tools to test accessibility\n\n3. **Visual Testing**:\n   - Compare the new design with the design specifications\n   - Verify consistent spacing, typography, and colors\n   - Check dark mode appearance\n\n4. **Performance Testing**:\n   - Measure and record page load times\n   - Test with throttled network connections\n   - Check for any render-blocking resources\n\nDocument all test results and fix any issues found before final deployment.",
-        "priority": "high",
-        "dependencies": [
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9,
-          10,
-          11,
-          12,
-          13,
-          14,
-          15,
-          16,
-          17,
-          18,
-          19,
-          20,
-          21,
-          22,
-          23,
-          24
-        ],
-        "status": "pending",
-        "subtasks": []
       }
     ],
     "metadata": {
-      "created": "2025-07-05T02:15:31.661Z",
-      "updated": "2025-07-05T02:15:31.661Z",
+      "created": "2025-07-05T07:41:07.658Z",
+      "updated": "2025-07-05T08:06:00.000Z",
       "description": "Tasks for master context"
     }
   }
