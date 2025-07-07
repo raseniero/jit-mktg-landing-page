@@ -135,11 +135,7 @@ interface PageProps {
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-interface CourseDetailPageProps extends PageProps {
-  params: {
-    slug: string;
-  };
-}
+type CourseDetailPageProps = PageProps;
 
 export default function CourseDetailPage({ params }: CourseDetailPageProps) {
   const [course, setCourse] = useState<Course | null>(null);
